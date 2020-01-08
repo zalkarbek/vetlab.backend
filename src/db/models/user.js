@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
   });
   user.associate = (models) => {
     // associations can be defined here
+    user.belongsToMany(models.roles, {
+      through: 'user_in_roles',
+      foreignKey: 'user_id',
+      otherKey: 'role_id'
+    });
   };
 
   return user;
