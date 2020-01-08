@@ -1,9 +1,9 @@
 
 const handler = require('./user.socket.handler');
-const SOCKET_EVENT = require('../../store/socketEvents');
-const { USER } = SOCKET_EVENT;
+const SOCKET_DATA = require('../../data/socketData');
+const { USER } = SOCKET_DATA.EVENTS;
 
-module.exports = ({ userIO, socketIO, httpServer, socketClient, app }) => {
+module.exports = ({ userIO }) => {
   userIO.on('connect', (socket) => {
 
     if(socket.payload && socket.payload.userId && socket.payload.login) {

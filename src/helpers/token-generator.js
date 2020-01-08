@@ -25,7 +25,6 @@ class TokenGenerator {
         resolve(payload);
       });
     });
-
   }
 }
 

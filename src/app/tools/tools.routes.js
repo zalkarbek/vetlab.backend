@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./user.controller');
+const controller = require('./tools.controller');
 const safeAsync = require('../../middleware/async');
 const jwtVerify = require('../../middleware/restTokenVerify');
 
-router.post('/v1/user/profile', jwtVerify ,safeAsync(controller.getUserProfile));
+router.get('/v1/tools/socketEvents', jwtVerify ,safeAsync(controller.getSocketEvents));
 
 module.exports = router;

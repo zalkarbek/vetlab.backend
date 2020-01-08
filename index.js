@@ -1,10 +1,10 @@
 const env = require('dotenv');
 env.config();
 
-const { httpsServer } = require('./server');
-const port = Number(process.env.SERVER_HTTPS_PORT);
+const { httpServer } = require('./server');
+const port = Number(process.env.SERVER_PORT);
 
-httpsServer.listen({ port }, () => {
+httpServer.listen({ port }, () => {
   console.log('Server starting');
 });
 
