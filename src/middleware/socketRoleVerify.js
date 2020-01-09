@@ -1,8 +1,8 @@
 const userService = require('../service/userService');
 
 module.exports = (roles) => {
-  return async (req, res, next) => {
-    const userRoles = JSON.parse(req.userRoles);
+  return async (socket, next) => {
+    const userRoles = JSON.parse(socket.userRoles);
     const checkedAccessRoles = await userService.checkAccessRole(userRoles, roles);
     if(checkedAccessRoles >= 1) {
       next();

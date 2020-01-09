@@ -27,6 +27,8 @@ class AuthService extends Service {
       include: [
         {
           model: this.db.roles,
+          attributes: ['role_i18n', 'role_name', 'role_key', 'active', 'priority'],
+          where: { active: 1 }
         }
       ]
     });

@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./user.controller');
 const safeAsync = require('../../middleware/async');
-const jwtVerify = require('../../middleware/restTokenVerify');
+const restTokenVerify = require('../../middleware/restTokenVerify');
+const restRoleVerify = require('../../middleware/restRoleVerify');
 
-router.post('/v1/user/profile', jwtVerify ,safeAsync(controller.getUserProfile));
+router.post('/v1/user/profile', restTokenVerify, restRoleVerify(['user']), safeAsync(controller.getUserProfile));
 
 module.exports = router;

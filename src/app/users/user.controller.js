@@ -1,15 +1,12 @@
 
-const db = require('../../db/models/index');
+const { Controller } = require('../controller');
+const userService = require('../../service/userService');
 
-class UserController {
+class UserController extends Controller {
 
   async getUserProfile(req, res) {
-
     const { email } = req.payload;
-    const user = await db.User.findOne({
-      where: {
-        email
-      },
+    const user = await userService.getUserByEmail(email, {
       attributes: { exclude: ['password', 'remember_token'] }
     });
 

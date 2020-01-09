@@ -1,7 +1,9 @@
 
+const { Controller } = require('../controller');
 const authService = require('../../service/authService');
+// const personalService = require('../../service/personalService');
 
-class AuthController {
+class AuthController extends Controller {
 
   // Авторизация пользователей
   async userAuthenticate(req, res) {
@@ -13,15 +15,17 @@ class AuthController {
         message: 'Authorization failed login or password wrong'
       });
     }
-    const token = authService.userGetToken(user);
+    const token = await authService.userGetToken(user);
     return res.json({
       error: false,
       message: 'Authorization success',
       token,
       user: {
+        id: user.id,
         name: user.name,
-        login: user.login,
         email: user.email,
+        roles: user.roles,
+        personal: {}
       }
     });
   }
