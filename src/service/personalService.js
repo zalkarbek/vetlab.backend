@@ -10,6 +10,10 @@ class PersonalService extends Service {
       }
     });
   }
+
+  async create(personal) {
+
+  }
 }
 
 module.exports = new PersonalService();
