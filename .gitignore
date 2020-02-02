@@ -65,7 +65,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+.env.prod
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -89,7 +89,3 @@ typings/
 .dynamodb/
 
 # Custom Directories
-jwtRS256.key
-jwtRS256.key.pub
-package-lock.json
-../cert
