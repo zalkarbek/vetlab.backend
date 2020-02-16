@@ -4,6 +4,9 @@ const authService = require('../../service/authService');
 // const personalService = require('../../service/personalService');
 
 class AuthController extends Controller {
+  constructor() {
+    super();
+  }
 
   // Авторизация пользователей
   async userAuthenticate(req, res) {

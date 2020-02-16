@@ -1,23 +1,28 @@
 
+const appRootPath = require('app-root-path');
 const env = require('dotenv');
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const pathResolve = require('./pathResolve');
 const routes = require('./src/app/routes');
 const app = express();
 const port = Number(process.env.SERVER_HTTPS_PORT) || 3000;
-
 env.config();
+
+// Обьявление констант путей
+const root = pathResolve(appRootPath);
+app.set('rootPath', root);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(cors());
 app.use(process.env.NODE_ENV === 'development' ? logger('dev') : logger('combined'));
-app.use(routes);
+
+app.use(routes({ app, root, routes: express.Router() }));
 
 function logErrors(err, req, res, next) {
   console.error(err.stack);

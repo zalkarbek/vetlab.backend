@@ -1,8 +1,7 @@
-const express = require('express');
-const router = express.Router();
 const controller = require('./test.controller');
 const asyncMiddleware = require('../../middleware/async');
 
-router.get('/v1/test/ok', asyncMiddleware(controller.get));
-
-module.exports = router;
+module.exports = ({ routes }) => {
+  routes.get('/v1/test/ok', asyncMiddleware(controller.get));
+  return routes;
+};

@@ -1,7 +1,7 @@
 
 const socketEvents = require('../../data/socketData');
 
-class ToolsController {
+class OptController {
   async getSocketEvents(req, res) {
     return res.json({
       error: false,
@@ -10,5 +10,5 @@ class ToolsController {
   }
 }
 
-module.exports = new ToolsController();
-module.exports.ToolsController = ToolsController;
+module.exports = new OptController();
+module.exports.OptController = OptController;

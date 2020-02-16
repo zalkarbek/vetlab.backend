@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js --exec babel-node --name=vetapp",
     "prod": "cross-env NODE_ENV=production pm2 start index.js --name=vetapp",
-    "monit": "cross-env NODE_ENV=production pm2 monit busapp",
+    "monit": "cross-env NODE_ENV=production pm2 monit vetapp",
+    "stop": "cross-env NODE_ENV=production pm2 stop vetapp",
     "db:test": "node ./db/test.js",
     "db:seed.up": " node ./db/seeds/up.js",
     "db:seed.down": "node ./db/seeds/down.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
+    "app-root-path": "^3.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

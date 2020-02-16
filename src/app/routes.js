@@ -1,14 +1,12 @@
-const express = require('express');
-const routes = express.Router();
-
 const authRoutes = require('./auth/auth.routes');
-const toolsRoutes = require('./tools/tools.routes');
+const optionRoutes = require('./option/opt.routes');
 const userRoutes = require('./users/user.routes');
 const testRoutes = require('./test/test.routes');
 
-routes.use('/api', authRoutes);
-routes.use('/api', toolsRoutes);
-routes.use('/api', userRoutes);
-routes.use('/api', testRoutes);
-
-module.exports = routes;
+module.exports = ({ root, routes }) => {
+  routes.use('/api', authRoutes({ root, routes }));
+  routes.use('/api', optionRoutes({ root, routes }));
+  routes.use('/api', userRoutes({ root, routes }));
+  routes.use('/api', testRoutes({ root, routes }));
+  return routes;
+};
