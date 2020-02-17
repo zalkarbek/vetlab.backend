@@ -1,5 +1,6 @@
 const tokenGenerator = require('../helpers/token-generator');
-const userService = require('../service/userService');
+const service = require('../service');
+const userService = service.getService('user');
 
 module.exports = async (req, res, next) => {
   // проверка токена

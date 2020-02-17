@@ -1,2 +1,2 @@
 # vetlab.backend
-vetlab backend api
+vetlab backend api service

@@ -1,23 +1,15 @@
 module.exports = {
   // ПРОСТРАНСТВО ИМЕН
   NAMESPACES: {
-    GUEST: {
-      NAME: '/GUEST'
-    },
-    USER: {
-      NAME: '/USER'
-    },
+    GUEST: '/GUEST', // канал не авторизованных гостей
+    AUTHORIZED: '/AUTHORIZED' // пространство имен авторизованных пользователей
   },
   // ДОСТУПНЫЕ КОМНАТЫ ДЛЯ ПОДКЛЮЧЕНИЯ
   ROOMS: {
-    ADMINS: {
-      NAME: 'ADMINS'
-    },
-    PUBLIC_NEWS: {
-      NAME: 'PUBLIC_NEWS'
-    }
+    ADMINS: 'ADMINS',
+    PUBLIC_NEWS: 'PUBLIC_NEWS'
   },
-  // СОБЫТИИ
+  // СОБЫТИИ SOCKET IO
   EVENTS: {
     AUTH: {
       // emit когда гость подключился

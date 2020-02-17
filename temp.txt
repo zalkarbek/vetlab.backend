@@ -1,0 +1,7 @@
+// const cert = {
+//   cert: fs.readFileSync('./cert/server.cert', 'utf-8'),
+//   key: fs.readFileSync('./cert/server.key', 'utf-8'),
+//   requestCert: false,
+//   rejectUnauthorized: false,
+// };
+// const httpsServer = https.createServer(cert, app);

@@ -49,7 +49,6 @@ class AuthService extends Service {
       tokenId: user.tokenId
     });
   }
-
 }
 
 module.exports = new AuthService();

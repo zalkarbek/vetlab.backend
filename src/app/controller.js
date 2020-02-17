@@ -1,11 +1,13 @@
 const db = require('../db/models/index');
-const root = require( '../../pathResolve');
+const pathResolve = require( '../../pathResolve');
+const socketData = require('../data/socketData');
 
 class Controller {
   constructor() {
     this.db = db;
     this.Op = db.Sequelize.Op;
-    this.root = root;
+    this.pathResolve = pathResolve;
+    this.socketData = socketData;
   }
 }
 
