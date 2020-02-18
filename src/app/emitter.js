@@ -6,7 +6,6 @@ class Emitter {
     authEvents(injection);
   }
 }
-
 const emitter = new Emitter();
 
 module.exports = (injection) => {

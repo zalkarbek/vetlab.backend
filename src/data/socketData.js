@@ -11,20 +11,16 @@ module.exports = {
   },
   // СОБЫТИИ SOCKET IO
   EVENTS: {
-    AUTH: {
-      // emit когда гость подключился
-      GUEST_CLIENT_CONNECTED: 'guest:client:connected',
-      // авторизация гостевого пользователя
-      GUEST_SERVER_LOGIN: 'guest:server:auth',
-      GUEST_CLIENT_LOGIN: 'guest:client:auth'
-    },
+    // emit когда гость подключился
+    GUEST_CLIENT_CONNECTED: 'guest:client:connected',
+    // авторизация гостевого пользователя
+    GUEST_SERVER_LOGIN: 'guest:server:auth',
+    GUEST_CLIENT_LOGIN: 'guest:client:auth',
 
-    USER: {
-      // emit отправка данные пользователя когда пользователь подключился
-      USER_CLIENT_CONNECTED: 'user:client:connected',
-      // socket событие для получение профиль пользователя
-      USER_SERVER_GET_PROFILE: 'user:server:get_profile',
-      USER_CLIENT_GET_PROFILE: 'user:client:get_profile'
-    }
+    // emit отправка данные пользователя когда пользователь подключился
+    USER_CLIENT_CONNECTED: 'user:client:connected',
+    // socket событие для получение профиль пользователя
+    USER_SERVER_GET_PROFILE: 'user:server:get_profile',
+    USER_CLIENT_GET_PROFILE: 'user:client:get_profile'
   },
 };

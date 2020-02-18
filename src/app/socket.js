@@ -1,20 +1,25 @@
-
-const { NAMESPACES } = require('../data/socketData');
 const userSocket = require('./users/user.socket');
 const authSocket = require('./auth/auth.socket');
 const socketTokenVerify = require('../middleware/socketTokenVerify');
 
-module.exports = (socketServer, httpServer, socketClient, app) => {
+class SocketEmitter {
+  init({ socketServer, SOCKS, ...injection}) {
+    // Пространство имен авторизованных пользователей
+    const authIO = socketServer.of(SOCKS.NAMESPACES.AUTHORIZED);
+    // Пространство имен гостей
+    const guestIO = socketServer.of(SOCKS.NAMESPACES.GUEST);
 
-  const authIO = socketServer.of(NAMESPACES.AUTHORIZED);
-  const guestIO = socketServer.of(NAMESPACES.GUEST);
+    // socketServer.sockets.use(socketBaseSecure);
+    authIO.use(socketTokenVerify);
 
-  //MIDDLEWARE
-  // socketServer.sockets.use(socketBaseSecure);
-  authIO.use(socketTokenVerify);
+    // HANDLING
+    authSocket({ socketIO:guestIO, ...injection });
+    // userSocket({ socketIO:this.authIO, ...injection });
+  }
+}
 
-  // HANDLING
-  authSocket({ socketIO:guestIO, socketServer, httpServer, socketClient, app });
-  // Канал авторизованных пользователей
-  userSocket({ socketIO:authIO, socketServer, httpServer, socketClient, app });
+const socketEmitter = new SocketEmitter();
+
+module.exports = (injection) => {
+  socketEmitter.init(injection);
 };
