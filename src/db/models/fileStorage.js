@@ -1,14 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('sMera', {
+  const schema = sequelize.define('fileStorage', {
 
-    i18n: {
-      type: DataTypes.STRING(300),
-      allowNull: true,
-      defaultValue: null
-    },
-
-    shortName: {
-      type: DataTypes.STRING(100),
+    link: {
+      type: DataTypes.STRING(600),
       allowNull: true,
       defaultValue: null
     },
@@ -20,12 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   }, {
-    tableName: 's_mera',
-    modelName: 'sMera',
+    tableName: 'file_storage',
+    modelName: 'fileStorage',
     timestamps: true
   });
+
   schema.associate = (models) => {
-    // associations can be defined here
+
   };
 
   return schema;

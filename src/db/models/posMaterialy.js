@@ -1,36 +1,119 @@
 module.exports = (sequelize, DataTypes) => {
-  const posMaterialy = sequelize.define('posMaterialy', {
+  const schema = sequelize.define('posMaterialy', {
+
+    napravlenieId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    opPokazatelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    ownerJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    mestoOtboraSRegionId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    kemOtobranJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    lechenieInfo: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    sMaterialId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
     materialCount: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    sMeraId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    vozrast: {
       type: DataTypes.INTEGER,
-      defaultValue: 1,
-      allowNull: false
-    }
+      allowNull: true,
+      defaultValue: null
+    },
+
+    dateZabolivanie: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    dateZaboya: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    dateOtbora: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    dateDostavki: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+
   }, {
     tableName: 'pos_materialy',
     modelName: 'posMaterialy',
     timestamps: true
   });
-  posMaterialy.associate = (models) => {
+
+  schema.associate = (models) => {
     // associations can be defined here
-    posMaterialy.belongsTo(models.personal, {
-      foreignKey: 'personalId'
+    schema.belongsTo(models.napravlenie, {
+      foreignKey: 'napravlenieId'
     });
-    posMaterialy.belongsTo(models.otdely, {
-      foreignKey: 'otdelId'
+
+    schema.belongsTo(models.sPokazately, {
+      foreignKey: 'opPokazatelId'
     });
-    posMaterialy.belongsTo(models.subOtdely, {
-      foreignKey: 'subOtdelId'
+
+    schema.belongsTo(models.sRegions, {
+      foreignKey: 'mestoOtboraSRegionId'
     });
-    posMaterialy.belongsTo(models.sRegions, {
-      foreignKey: 'sRegionId'
-    });
-    posMaterialy.belongsTo(models.sMaterialy, {
+
+    schema.belongsTo(models.sMaterialy, {
       foreignKey: 'sMaterialId'
     });
-    posMaterialy.belongsTo(models.sMera, {
+
+    schema.belongsTo(models.sMera, {
       foreignKey: 'sMeraId'
     });
   };
 
-  return posMaterialy;
+  return schema;
 };

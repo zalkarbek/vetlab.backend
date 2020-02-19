@@ -1,32 +1,43 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-  const sOtdelenia = sequelize.define('sOtdelenia', {
+  const schema = sequelize.define('sOtdelenia', {
+
     i18n: {
-      type: DataTypes.STRING(255),
-      defaultValue: null,
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null
     },
+
+    shortName: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: null
+    },
+
     name: {
-      type: DataTypes.STRING(255),
-      defaultValue: null,
-      allowNull: true
-    }
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null
+    },
+
   }, {
     tableName: 's_otdelenia',
     modelName: 'sOtdelenia',
     timestamps: true
   });
-  sOtdelenia.associate = (models) => {
+
+  schema.associate = (models) => {
     // associations can be defined here
-    sOtdelenia.hasMany(models.otdely, {
+    schema.hasMany(models.otdely, {
       foreignKey: 'sOtdeleniaId',
       sourceKey: 'id'
     });
-    sOtdelenia.hasMany(models.subOtdely, {
+    schema.hasMany(models.subOtdely, {
       foreignKey: 'sOtdeleniaId',
       sourceKey: 'id'
     });
   };
 
-  return sOtdelenia;
+  return schema;
 };

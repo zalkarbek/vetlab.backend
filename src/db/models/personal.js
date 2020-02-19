@@ -1,43 +1,112 @@
 module.exports = (sequelize, DataTypes) => {
-  const personal = sequelize.define('personal', {
+  const schema = sequelize.define('personal', {
+
     firstName: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(300),
       allowNull: false
     },
+
     lastName: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
+
+    personalDataJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
     pol: {
       type: DataTypes.STRING(100),
-      defaultValue: null,
-      allowNull: true
+      allowNull: true,
+      defaultValue: null
     },
-    imgUrl: {
-      type: DataTypes.STRING(255),
-      defaultValue: null,
-      allowNull: true
-    }
+
+    imFileId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    addressLiveSRegionId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    addressBirthSRegionId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    userId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    sDoljnostId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    otdelId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    subOtdelId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+
   }, {
     tableName: 'personal',
     modelName: 'personal',
     timestamps: true
   });
-  personal.associate = (models) => {
-    personal.belongsTo(models.sRegions, {
+
+  schema.associate = (models) => {
+    // associations can be defined here
+    schema.belongsTo(models.fileStorage, {
+      foreignKey: 'imFileId'
+    });
+
+    schema.belongsTo(models.sRegions, {
+      foreignKey: 'addressLiveSRegionId'
+    });
+
+    schema.belongsTo(models.sRegions, {
+      foreignKey: 'addressBirthSRegionId'
+    });
+
+    schema.belongsTo(models.user, {
+      foreignKey: 'userId'
+    });
+
+    schema.belongsTo(models.sRegions, {
       foreignKey: 'sRegionId'
     });
-    personal.belongsTo(models.sDoljnosti, {
+
+    schema.belongsTo(models.sDoljnosti, {
       foreignKey: 'sDoljnostId'
     });
-    personal.belongsTo(models.otdely, {
+
+    schema.belongsTo(models.otdely, {
       foreignKey: 'otdelId'
     });
-    personal.belongsTo(models.subOtdely, {
+
+    schema.belongsTo(models.subOtdely, {
       foreignKey: 'subOtdelId'
     });
-    // associations can be defined here
+
   };
 
-  return personal;
+  return schema;
 };

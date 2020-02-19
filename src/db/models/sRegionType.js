@@ -1,5 +1,7 @@
+
+
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('sMera', {
+  const schema = sequelize.define('sRegionType', {
 
     i18n: {
       type: DataTypes.STRING(300),
@@ -19,11 +21,13 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+
   }, {
-    tableName: 's_mera',
-    modelName: 'sMera',
+    tableName: 's_region_type',
+    modelName: 'sRegionType',
     timestamps: true
   });
+
   schema.associate = (models) => {
     // associations can be defined here
   };

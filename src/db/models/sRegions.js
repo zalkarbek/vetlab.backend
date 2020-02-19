@@ -2,6 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const sRegions = sequelize.define('sRegions', {
+
     i18n: {
       type: DataTypes.STRING(255),
       defaultValue: null,
@@ -11,7 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(255),
       defaultValue: null,
       allowNull: true
+    },
+
+    sRegionTypeId: {
+      type: DataTypes.INT(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
     }
+
   }, {
     tableName: 's_regions',
     modelName: 'sRegions',
@@ -19,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
   });
   sRegions.associate = (models) => {
     // associations can be defined here
+
+    schema.belongsTo(models.sRegionType, {
+      foreignKey: 'sRegionTypeId'
+    });
+
     sRegions.hasMany(models.otdely, {
       foreignKey: 'sRegionId',
       sourceKey: 'id'

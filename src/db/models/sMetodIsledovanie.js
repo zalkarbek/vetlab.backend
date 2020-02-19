@@ -1,28 +1,34 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-  const sMetodIsledovanie = sequelize.define('sMetodIsledovanie', {
+  const schema = sequelize.define('sMetodIsledovanie', {
+
     i18n: {
-      type: DataTypes.STRING(255),
-      defaultValue: null,
-      allowNull: true
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null
     },
+
+    shortName: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: null
+    },
+
     name: {
-      type: DataTypes.STRING(255),
-      defaultValue: null,
-      allowNull: true
-    }
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null
+    },
+
   }, {
     tableName: 's_metod_isledovanie',
     modelName: 'sMetodIsledovanie',
     timestamps: true
   });
-  sMetodIsledovanie.associate = (models) => {
+  schema.associate = (models) => {
     // associations can be defined here
-    sMetodIsledovanie.hasMany(models.isledovanie, {
-      foreignKey: 'sMetodId'
-    });
   };
 
-  return sMetodIsledovanie;
+  return schema;
 };

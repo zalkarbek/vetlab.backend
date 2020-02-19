@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('sMera', {
+  const schema = sequelize.define('sMaterialType', {
 
     i18n: {
       type: DataTypes.STRING(300),
@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   }, {
-    tableName: 's_mera',
-    modelName: 'sMera',
+    tableName: 's_material_type',
+    modelName: 'sMaterialType',
     timestamps: true
   });
   schema.associate = (models) => {

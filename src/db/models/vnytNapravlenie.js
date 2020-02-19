@@ -1,19 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('napravlenie', {
+  const schema = sequelize.define('vnytNapravlenie', {
 
-    zapolnilPersonalId: {
+    napravilPersonalId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    zapolnilDepartmentId: {
+    napravlenDepartmentId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    zapolnilDate: {
+    napravlenOtdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    napravlenSubOtdelId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
@@ -31,19 +37,13 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    otdelId: {
+    prinyalSubOtdelId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    perenapravilPersonalId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    dataZapolnenia: {
+    prinyalDate: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null
@@ -55,83 +55,78 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    probyNapravilJSON: {
-      type: DataTypes.JSON,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    probyDostavilJSON: {
-      type: DataTypes.JSON,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    oldPrinyalPersonalId: {
+    posMaterialId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    oldPrinyalOtdelId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    postMaterialCount: {
+      type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: null
     },
 
-    oldPrinyalDate: {
-      type: DataTypes.DATE,
+    posMaterialCheckVid: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
-      defaultValue: null
+      defaultValue: 1
+    },
+
+    postMaterialCheck: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: 1
     },
 
     status: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.VARCHAR(100),
       allowNull: true,
       defaultValue: null
-    }
+    },
+
 
   }, {
-    tableName: 'napravlenie',
-    modelName: 'napravlenie',
+    tableName: 'vnyt_napravlenie',
+    modelName: 'vnytNapravlenie',
     timestamps: true
   });
   schema.associate = (models) => {
     // associations can be defined here
     schema.belongsTo(models.personal, {
-      foreignKey: 'zapolnilPersonalId'
+      foreignKey: 'napravilPersonalId'
     });
 
     schema.belongsTo(models.departments, {
-      foreignKey: 'zapolnilDepartmentId'
+      foreignKey: 'napravlenDepartmentId'
+    });
+
+    schema.belongsTo(models.otdely, {
+      foreignKey: 'napravlenOtdelId'
+    });
+
+    schema.belongsTo(models.subOtdely, {
+      foreignKey: 'napravlenSubOtdelId'
     });
 
     schema.belongsTo(models.personal, {
       foreignKey: 'prinyalPersonalId'
     });
 
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.personal, {
       foreignKey: 'prinyalOtdelId'
     });
 
-    schema.belongsTo(models.otdely, {
-      foreignKey: 'otdelId'
+    schema.belongsTo(models.subOtdely, {
+      foreignKey: 'prinyalSubOtdelId'
     });
 
-    schema.belongsTo(models.personal, {
-      foreignKey: 'perenapravilPersonalId'
-    });
-
-    schema.belongsTo(models.opPokazately, {
+    schema.belongsTo(models.sPokazately, {
       foreignKey: 'opPokazatelId'
     });
 
-    schema.belongsTo(models.personal, {
-      foreignKey: 'oldPrinyalPersonalId'
-    });
-
-    schema.belongsTo(models.otdely, {
-      foreignKey: 'oldPrinyalOtdelId'
+    schema.belongsTo(models.posMaterialy, {
+      foreignKey: 'posMaterialId'
     });
   };
 

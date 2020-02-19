@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('otdely', {
+  const schema = sequelize.define('sMaterialAnimalType', {
 
     i18n: {
       type: DataTypes.STRING(300),
@@ -19,41 +19,22 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    departmentId: {
+    sMaterialAnimalClassId: {
       type: DataTypes.INT(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    sOtdeleniaId: {
-      type: DataTypes.INT(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    otdelData: {
-      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     }
 
   }, {
-    tableName: 'otdely',
-    modelName: 'otdely',
+    tableName: 's_material_animal_type',
+    modelName: 'sMaterialAnimalType',
     timestamps: true
   });
-
   schema.associate = (models) => {
     // associations can be defined here
-
-    schema.belongsTo(models.departments, {
-      foreignKey: 'departmentId'
+    schema.belongsTo(models.sMaterialAnimalClass, {
+      foreignKey: 'sMaterialAnimalClassId'
     });
-
-    schema.belongsTo(models.sOtdelenia, {
-      foreignKey: 'sOtdeleniaId'
-    });
-
   };
 
   return schema;

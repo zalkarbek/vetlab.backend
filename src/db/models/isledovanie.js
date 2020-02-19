@@ -1,13 +1,70 @@
 module.exports = (sequelize, DataTypes) => {
-  const isledovanie = sequelize.define('isledovanie', {
-    isledCount: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+  const schema = sequelize.define('isledovanie', {
+
+    vnytNapravlenieId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
     },
+
+    otdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    subOtdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    provelIsPersonalId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    isMaterialCount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null
+    },
+
     positiveCount: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      defaultValue: 0,
-      allowNull: true
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    metodId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    opPokazatelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    dateStart: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    dateFinish: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    status: {
+      type: DataTypes.VARCHAR(100),
+      allowNull: true,
+      defaultValue: null
     },
 
   }, {
@@ -15,18 +72,32 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'isledovanie',
     timestamps: true
   });
-  isledovanie.associate = (models) => {
+  schema.associate = (models) => {
     // associations can be defined here
-    isledovanie.belongsTo(models.posMaterialy, {
-      foreignKey: 'posMaterialId'
+    schema.belongsTo(models.vnytNapravlenie, {
+      foreignKey: 'vnytNapravlenieId'
     });
-    isledovanie.belongsTo(models.sMetodIsledovanie, {
-      foreignKey: 'sMetodId'
+
+    schema.belongsTo(models.otdely, {
+      foreignKey: 'otdelId'
     });
-    isledovanie.belongsTo(models.sMera, {
-      foreignKey: 'sMeraId'
+
+    schema.belongsTo(models.subOtdely, {
+      foreignKey: 'subOtdelId'
+    });
+
+    schema.belongsTo(models.personal, {
+      foreignKey: 'provelIsPersonalId'
+    });
+
+    schema.belongsTo(models.sMetodIsledovanie, {
+      foreignKey: 'metodId'
+    });
+
+    schema.belongsTo(models.sPokazateli, {
+      foreignKey: 'opPokazatelId'
     });
   };
 
-  return isledovanie;
+  return schema;
 };
