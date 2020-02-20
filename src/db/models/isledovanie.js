@@ -97,6 +97,11 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.sPokazateli, {
       foreignKey: 'opPokazatelId'
     });
+
+    schema.hasMany(models.protocol, {
+      foreignKey: 'isledovanieId'
+    });
+
   };
 
   return schema;

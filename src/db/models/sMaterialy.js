@@ -60,6 +60,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sMaterialId',
       sourceKey: 'id'
     });
+
+    schema.hasMany(models.vnytNapravlenie, {
+      foreignKey: 'posMaterialId'
+    });
+
   };
 
   return schema;

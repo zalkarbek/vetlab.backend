@@ -50,6 +50,19 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.sRegions, {
       foreignKey: 'sRegionId'
     });
+
+    schema.hasMany(models.otdely, {
+      foreignKey: 'departmentId'
+    });
+
+    schema.hasMany(models.napravlenie, {
+      foreignKey: 'departmentId'
+    });
+
+    schema.hasMany(models.vnytNapravlenie, {
+      foreignKey: 'departmentId'
+    });
+
   };
 
   return schema;

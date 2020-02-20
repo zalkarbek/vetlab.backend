@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
   });
   schema.associate = (models) => {
     // associations can be defined here
+    schema.hasMany(models.isledovanie, {
+      foreignKey: 'metodId'
+    });
   };
 
   return schema;

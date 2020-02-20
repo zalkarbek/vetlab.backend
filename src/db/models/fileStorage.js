@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
 
+    schema.hasMany(models.personal, {
+      foreignKey: 'imgFileId'
+    });
+
   };
 
   return schema;

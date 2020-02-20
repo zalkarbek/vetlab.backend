@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.sMaterialAnimalClass, {
       foreignKey: 'sMaterialAnimalClassId'
     });
+
+    schema.hasMany(models.sMaterialy, {
+      foreignKey: 'sMaterialAnimalType'
+    });
   };
 
   return schema;

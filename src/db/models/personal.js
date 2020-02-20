@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    imFileId: {
+    imgFileId: {
       type: DataTypes.INT(11).UNSIGNED,
       allowNull: true,
       defaultValue: null

@@ -1,7 +1,7 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-  const sRegions = sequelize.define('sRegions', {
+  const schema = sequelize.define('sRegions', {
 
     i18n: {
       type: DataTypes.STRING(255),
@@ -25,30 +25,29 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'sRegions',
     timestamps: true
   });
-  sRegions.associate = (models) => {
+  schema.associate = (models) => {
     // associations can be defined here
 
     schema.belongsTo(models.sRegionType, {
       foreignKey: 'sRegionTypeId'
     });
 
-    sRegions.hasMany(models.otdely, {
-      foreignKey: 'sRegionId',
-      sourceKey: 'id'
+    schema.hasMany(models.otdely, {
+      foreignKey: 'sRegionId'
     });
-    sRegions.hasMany(models.personal, {
-      foreignKey: 'sRegionId',
-      sourceKey: 'id'
+
+    schema.hasMany(models.personal, {
+      foreignKey: 'sRegionId'
     });
-    sRegions.hasMany(models.planRaboty, {
-      foreignKey: 'sRegionId',
-      sourceKey: 'id'
+
+    schema.hasMany(models.planRaboty, {
+      foreignKey: 'sRegionId'
     });
-    sRegions.hasMany(models.posMaterialy, {
-      foreignKey: 'sRegionId',
-      sourceKey: 'id'
+
+    schema.hasMany(models.posMaterialy, {
+      foreignKey: 'sRegionId'
     });
   };
 
-  return sRegions;
+  return schema;
 };

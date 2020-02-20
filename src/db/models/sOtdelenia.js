@@ -29,14 +29,17 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
+
     schema.hasMany(models.otdely, {
       foreignKey: 'sOtdeleniaId',
       sourceKey: 'id'
     });
+
     schema.hasMany(models.subOtdely, {
       foreignKey: 'sOtdeleniaId',
       sourceKey: 'id'
     });
+
   };
 
   return schema;

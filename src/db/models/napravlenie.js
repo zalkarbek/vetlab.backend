@@ -133,6 +133,11 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.otdely, {
       foreignKey: 'oldPrinyalOtdelId'
     });
+
+    schema.hasMany(models.posMaterialy, {
+      foreignKey: 'napravlenieId'
+    });
+
   };
 
   return schema;

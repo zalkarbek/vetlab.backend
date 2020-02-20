@@ -24,8 +24,12 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'sMera',
     timestamps: true
   });
+
   schema.associate = (models) => {
     // associations can be defined here
+    schema.hasMany(models.posMaterialy, {
+      foreignKey: 'sMeraId'
+    });
   };
 
   return schema;

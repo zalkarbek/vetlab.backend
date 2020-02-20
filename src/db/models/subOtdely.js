@@ -45,6 +45,14 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.sOtdelenia, {
       foreignKey: 'sOtdeleniaId'
     });
+
+    schema.hasMany(models.personal, {
+      foreignKey: 'subOtdelId'
+    });
+
+    schema.hasMany(models.isledovanie, {
+      foreignKey: 'subOtdelId'
+    });
   };
 
   return schema;
