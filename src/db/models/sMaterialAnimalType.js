@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     sMaterialAnimalClassId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     }
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.hasMany(models.sMaterialy, {
-      foreignKey: 'sMaterialAnimalType'
+      foreignKey: 'sMaterialAnimalTypeId'
     });
   };
 

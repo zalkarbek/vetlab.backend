@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     departmentId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     sOtdeleniaId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },

@@ -1,13 +1,16 @@
-const AuthEventHandler = require('./auth.events.handler');
+const handler = require('./auth.events.handler');
 
 class AuthEvents {
   binding(injection) {
-    this.handler = new AuthEventHandler(injection);
+    handler.binding(injection);
     this.handle(injection);
   }
 
   handle({ EVENTS, eventEmitter }) {
-    eventEmitter.on(EVENTS.USER_LOGGED_IN, this.handler.onUserLogged);
+    eventEmitter.on(EVENTS.USER_LOGGED_IN, handler.onUserLogged);
+    eventEmitter.on('test', (data) => {
+      console.log('Персонал подключился', data);
+    });
   }
 }
 

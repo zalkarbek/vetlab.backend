@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     status: {
-      type: DataTypes.VARCHAR(100),
+      type: DataTypes.STRING(100),
       allowNull: true,
       defaultValue: null
     },

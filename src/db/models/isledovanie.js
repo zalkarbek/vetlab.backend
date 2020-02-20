@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     status: {
-      type: DataTypes.VARCHAR(100),
+      type: DataTypes.STRING(100),
       allowNull: true,
       defaultValue: null
     },
@@ -94,7 +94,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'metodId'
     });
 
-    schema.belongsTo(models.sPokazateli, {
+    schema.belongsTo(models.sPokazately, {
       foreignKey: 'opPokazatelId'
     });
 

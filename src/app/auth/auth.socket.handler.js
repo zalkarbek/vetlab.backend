@@ -1,16 +1,21 @@
 const inject = new Map();
 
 class AuthSocketHandler {
-  constructor({ service, SOCKS, ...injection }) {
+  constructor() {}
+
+  binding({ service, SOCKS }) {
     inject
-      .set('inject', injection)
       .set('SOCKS', SOCKS)
       .set('service', service);
   }
 
-  init({ socket }) {
+  bindingLocalSocket({ socket }) {
     inject.set('socket', socket);
+
+    socket.on('disconnect', this.onDisconnect);
+    socket.on('disconnecting', this.onDisconnecting);
   }
+
   onDisconnect() {
     inject.get('socket').removeAllListeners();
   }
@@ -52,4 +57,4 @@ class AuthSocketHandler {
   }
 }
 
-module.exports = AuthSocketHandler;
+module.exports = new AuthSocketHandler();

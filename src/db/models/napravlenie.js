@@ -122,7 +122,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'perenapravilPersonalId'
     });
 
-    schema.belongsTo(models.opPokazately, {
+    schema.belongsTo(models.sPokazately, {
       foreignKey: 'opPokazatelId'
     });
 

@@ -1,9 +1,9 @@
 
-const AuthSocketHandler = require('./auth.socket.handler');
+const socketHandler = require('./auth.socket.handler');
 
 class AuthSocket {
   binding({ SOCKS, ...injection }) {
-    this.authSocketHandler = new AuthSocketHandler({ SOCKS, ...injection });
+    socketHandler.binding({ SOCKS, ...injection });
     this.handle({ SOCKS, ...injection });
     this.SOCKS = SOCKS;
   }
@@ -12,9 +12,10 @@ class AuthSocket {
   }
   onConnect(socket) {
     const { EVENTS } = this.SOCKS;
-    this.authSocketHandler.init({ socket });
+    socketHandler.bindingLocalSocket({ socket });
+
     socket.emit(EVENTS.GUEST_CLIENT_CONNECTED, { message: 'Welcome Guest' });
-    socket.on(EVENTS.GUEST_SERVER_LOGIN, this.authSocketHandler.onAuthenticate);
+    socket.on(EVENTS.GUEST_SERVER_LOGIN, socketHandler.onAuthenticate);
   }
 }
 

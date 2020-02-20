@@ -24,43 +24,43 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     imgFileId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     addressLiveSRegionId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     addressBirthSRegionId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     userId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     sDoljnostId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     otdelId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
     subOtdelId: {
-      type: DataTypes.INT(11).UNSIGNED,
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },

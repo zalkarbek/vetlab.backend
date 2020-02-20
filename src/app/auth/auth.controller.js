@@ -1,7 +1,6 @@
 
 const { Controller } = require('../controller');
 const authService = require('../../service/authService');
-// const personalService = require('../../service/personalService');
 
 class AuthController extends Controller {
   constructor() {
@@ -10,7 +9,14 @@ class AuthController extends Controller {
 
   // Авторизация пользователей
   async userAuthenticate(req, res) {
+    const EVENTS = Controller.getInject('EVENTS');
+    const eventEmitter = Controller.getInject('eventEmitter');
+    const socketServer = Controller.getInject('socketServer');
+    console.log(socketServer);
+
     const { email, password } = req.body;
+    eventEmitter.emit('test', { email, password });
+
     const user = await authService.userAuthenticate({ email, password });
     if (!user) {
       return res.json({

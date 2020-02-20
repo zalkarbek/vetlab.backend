@@ -2,12 +2,12 @@
 const authEvents = require('./auth/auth.events');
 
 class Emitter {
-  init(injection) {
+  binding(injection) {
     authEvents(injection);
   }
 }
 const emitter = new Emitter();
 
 module.exports = (injection) => {
-  emitter.init(injection);
+  emitter.binding(injection);
 };
