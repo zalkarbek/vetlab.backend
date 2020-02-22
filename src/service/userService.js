@@ -3,18 +3,20 @@ const { Service } = require('./service');
 class UserService extends Service {
 
   async getUserByEmail(email, options) {
-    return this.db.user.findOne({
+    const db = Service.db;
+    return db.user.findOne({
       where: { email },
       ...options
     });
   }
 
   async getUserByEmailWithRole(email, options) {
-    return this.db.user.findOne({
+    const db = Service.db;
+    return db.user.findOne({
       where: { email },
       include: [
         {
-          model: this.db.roles,
+          model: db.roles,
           attributes: ['role_i18n', 'role_name', 'role_key', 'active', 'priority'],
           where: { active: 1 }
         }
@@ -24,21 +26,25 @@ class UserService extends Service {
   }
 
   async getUserById(id, options) {
-    return this.db.user.findByPk(id, { ...options });
+    const db = Service.db;
+    return db.user.findByPk(id, { ...options });
   }
 
   async getUserRoles(options) {
-    return this.db.roles.findAll(options);
+    const db = Service.db;
+    return db.roles.findAll(options);
   }
 
   async checkAccessRole(userRoles, checkRoles) {
+    const db = Service.db;
+    const Op = db.Sequelize.Op;
     if(userRoles.length === 0) return 0;
     let accessCount = 0;
     const maxRole = this._.maxBy(userRoles, 'priority');
     const roles = await this.getUserRoles({
       where: {
         role_key: {
-          [this.Op.in]: checkRoles
+          [Op.in]: checkRoles
         }
       }
     });

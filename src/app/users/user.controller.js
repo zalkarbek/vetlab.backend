@@ -1,10 +1,10 @@
 
 const { Controller } = require('../controller');
-const userService = require('../../service/userService');
 
 class UserController extends Controller {
 
   async getUserProfile(req, res) {
+    const userService = Controller.getInject('service').getService('user');
     const { email } = req.payload;
     const user = await userService.getUserByEmail(email, {
       attributes: { exclude: ['password', 'remember_token'] }

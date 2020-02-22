@@ -20,7 +20,7 @@ class TokenGenerator {
   }
   jwtVerify(token) {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, publicKey, async (err, payload) => {
+      jwt.verify(token, publicKey, jwtConfig, async (err, payload) => {
         if(err) reject(err);
         resolve(payload);
       });

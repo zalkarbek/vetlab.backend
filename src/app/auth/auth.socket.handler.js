@@ -1,17 +1,13 @@
+const { Handler } = require('../handler');
 const inject = new Map();
 
-class AuthSocketHandler {
-  constructor() {}
-
-  binding({ service, SOCKS }) {
-    inject
-      .set('SOCKS', SOCKS)
-      .set('service', service);
+class AuthSocketHandler extends Handler {
+  constructor() {
+    super();
   }
 
   bindingLocalSocket({ socket }) {
     inject.set('socket', socket);
-
     socket.on('disconnect', this.onDisconnect);
     socket.on('disconnecting', this.onDisconnecting);
   }
@@ -24,14 +20,14 @@ class AuthSocketHandler {
   }
 
   async onAuthenticate(data) {
-    const authService = inject.get('service').getService('auth');
-
-    const { EVENTS } = inject.get('SOCKS');
+    const authService = Handler.getInject('service').getService('auth');
+    const { EVENTS } = Handler.get('SOCKS');
     const socket = inject.get('socket');
 
     const email = data.email || '';
     const password = data.password || '';
     const user = await authService.userAuthenticate({ email, password });
+
     if (!user) {
       socket.emit(EVENTS.GUEST_CLIENT_LOGIN, {
         user: null,
@@ -41,7 +37,6 @@ class AuthSocketHandler {
       return ;
     }
     const token = await authService.userGetToken(user);
-
     socket.emit(EVENTS.GUEST_CLIENT_LOGIN, {
       error: false,
       message: 'Authorization success',

@@ -1,16 +1,25 @@
+const socketHandler = require('./user.socket.handler');
 
-const handler = require('./user.socket.handler');
-const SOCKET_DATA = require('../../data/socketData');
-const { USER } = SOCKET_DATA.EVENTS;
+const socket =  {
+  binding({ SOCKS, ...injection }) {
+    this.handle({ SOCKS, ...injection });
+    this.SOCKS = SOCKS;
+  },
+  handle({ socketIO }) {
+    socketIO.on('connect', this.onConnect);
+  },
 
-module.exports = ({ userIO }) => {
-  userIO.on('connect', (socket) => {
-
+  onConnect(socket) {
+    const { EVENTS } = this.SOCKS;
+    socketHandler.bindingLocalSocket({ socket });
     if(socket.payload && socket.payload.userId && socket.payload.login) {
-      // eslint-disable-next-line no-unused-vars
       const { tokenId, ...payload } = socket.payload;
-      socket.emit(USER.USER_CLIENT_CONNECTED, payload);
+      socket.emit(EVENTS.USER_CLIENT_CONNECTED, payload);
     }
-    socket.on(USER.USER_SERVER_GET_PROFILE, handler.onGet({ socket }, USER.USER_CLIENT_GET_PROFILE));
-  });
+    socket.on(EVENTS.USER_SERVER_GET_PROFILE, socketHandler.onGetProfile);
+  }
+};
+
+module.exports = (injection) => {
+  socket.binding(injection);
 };

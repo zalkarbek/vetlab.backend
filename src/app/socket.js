@@ -3,7 +3,7 @@ const authSocket = require('./auth/auth.socket');
 const socketTokenVerify = require('../middleware/socketTokenVerify');
 
 class SocketEmitter {
-  init({ socketServer, SOCKS, ...injection}) {
+  binding({ socketServer, SOCKS, ...injection }) {
     // Пространство имен авторизованных пользователей
     const authIO = socketServer.of(SOCKS.NAMESPACES.AUTHORIZED);
     // Пространство имен гостей
@@ -13,13 +13,10 @@ class SocketEmitter {
     authIO.use(socketTokenVerify);
 
     // HANDLING
-    authSocket({ socketIO:guestIO, ...injection });
-    // userSocket({ socketIO:this.authIO, ...injection });
+    authSocket({ socketIO:guestIO, socketServer, SOCKS, ...injection });
+    // userSocket({ socketIO: authIO, socketServer, SOCKS, ...injection });
   }
 }
 
-const socketEmitter = new SocketEmitter();
+module.exports = new SocketEmitter();
 
-module.exports = (injection) => {
-  socketEmitter.init(injection);
-};

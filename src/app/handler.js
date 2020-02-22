@@ -1,9 +1,9 @@
 const { Kernel } = require('./kernel');
 
-class Controller extends Kernel {
+class Handler extends Kernel {
   constructor() {
     super();
   }
 }
 
-module.exports.Controller = Controller;
+module.exports.Handler = Handler;

@@ -1,13 +1,16 @@
 const tokenGenerator = require('../helpers/token-generator');
-const db = require('../db/models/index');
 const lodash = require('lodash');
+const { Kernel } = require('../app/kernel');
 
-class Service {
+class Service extends Kernel {
   constructor() {
-    this.db = db;
-    this.Op = db.Sequelize.Op;
+    super();
     this.tokenGenerator = tokenGenerator;
     this._ = lodash;
+  }
+
+  static bind({ db }) {
+    this.db = db;
   }
 }
 

@@ -1,17 +1,24 @@
+const { Handler } = require('../handler');
+const inject = new Map();
 
-const db = require('../../db/models/index');
+class UserSocketHandler extends Handler {
 
-module.exports = {
+  bindingLocalSocket({ socket }) {
+    inject.set('socket', socket);
+    socket.on('disconnect', this.onDisconnect);
+    socket.on('disconnecting', this.onDisconnecting);
+  }
 
-  onGet({ socket }, clientEvent) {
-    return async () => {
-      const user = await db.User.findOne({
-        where: {
-          email: socket.payload.email
-        }
-      });
-      socket.emit(clientEvent, { user });
-    };
-  },
+  onDisconnect() {
+    inject.get('socket').removeAllListeners();
+  }
+  onDisconnecting() {
+    inject.get('socket').removeAllListeners();
+  }
 
-};
+  async onGetProfile() {
+    return { name: 'Zalkarbek' };
+  }
+}
+
+module.exports = new UserSocketHandler();

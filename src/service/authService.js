@@ -4,8 +4,13 @@ const crypter = require('../helpers/crypter');
 
 class AuthService extends Service {
 
+  constructor() {
+    super();
+  }
+
   async userExists({ email, name }) {
-    return this.db.user.findOne({
+    const db = Service.getInject('db');
+    return db.user.findOne({
       where: {
         [this.Op.or]: [
           {
@@ -20,13 +25,14 @@ class AuthService extends Service {
   }
 
   async userAuthenticate({ email, password }) {
-    const user = await this.db.user.findOne({
+    const db = Service.getInject('db');
+    const user = await db.user.findOne({
       where: {
         email
       },
       include: [
         {
-          model: this.db.roles,
+          model: db.roles,
           attributes: ['role_i18n', 'role_name', 'role_key', 'active', 'priority'],
           where: { active: 1 }
         }

@@ -1,18 +1,13 @@
-const inject = new Map();
+const { Handler } = require('../handler');
 
-class AuthEventsHandler {
-  constructor() {}
-
-  binding({ EVENTS, service }) {
-    inject
-      .set('EVENTS', EVENTS)
-      .set('service', service);
+class AuthEventsHandler extends Handler {
+  constructor() {
+    super();
   }
 
   onUserLogged() {
     console.log('user logged');
   }
-
 }
 
 module.exports = new AuthEventsHandler();
