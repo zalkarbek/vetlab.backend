@@ -10,7 +10,6 @@ module.exports = async (req, res, next) => {
   }
   token = token || req.query.token || req.body.token || '';
 
-
   if(token) {
     try {
       const payload = await tokenGenerator.jwtVerify(token);
