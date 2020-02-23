@@ -8,6 +8,7 @@ const pathResolve = require('./pathResolve');
 
 const routes = require('./src/app/routes');
 const dispatcher = require('./src/app/dispatcher');
+const db = require('./src/db/models');
 
 const app = express();
 const port = Number(process.env.SERVER_HTTPS_PORT) || 3000;
@@ -87,4 +88,5 @@ app.use(errorHandler);
 app.on('error', onError);
 
 module.exports.app = app;
+module.exports.db = db;
 module.exports.dispatcher = dispatcher;

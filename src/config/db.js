@@ -2,7 +2,7 @@ module.exports = {
   'development': {
     'username': 'admin',
     'password': '1',
-    'database': 'vet',
+    'database': 'vetdb',
     'host': '127.0.0.1',
     'port': '3306',
     'dialect': 'mysql'

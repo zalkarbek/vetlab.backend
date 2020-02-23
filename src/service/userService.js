@@ -3,7 +3,8 @@ const { Service } = require('./service');
 class UserService extends Service {
 
   async getUserByEmail(email, options) {
-    const db = Service.db;
+    const db = Service.getInject('db');
+
     return db.user.findOne({
       where: { email },
       ...options
@@ -11,7 +12,8 @@ class UserService extends Service {
   }
 
   async getUserByEmailWithRole(email, options) {
-    const db = Service.db;
+    const db = Service.getInject('db');
+
     return db.user.findOne({
       where: { email },
       include: [
@@ -26,7 +28,7 @@ class UserService extends Service {
   }
 
   async getUserById(id, options) {
-    const db = Service.db;
+    const db = Service.getInject('db');
     return db.user.findByPk(id, { ...options });
   }
 
@@ -35,11 +37,15 @@ class UserService extends Service {
     return db.roles.findAll(options);
   }
 
+  /**
+   * Проверка входит ли роли пользователя к определенным ролям списке
+   * Возвращает колучиство сопадениий с ролями
+  */
   async checkAccessRole(userRoles, checkRoles) {
-    const db = Service.db;
+    const db = Service.getInject('db');
     const Op = db.Sequelize.Op;
+
     if(userRoles.length === 0) return 0;
-    let accessCount = 0;
     const maxRole = this._.maxBy(userRoles, 'priority');
     const roles = await this.getUserRoles({
       where: {
@@ -48,6 +54,8 @@ class UserService extends Service {
         }
       }
     });
+
+    let accessCount = 0;
     roles.forEach((role) => {
       if(role && Number(role.priority) <= Number(maxRole.priority)) {
         accessCount = accessCount + 1;
