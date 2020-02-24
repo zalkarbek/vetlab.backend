@@ -5,17 +5,20 @@ class RefService extends Service {
 
   constructor() {
     super();
-    this.allFields = [ 'i18n', 'shortName', 'name', 'createdAt', 'updatedAt', 'deletedAt' ];
-    this.publicFields = [ 'i18n', 'shortName', 'name' ];
+    this.mera_fields = [ 'i18n', 'shortName', 'name' ];
+  }
+
+  async getAllMera() {
+    return db.sMera.findAll();
   }
 
   async createMera(data) {
-    return db.sMera.create(data, { fields: [ 'i18n', 'shortName', 'name' ] });
+    return db.sMera.create(data, { fields: this.mera_fields });
   }
 
   async updateMera(data) {
     const unit = await db.sMera.findByPk(data.id);
-    return unit.update(data, { fields: [ 'i18n', 'shortName', 'name' ] });
+    return unit.update(data, { fields: this.mera_fields });
   }
 
   async destroyMera({ id }) {
