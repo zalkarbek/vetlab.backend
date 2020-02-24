@@ -5,4 +5,5 @@ class Events {
     authEvents(injection);
   }
 }
+
 module.exports = new Events();

@@ -1,10 +1,9 @@
-const { Service } = require('./service');
+const Service = require('./service');
+const db = Service.getInject('db');
 
 class UserService extends Service {
 
   async getUserByEmail(email, options) {
-    const db = Service.getInject('db');
-
     return db.user.findOne({
       where: { email },
       ...options
@@ -12,8 +11,6 @@ class UserService extends Service {
   }
 
   async getUserByEmailWithRole(email, options) {
-    const db = Service.getInject('db');
-
     return db.user.findOne({
       where: { email },
       include: [
@@ -28,12 +25,10 @@ class UserService extends Service {
   }
 
   async getUserById(id, options) {
-    const db = Service.getInject('db');
     return db.user.findByPk(id, { ...options });
   }
 
   async getUserRoles(options) {
-    const db = Service.db;
     return db.roles.findAll(options);
   }
 
@@ -42,7 +37,6 @@ class UserService extends Service {
    * Возвращает колучиство сопадениий с ролями
   */
   async checkAccessRole(userRoles, checkRoles) {
-    const db = Service.getInject('db');
     const Op = db.Sequelize.Op;
 
     if(userRoles.length === 0) return 0;
@@ -63,8 +57,6 @@ class UserService extends Service {
     });
     return accessCount;
   }
-
 }
 
 module.exports = new UserService();
-module.exports.UserService = UserService;

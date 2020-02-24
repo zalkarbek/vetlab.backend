@@ -1,7 +1,5 @@
-const { Handler } = require('../handler');
-const inject = new Map();
 
-class UserSocketHandler extends Handler {
+class UserSocketHandler {
 
   bindingLocalSocket({ socket }) {
     inject.set('socket', socket);

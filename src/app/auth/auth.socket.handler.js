@@ -1,11 +1,9 @@
-const { Handler } = require('../handler');
+const Container = require('../../container');
 const inject = new Map();
+const authService = Container.getInject('service').getService('auth');
+const { EVENTS } = Container.getInject('SOCKS');
 
-class AuthSocketHandler extends Handler {
-  constructor() {
-    super();
-  }
-
+class AuthSocketHandler {
   bindingLocalSocket({ socket }) {
     inject.set('socket', socket);
     socket.on('disconnect', this.onDisconnect);
@@ -15,15 +13,13 @@ class AuthSocketHandler extends Handler {
   onDisconnect() {
     inject.get('socket').removeAllListeners();
   }
+
   onDisconnecting() {
     inject.get('socket').removeAllListeners();
   }
 
   async onAuthenticate(data) {
-    const authService = Handler.getInject('service').getService('auth');
-    const { EVENTS } = Handler.get('SOCKS');
     const socket = inject.get('socket');
-
     const email = data.email || '';
     const password = data.password || '';
     const user = await authService.userAuthenticate({ email, password });

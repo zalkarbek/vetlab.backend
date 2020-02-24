@@ -1,17 +1,14 @@
 
-const { Controller } = require('../controller');
-const personalService = require('../../service/personalService');
+const Controller = require('../controller');
+const personalService = Controller.getService('personal');
 
 class PersonalController extends Controller {
+  async getPersonalProfile(req, res) {
+    const { userId } = req.payload;
+    const personal = await personalService.getPersonalByUserId(userId);
 
-  async create(req, res) {
-    const newPersonal = req.personal;
-  }
-
-  async update(req, res) {
-
+    return res.json(personal);
   }
 }
 
 module.exports = new PersonalController();
-module.exports.PersonalController = PersonalController;

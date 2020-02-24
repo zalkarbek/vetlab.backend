@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
   schema.associate = (models) => {
     // associations can be defined here
     schema.belongsTo(models.fileStorage, {
-      foreignKey: 'imFileId'
+      foreignKey: 'imgFileId'
     });
 
     schema.belongsTo(models.sRegions, {
@@ -88,10 +88,6 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.user, {
       foreignKey: 'userId'
-    });
-
-    schema.belongsTo(models.sRegions, {
-      foreignKey: 'sRegionId'
     });
 
     schema.belongsTo(models.sDoljnosti, {

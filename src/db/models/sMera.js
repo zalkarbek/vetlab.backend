@@ -4,19 +4,28 @@ module.exports = (sequelize, DataTypes) => {
     i18n: {
       type: DataTypes.STRING(300),
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('i18n', val.toLowerCase());
+      }
     },
 
     shortName: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('shortName', val.toLowerCase());
+      }
     },
 
     name: {
       type: DataTypes.STRING(300),
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('name', val.toLowerCase());
+      }
     },
 
   }, {

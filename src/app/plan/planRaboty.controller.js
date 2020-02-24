@@ -1,5 +1,5 @@
 
-const { Controller } = require('../controller');
+const Controller = require('../controller');
 
 class PlanRabotyController extends Controller {
 
@@ -11,4 +11,3 @@ class PlanRabotyController extends Controller {
 }
 
 module.exports = new PlanRabotyController();
-module.exports.PlanRabotyController = PlanRabotyController;

@@ -1,7 +1,7 @@
-
+const Controller = require('../controller');
 const socketEvents = require('../../data/socketData');
 
-class OptController {
+class OptController extends Controller {
   async getSocketEvents(req, res) {
     return res.json({
       error: false,
@@ -11,4 +11,3 @@ class OptController {
 }
 
 module.exports = new OptController();
-module.exports.OptController = OptController;

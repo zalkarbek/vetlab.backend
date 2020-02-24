@@ -14,4 +14,3 @@ class Crypter {
 }
 
 module.exports = new Crypter();
-module.exports.Crypter = Crypter;

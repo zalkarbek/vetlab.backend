@@ -1,9 +1,13 @@
-const { Kernel } = require('./kernel');
+const Container = require('../container');
 
-class Controller extends Kernel {
-  constructor() {
-    super();
+class Controller {
+  static getService(name) {
+    return Container.getInject('service').getService(name);
+  }
+
+  static getInject(name) {
+    return Container.getInject(name);
   }
 }
 
-module.exports.Controller = Controller;
+module.exports = Controller;

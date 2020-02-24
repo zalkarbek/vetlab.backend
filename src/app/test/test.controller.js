@@ -5,9 +5,6 @@ class TestController {
       status: 'OK'
     });
   }
-
-  
 }
 
 module.exports = new TestController();
-module.exports.TestController = TestController;

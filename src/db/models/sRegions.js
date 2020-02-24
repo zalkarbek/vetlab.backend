@@ -36,10 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sRegionId'
     });
 
-    schema.hasMany(models.personal, {
-      foreignKey: 'sRegionId'
-    });
-
     schema.hasMany(models.planRaboty, {
       foreignKey: 'sRegionId'
     });

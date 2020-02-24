@@ -1,6 +1,7 @@
 
-const { Service } = require('./service');
+const Service = require('./service');
 const crypter = require('../helpers/crypter');
+const db = Service.getInject('db');
 
 class AuthService extends Service {
 
@@ -9,7 +10,6 @@ class AuthService extends Service {
   }
 
   async userExists({ email, name }) {
-    const db = Service.getInject('db');
     return db.user.findOne({
       where: {
         [this.Op.or]: [
@@ -25,7 +25,6 @@ class AuthService extends Service {
   }
 
   async userAuthenticate({ email, password }) {
-    const db = Service.getInject('db');
     const user = await db.user.findOne({
       where: {
         email
@@ -58,4 +57,3 @@ class AuthService extends Service {
 }
 
 module.exports = new AuthService();
-module.exports.AuthService = AuthService;

@@ -1,10 +1,9 @@
 
-const { Controller } = require('../controller');
+const Controller = require('../controller');
+const userService = Controller.getService('user');
 
 class UserController extends Controller {
-
   async getUserProfile(req, res) {
-    const userService = Controller.getInject('service').getService('user');
     const { email } = req.payload;
     const user = await userService.getUserByEmail(email, {
       attributes: { exclude: ['password', 'remember_token'] }
@@ -18,4 +17,3 @@ class UserController extends Controller {
 }
 
 module.exports = new UserController();
-module.exports.UserController = UserController;

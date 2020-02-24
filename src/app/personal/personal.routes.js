@@ -4,6 +4,11 @@ const restTokenVerify = require('../../middleware/restTokenVerify');
 const restRoleVerify = require('../../middleware/restRoleVerify');
 
 module.exports = ({ routes }) => {
-  routes.post('/v1/personal/create', restTokenVerify, restRoleVerify(['admin']), safeAsync(controller.create));
+  routes.post(
+    '/v1/personal/profile'
+    ,restTokenVerify
+    ,restRoleVerify(['admin'])
+    ,safeAsync(controller.getPersonalProfile)
+  );
   return routes;
 };

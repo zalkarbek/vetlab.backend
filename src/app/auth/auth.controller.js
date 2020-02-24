@@ -1,10 +1,9 @@
-const { Controller } = require('../controller');
+const Controller = require('../controller');
+const authService = Controller.getService('auth');
 
 class AuthController extends Controller {
   // Авторизация пользователей
   async userAuthenticate(req, res) {
-    const authService = Controller.getInject('service').getService('auth');
-
     const { email, password } = req.body;
     const user = await authService.userAuthenticate({ email, password });
     if (!user) {
@@ -30,4 +29,3 @@ class AuthController extends Controller {
 }
 
 module.exports = new AuthController();
-module.exports.AuthController = AuthController;

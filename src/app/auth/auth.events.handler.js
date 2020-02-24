@@ -1,6 +1,6 @@
-const { Handler } = require('../handler');
+const Container = require('../../container');
 
-class AuthEventsHandler extends Handler {
+class AuthEventsHandler extends Container {
   constructor() {
     super();
   }

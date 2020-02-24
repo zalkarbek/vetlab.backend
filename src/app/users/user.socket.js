@@ -5,6 +5,7 @@ const socket =  {
     this.handle({ SOCKS, ...injection });
     this.SOCKS = SOCKS;
   },
+
   handle({ socketIO }) {
     socketIO.on('connect', this.onConnect);
   },

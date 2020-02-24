@@ -2,12 +2,13 @@ const env = require('dotenv');
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const compression = require('compression');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const pathResolve = require('./pathResolve');
 
 const routes = require('./src/app/routes');
-const dispatcher = require('./src/app/dispatcher');
+const dispatcher = require('./src/dispatcher');
 const db = require('./src/db/models');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static(path.join(__dirname, '/public')));
