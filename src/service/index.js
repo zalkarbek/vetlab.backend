@@ -1,6 +1,8 @@
 const authService = require('./auth');
 const userService = require('./user');
 const personalService = require('./personal');
+const refService = require('./ref');
+const regionService = require('./region');
 
 class ServiceBinder {
   constructor() {
@@ -8,6 +10,8 @@ class ServiceBinder {
       auth: authService,
       user: userService,
       personal: personalService,
+      ref: refService,
+      region: regionService
     };
   }
 

@@ -1,6 +1,6 @@
-const tokenGenerator = require('../helpers/token-generator');
 const lodash = require('lodash');
-
+const tokenGenerator = require('../helpers/token-generator');
+const helpers = require('../helpers');
 const db = require('../db/models');
 const pathResolve = require( '../../pathResolve');
 const EVENTS = require('../data/eventData');
@@ -9,11 +9,13 @@ const USER_ROLES = require('../data/userRoleData');
 
 const injectMap = new Map();
 injectMap.set('inject', {
-  EVENTS
+  lodash
+  ,helpers
+  ,db
+  ,EVENTS
   ,SOCKS
   ,USER_ROLES
   ,pathResolve
-  ,db
 });
 
 class Service {
@@ -29,8 +31,8 @@ class Service {
     }
   }
 
-  static getService(name) {
-    return Service.getInject('service').getService(name);
+  static getHelper(name) {
+    return Service.getInject('helpers').getHelper(name);
   }
 }
 

@@ -2,27 +2,55 @@ const Controller = require('../controller');
 const refService = Controller.getService('ref');
 
 class MeraController extends Controller {
+
+  constructor() {
+    super();
+    this.modelName = 'sMera';
+    this.i18nUnitOne = 'unit.one';
+    this.i18nUnitMany = 'unit.many';
+  }
+
+  async id(req, res) {
+    const { id } = req.params;
+    const unit = await refService.getById(this.modelName, id);
+    return res.json(unit);
+  }
+
   async all(req, res) {
-    const units = await refService.getAllMera();
-    return res.json(units);
+    const regions = await refService.getAll(this.modelName);
+    res.json(regions);
   }
 
   async create(req, res) {
-    const data = req.data;
-    const unit = await refService.createMera(data);
-    return res.json(unit);
+    const data = req.body;
+    const created = await refService.create(this.modelName, data);
+
+    return res.json(rest.responseWith({
+      unit:  this.i18nUnitOne,
+      message: 'create.success.one',
+      data: created
+    }));
   }
 
   async update(req, res) {
-    const data = req.data;
-    const unit = await refService.updateMera(data);
-    return res.json(unit);
+    const data = req.body;
+    const updated = await refService.updateById(this.modelName, data);
+
+    return res.json(rest.responseWith({
+      unit: this.i18nUnitOne,
+      message: 'update.success.one',
+      data: updated
+    }));
   }
 
   async destroy(req, res) {
-    const { id } = req.data;
-    const unit = await refService.destroyMera({ id });
-    return res.json(unit);
+    const { id } = req.body;
+    const deleted = await refService.destroyById(this.modelName, id);
+    return res.json(rest.responseWith({
+      unit: this.i18nUnitOne,
+      message: 'destroy.success.one',
+      data: deleted
+    }));
   }
 }
 

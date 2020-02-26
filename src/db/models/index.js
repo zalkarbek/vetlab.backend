@@ -8,9 +8,11 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require('../../config/db')[env];
+const FIELDS = require('../const/fields');
+const QUERY = require('../const/queries');
 const db = {};
-
 let vetdb;
+
 if (config.use_env_variable) {
   vetdb = new Sequelize(process.env[config.use_env_variable], config);
 } else {
@@ -35,5 +37,7 @@ Object.keys(db).forEach(modelName => {
 
 db.vetdb = vetdb;
 db.Sequelize = Sequelize;
+db.FIELDS = FIELDS;
+db.QUERY = QUERY;
 
 module.exports = db;

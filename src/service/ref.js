@@ -2,28 +2,33 @@ const Service = require('./service');
 const db = Service.getInject('db');
 
 class RefService extends Service {
-
   constructor() {
     super();
-    this.mera_fields = [ 'i18n', 'shortName', 'name' ];
+  }
+  // ========================= REFERENCE ================================//
+  async getById(model, id, options) {
+    return db[model].findByPk(id, { ...options });
   }
 
-  async getAllMera() {
-    return db.sMera.findAll();
+  async getAll(model, options = {}) {
+    return db[model].findAll(options);
   }
 
-  async createMera(data) {
-    return db.sMera.create(data, { fields: this.mera_fields });
+  async create(model, data) {
+    return db[model].create(data);
   }
 
-  async updateMera(data) {
-    const unit = await db.sMera.findByPk(data.id);
-    return unit.update(data, { fields: this.mera_fields });
+  async updateById(model, { id, ...data }, options = {}) {
+    return db[model].update(data, {
+      where: { id },
+      ...options
+    });
   }
 
-  async destroyMera({ id }) {
-    const unit = await db.sMera.findByPk(id);
-    return unit.destroy({ force: true });
+  async destroyById(model, id) {
+    return db[model].destroy({
+      where: { id }
+    });
   }
 }
 

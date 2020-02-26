@@ -1,4 +1,4 @@
-const userSocket = require('./users/user.socket');
+const userSocket = require('./user/user.socket');
 const authSocket = require('./auth/auth.socket');
 const socketTokenVerify = require('../middleware/socketTokenVerify');
 const Container = require('../container');

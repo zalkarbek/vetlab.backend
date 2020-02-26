@@ -1,29 +1,97 @@
-
 const Controller = require('../controller');
 const regionService = Controller.getService('region');
+const rest = Controller.getHelper('rest');
 
 class RegionController extends Controller {
-  async all(req, res) {
-    const units = await refService.getAllMera();
-    return res.json(units);
+  constructor() {
+    super();
+    this.modelName = 'sRegion';
+    this.i18nUnitOne = 'region.one';
+    this.i18nUnitMany = 'region.many';
   }
 
-  async create(req, res) {
-    const data = req.data;
-    const unit = await refService.createMera(data);
-    return res.json(unit);
+  // ========================= REGIONS TYPE ================================//
+  async getRegionTypeById(req, res) {
+    const { id } = req.params;
+    const region = await regionService.getRegionTypeById(id);
+    return res.json(region);
   }
 
-  async update(req, res) {
-    const data = req.data;
-    const unit = await refService.updateMera(data);
-    return res.json(unit);
+  async getRegionTypes(req, res) {
+    const regions = await regionService.getAllRegionType();
+    res.json(regions);
   }
 
-  async destroy(req, res) {
-    const { id } = req.data;
-    const unit = await refService.destroyMera({ id });
-    return res.json(unit);
+  async createRegionType(req, res) {
+    const data = req.body;
+    const created = await regionService.createRegionType(data);
+    return res.json(rest.responseWith({
+      unit: 'region.type.one',
+      message: 'create.success.one',
+      data: created
+    }));
+  }
+
+  async updateRegionType(req, res) {
+    const data = req.body;
+    const updated = await regionService.updateRegionTypeById(data);
+    return res.json(rest.responseWith({
+      unit: 'region.type.one',
+      message: 'update.success.one',
+      data: updated
+    }));
+  }
+
+  async destroyRegionType(req, res) {
+    const { id } = req.body;
+    const deleted = await regionService.destroyRegionTypeById(id);
+    return res.json(rest.responseWith({
+      unit: 'region.type.one',
+      message: 'destroy.success.one',
+      data: deleted
+    }));
+  }
+
+  // ========================= REGIONS ================================//
+  async getRegionById(req, res) {
+    const { id } = req.params;
+    const region = await regionService.getRegionById(id);
+    return res.json(region);
+  }
+
+  async getRegions(req, res) {
+    const regions = await regionService.getAllRegions();
+    res.json(regions);
+  }
+
+  async createRegion(req, res) {
+    const data = req.body;
+    const region = await regionService.createRegion(data);
+    return res.json(rest.responseWith({
+      unit: 'region.one',
+      message: 'create.success.one',
+      data: region
+    }));
+  }
+
+  async updateRegion(req, res) {
+    const data = req.body;
+    const updated = await regionService.updateRegionById(data);
+    return res.json(rest.responseWith({
+      unit: 'region.one',
+      message: 'update.success.one',
+      data: updated
+    }));
+  }
+
+  async destroyRegion(req, res) {
+    const { id } = req.body;
+    const deleted = await regionService.destroyRegionById(id);
+    return res.json(rest.responseWith({
+      unit: 'region.one',
+      message: 'destroy.success.one',
+      data: deleted
+    }));
   }
 }
 
