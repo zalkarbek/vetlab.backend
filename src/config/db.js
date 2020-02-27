@@ -1,5 +1,5 @@
 module.exports = {
-  'development': {
+  development: {
     'username': process.env.DEV_DB_USERNAME,
     'password': process.env.DEV_DB_PASSWORD,
     'database': process.env.DEV_DB_NAME,
@@ -7,7 +7,7 @@ module.exports = {
     'port': process.env.DEV_DB_PORT,
     'dialect': process.env.DEV_DB_DIALECT,
   },
-  'test': {
+  test: {
     'username': 'root',
     'password': '1',
     'database': 'database_test',
@@ -15,7 +15,7 @@ module.exports = {
     'port': '3306',
     'dialect': 'mysql'
   },
-  'production': {
+  production: {
     'username': process.env.PROD_DB_USERNAME,
     'password': process.env.PROD_DB_PASSWORD,
     'database': process.env.PROD_DB_NAME,

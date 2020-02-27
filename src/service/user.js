@@ -1,5 +1,7 @@
 const Service = require('./service');
+const helpers = require('../helpers');
 const db = Service.getInject('db');
+const crypter = helpers.getHelper('crypter');
 
 class UserService extends Service {
 
@@ -48,8 +50,8 @@ class UserService extends Service {
         }
       }
     });
-
     let accessCount = 0;
+
     roles.forEach((role) => {
       if(role && Number(role.priority) <= Number(maxRole.priority)) {
         accessCount = accessCount + 1;
@@ -58,8 +60,16 @@ class UserService extends Service {
     return accessCount;
   }
 
-  createUser() {
+  async createUser({ name, email, password } = {}) {
+    const { password_hashed } = await crypter.hashPwd(password);
+    const newUser = db.user.build({
+      name,
+      email,
+      password: password_hashed
+    });
 
+    await newUser.save();
+    return newUser;
   }
 }
 
