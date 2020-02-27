@@ -1,5 +1,6 @@
 const Controller = require('../controller');
 const refService = Controller.getService('ref');
+const rest = Controller.getHelper('rest');
 
 class MaterialTypeController extends Controller {
 

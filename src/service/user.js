@@ -57,6 +57,10 @@ class UserService extends Service {
     });
     return accessCount;
   }
+
+  createUser() {
+
+  }
 }
 
 module.exports = new UserService();

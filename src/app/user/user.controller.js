@@ -1,6 +1,7 @@
 
 const Controller = require('../controller');
 const userService = Controller.getService('user');
+const rest = Controller.getHelper('rest');
 
 class UserController extends Controller {
   async getUserProfile(req, res) {
@@ -15,10 +16,21 @@ class UserController extends Controller {
     });
   }
 
-  createUser(req, res) {
+  async create(req, res) {
     const data = req.body;
+    const newUser = await userService.createUser(data);
 
   }
+
+  async update(req, res) {
+
+  }
+
+  async destroy(req, res) {
+
+  }
+
+
 }
 
 module.exports = new UserController();

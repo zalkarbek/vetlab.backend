@@ -2,6 +2,7 @@
 const Controller = require('../controller');
 const personalService = Controller.getService('personal');
 const refService = Controller.getService('ref');
+const rest = Controller.getHelper('rest');
 
 class PersonalController extends Controller {
   constructor() {
