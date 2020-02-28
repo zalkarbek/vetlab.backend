@@ -5,23 +5,27 @@ class RefService extends Service {
   constructor() {
     super();
   }
+
   // ========================= REFERENCE ================================//
-  async getById(model, id, options) {
-    return db[model].findByPk(id, { ...options });
+  async getById(model, id, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db[model].findByPk(id, { ...safeOptions });
   }
 
   async getAll(model, options = {}) {
-    return db[model].findAll(options);
+    const safeOptions = await this.safeOptions(options);
+    return db[model].findAll(safeOptions);
   }
 
-  async create(model, data) {
+  async create(model, data = {}) {
     return db[model].create(data);
   }
 
   async updateById(model, { id, ...data }, options = {}) {
+    const safeOptions = await this.safeOptions(options);
     return db[model].update(data, {
       where: { id },
-      ...options
+      ...safeOptions
     });
   }
 

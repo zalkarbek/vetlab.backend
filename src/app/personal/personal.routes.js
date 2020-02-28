@@ -14,7 +14,7 @@ module.exports = ({ routes }) => {
   routes.get('/v1/personal/all', safeAsync(controller.all));
   routes.get('/v1/personal/all/:id', safeAsync(controller.id));
   routes.post('/v1/personal/create', safeAsync(controller.create));
-  routes.post('/v1/personal/update', safeAsync(controller.update));
-  routes.post('/v1/personal/destroy', safeAsync(controller.destroy));
+  routes.put('/v1/personal/update', safeAsync(controller.update));
+  routes.delete('/v1/personal/destroy', safeAsync(controller.destroy));
   return routes;
 };

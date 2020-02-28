@@ -5,7 +5,7 @@ module.exports = ({ routes }) => {
   routes.get('/v1/material/all', safeAsync(controller.all));
   routes.get('/v1/material/all/:id', safeAsync(controller.id));
   routes.post('/v1/material/create', safeAsync(controller.create));
-  routes.post('/v1/material/update', safeAsync(controller.update));
-  routes.post('/v1/material/destroy', safeAsync(controller.destroy));
+  routes.put('/v1/material/update', safeAsync(controller.update));
+  routes.delete('/v1/material/destroy', safeAsync(controller.destroy));
   return routes;
 };

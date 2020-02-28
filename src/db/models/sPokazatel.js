@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'opPokazatelId'
     });
 
-    schema.hasMany(models.posMaterialy, {
+    schema.hasMany(models.posMaterial, {
       foreignKey: 'opPokazatelId'
     });
 

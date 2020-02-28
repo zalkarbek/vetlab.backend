@@ -98,15 +98,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'napravlenieId'
     });
 
-    schema.belongsTo(models.sPokazately, {
+    schema.belongsTo(models.sPokazatel, {
       foreignKey: 'opPokazatelId'
     });
 
-    schema.belongsTo(models.sRegions, {
+    schema.belongsTo(models.sRegion, {
       foreignKey: 'mestoOtboraSRegionId'
     });
 
-    schema.belongsTo(models.sMaterialy, {
+    schema.belongsTo(models.sMaterial, {
       foreignKey: 'sMaterialId'
     });
 

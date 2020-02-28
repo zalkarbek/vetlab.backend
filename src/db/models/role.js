@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('roles', {
+  const schema = sequelize.define('role', {
 
     role_i18n: {
       type: DataTypes.STRING(255),
@@ -41,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {
     tableName: 'roles',
-    modelName: 'roles',
-    timestamps: false
+    modelName: 'role',
+    timestamps: true
   });
 
   schema.associate = (models) => {

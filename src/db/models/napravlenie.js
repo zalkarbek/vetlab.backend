@@ -102,7 +102,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'zapolnilPersonalId'
     });
 
-    schema.belongsTo(models.departments, {
+    schema.belongsTo(models.department, {
       foreignKey: 'zapolnilDepartmentId'
     });
 
@@ -110,11 +110,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'prinyalPersonalId'
     });
 
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.otdel, {
       foreignKey: 'prinyalOtdelId'
     });
 
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.otdel, {
       foreignKey: 'otdelId'
     });
 
@@ -122,7 +122,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'perenapravilPersonalId'
     });
 
-    schema.belongsTo(models.sPokazately, {
+    schema.belongsTo(models.sPokazatel, {
       foreignKey: 'opPokazatelId'
     });
 
@@ -130,11 +130,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'oldPrinyalPersonalId'
     });
 
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.otdel, {
       foreignKey: 'oldPrinyalOtdelId'
     });
 
-    schema.hasMany(models.posMaterialy, {
+    schema.hasMany(models.posMaterial, {
       foreignKey: 'napravlenieId'
     });
 

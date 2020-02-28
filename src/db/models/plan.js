@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   schema.associate = (models) => {
     // associations can be defined here
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.otdel, {
       foreignKey: 'otdelId'
     });
   };

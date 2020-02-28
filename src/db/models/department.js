@@ -47,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
-    schema.belongsTo(models.sRegions, {
+    schema.belongsTo(models.sRegion, {
       foreignKey: 'sRegionId'
     });
 
-    schema.hasMany(models.otdely, {
+    schema.hasMany(models.otdel, {
       foreignKey: 'departmentId'
     });
 

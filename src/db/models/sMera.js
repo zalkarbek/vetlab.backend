@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
-    schema.hasMany(models.posMaterialy, {
+    schema.hasMany(models.posMaterial, {
       foreignKey: 'sMeraId'
     });
   };

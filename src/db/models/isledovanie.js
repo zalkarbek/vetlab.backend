@@ -78,11 +78,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'vnytNapravlenieId'
     });
 
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.otdel, {
       foreignKey: 'otdelId'
     });
 
-    schema.belongsTo(models.subOtdely, {
+    schema.belongsTo(models.subOtdel, {
       foreignKey: 'subOtdelId'
     });
 
@@ -90,11 +90,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'provelIsPersonalId'
     });
 
-    schema.belongsTo(models.sMetodIsledovanie, {
+    schema.belongsTo(models.sMetod, {
       foreignKey: 'metodId'
     });
 
-    schema.belongsTo(models.sPokazately, {
+    schema.belongsTo(models.sPokazatel, {
       foreignKey: 'opPokazatelId'
     });
 

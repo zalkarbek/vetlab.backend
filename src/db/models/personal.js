@@ -78,11 +78,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'imgFileId'
     });
 
-    schema.belongsTo(models.sRegions, {
+    schema.belongsTo(models.sRegion, {
       foreignKey: 'addressLiveSRegionId'
     });
 
-    schema.belongsTo(models.sRegions, {
+    schema.belongsTo(models.sRegion, {
       foreignKey: 'addressBirthSRegionId'
     });
 
@@ -90,15 +90,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId'
     });
 
-    schema.belongsTo(models.sDoljnosti, {
+    schema.belongsTo(models.sDoljnost, {
       foreignKey: 'sDoljnostId'
     });
 
-    schema.belongsTo(models.otdely, {
+    schema.belongsTo(models.otdel, {
       foreignKey: 'otdelId'
     });
 
-    schema.belongsTo(models.subOtdely, {
+    schema.belongsTo(models.subOtdel, {
       foreignKey: 'subOtdelId'
     });
 

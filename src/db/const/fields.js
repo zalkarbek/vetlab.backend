@@ -28,10 +28,13 @@ const FIELDS = {
     ,'priority'
   ],
 
-  USER: [
+  USER_PUBLIC: [
     'name'
     ,'email'
-    ,'password'
+  ],
+
+  USER_PRIVATE: [
+    'password'
     ,'tokenId'
     ,'active'
     ,'lock'

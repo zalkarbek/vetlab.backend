@@ -32,15 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sRegionTypeId'
     });
 
-    schema.hasMany(models.otdely, {
+    schema.hasMany(models.otdel, {
       foreignKey: 'sRegionId'
     });
 
-    schema.hasMany(models.planRaboty, {
+    schema.hasMany(models.plan, {
       foreignKey: 'sRegionId'
     });
 
-    schema.hasMany(models.posMaterialy, {
+    schema.hasMany(models.posMaterial, {
       foreignKey: 'sRegionId'
     });
   };

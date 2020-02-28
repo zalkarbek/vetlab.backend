@@ -4,20 +4,68 @@ const db = Service.getInject('db');
 const crypter = helpers.getHelper('crypter');
 
 class UserService extends Service {
+  constructor() {
+    super();
+    this.user_public_fields = db.FIELDS.USER_PUBLIC;
+  }
 
-  async getUserByEmail(email, options) {
+  async _findByPk(id) {
+    return db.user.findByPk(id);
+  }
+
+  // при получении пользователей удаляем поля password и tokenId для скрытья полей
+  async safeAttributes({ attributes = {}, ...otherOptions }) {
+    let { exclude = ['password', 'tokenId'], include = [] }  = attributes;
+    let filteredAttributes = {
+      exclude
+    };
+
+    if(include.length >= 1) {
+      include = include.filter(value => value !== 'password' && value !== 'tokenId');
+      filteredAttributes = {
+        include
+      };
+    }
+
+    if (exclude.length >= 1) {
+      filteredAttributes = {
+        exclude: [ 'password', 'tokenId', ...exclude ],
+      };
+    }
+
+    return { attributes: filteredAttributes, ...otherOptions };
+  }
+
+  // при обновлении пользователя убираем поле password и tokeId для безопасности
+  safeFields({ fields = [], ...otherOptions }) {
+    const filtered = fields.filter(value => value !== 'password' && value !== 'tokenId');
+    return { fields: filtered, ...otherOptions };
+  }
+
+  async getUsers(options = {}) {
+    const filteredOptions = await this.safeAttributes(options);
+    return db.user.findAll(filteredOptions);
+  }
+
+  async getUserById(id, options = {}) {
+    const filteredOptions = await this.safeAttributes(options);
+    return db.user.findByPk(id, filteredOptions);
+  }
+
+  async getUserByEmail(email, options = {}) {
+    const filteredOptions = await this.safeAttributes(options);
     return db.user.findOne({
       where: { email },
-      ...options
+      ...filteredOptions
     });
   }
 
-  async getUserByEmailWithRole(email, options) {
+  async getUserByEmailWithRole(email, options = {}) {
     return db.user.findOne({
       where: { email },
       include: [
         {
-          model: db.roles,
+          model: db.role,
           attributes: ['role_i18n', 'role_name', 'role_key', 'active', 'priority'],
           where: { active: 1 }
         }
@@ -26,12 +74,8 @@ class UserService extends Service {
     });
   }
 
-  async getUserById(id, options) {
-    return db.user.findByPk(id, { ...options });
-  }
-
-  async getUserRoles(options) {
-    return db.roles.findAll(options);
+  async getRoles(options) {
+    return db.role.findAll(options);
   }
 
   /**
@@ -43,7 +87,7 @@ class UserService extends Service {
 
     if(userRoles.length === 0) return 0;
     const maxRole = this._.maxBy(userRoles, 'priority');
-    const roles = await this.getUserRoles({
+    const roles = await this.getRoles({
       where: {
         role_key: {
           [Op.in]: checkRoles
@@ -70,6 +114,40 @@ class UserService extends Service {
 
     await newUser.save();
     return newUser;
+  }
+
+  async updateUserById({ id, ...data }, options = {}) {
+    delete data.password;
+    delete data.tokenId;
+    const filteredOptions = this.safeFields(options);
+
+    return db.user.update(data, {
+      where: { id },
+      ...filteredOptions
+    });
+  }
+
+  async destroyUserById(id) {
+    return db.user.destroy({
+      where: { id }
+    });
+  }
+
+  async getRolesToUser(userId) {
+    const user = await this.getUserById(userId);
+    return user.getRoles();
+  }
+
+  async addRolesToUser(userId, roles) {
+    const user = await this.getUserById(userId);
+    if ( !user) return null;
+    return user.addRoles(roles);
+  }
+
+  async removeRolesToUser(userId, roles) {
+    const user = await this.getUserById(userId);
+    if (!user) return null;
+    return user.removeRoles(roles);
   }
 }
 

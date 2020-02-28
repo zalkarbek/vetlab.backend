@@ -7,8 +7,9 @@ const port = Number(process.env.SERVER_PORT);
 db
   .vetdb
   .authenticate()
-  .then(() => {
+  .then(async () => {
     console.log('Connection has been database established successfully.');
+    // await db.vetdb.sync();
 
     httpServer.listen({ port }, () => {
       console.log('Server starting');

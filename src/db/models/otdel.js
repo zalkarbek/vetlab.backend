@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
   schema.associate = (models) => {
     // associations can be defined here
 
-    schema.belongsTo(models.departments, {
+    schema.belongsTo(models.department, {
       foreignKey: 'departmentId'
     });
 
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sOtdeleniaId'
     });
 
-    schema.hasMany(models.subOtdely, {
+    schema.hasMany(models.subOtdel, {
       foreignKey: 'otdelId'
     });
 
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'otdelId'
     });
 
-    schema.hasMany(models.planRaboty, {
+    schema.hasMany(models.plan, {
       foreignKey: 'otdelId'
     });
 
