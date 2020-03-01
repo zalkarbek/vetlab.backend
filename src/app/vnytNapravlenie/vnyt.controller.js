@@ -9,6 +9,11 @@ class VnytController extends Controller {
     this.modelName = 'vnytNapravlenie';
     this.i18nUnitOne = 'vnytNapravlenie.one';
     this.i18nUnitMany = 'vnytNapravlenie.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

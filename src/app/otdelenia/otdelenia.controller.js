@@ -9,6 +9,11 @@ class OtdeleniaController extends Controller {
     this.modelName = 'sOtdelenia';
     this.i18nUnitOne = 'otdelenia.one';
     this.i18nUnitMany = 'otdelenia.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

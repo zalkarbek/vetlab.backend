@@ -14,7 +14,7 @@ class UserService extends Service {
   }
 
   // при получении пользователей удаляем поля password и tokenId для скрытья полей
-  async safeAttributes({ attributes = {}, ...otherOptions }) {
+  async safeAttributes({ attributes = {}, ...otherOptions } = {}) {
     let { exclude = ['password', 'tokenId'], include = [] }  = attributes;
     let filteredAttributes = {
       exclude

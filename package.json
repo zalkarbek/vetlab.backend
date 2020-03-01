@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon index.js --exec babel-node --name=vetapp",
+    "dev": "cross-env NODE_ENV=development nodemon index.js --name=vetapp",
     "prod": "cross-env NODE_ENV=production pm2 start index.js --name=vetapp",
     "monit": "cross-env NODE_ENV=production pm2 monit vetapp",
     "stop": "cross-env NODE_ENV=production pm2 stop vetapp",

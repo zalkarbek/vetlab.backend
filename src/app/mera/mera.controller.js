@@ -9,6 +9,11 @@ class MeraController extends Controller {
     this.modelName = 'sMera';
     this.i18nUnitOne = 'unit.one';
     this.i18nUnitMany = 'unit.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

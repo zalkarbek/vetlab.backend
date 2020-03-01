@@ -9,6 +9,11 @@ class MaterialController extends Controller {
     this.modelName = 'sMaterial';
     this.i18nUnitOne = 'material.one';
     this.i18nUnitMany = 'material.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

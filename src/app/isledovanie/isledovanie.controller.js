@@ -9,6 +9,11 @@ class IsledovanieController extends Controller {
     this.modelName = 'isledovanie';
     this.i18nUnitOne = 'isledovanie.one';
     this.i18nUnitMany = 'isledovanie.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

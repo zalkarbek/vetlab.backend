@@ -9,6 +9,11 @@ class BoleznController extends Controller {
     this.modelName = 'sBolezn';
     this.i18nUnitOne = 'bolezn.one';
     this.i18nUnitMany = 'bolezn.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

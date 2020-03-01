@@ -9,6 +9,11 @@ class DoljnostController extends Controller {
     this.modelName = 'sDoljnost';
     this.i18nUnitOne = 'doljnost.one';
     this.i18nUnitMany = 'doljnost.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

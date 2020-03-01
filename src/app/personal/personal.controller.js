@@ -10,6 +10,11 @@ class PersonalController extends Controller {
     this.modelName = 'personal';
     this.i18nUnitOne = 'personal.one';
     this.i18nUnitMany = 'personal.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async getPersonalProfile(req, res) {

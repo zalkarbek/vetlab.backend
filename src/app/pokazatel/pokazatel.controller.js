@@ -9,6 +9,11 @@ class PokazatelController extends Controller {
     this.modelName = 'sPokazatel';
     this.i18nUnitOne = 'pokazatel.one';
     this.i18nUnitMany = 'pokazatel.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

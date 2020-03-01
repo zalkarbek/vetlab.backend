@@ -9,6 +9,11 @@ class PlanController extends Controller {
     this.modelName = 'plan';
     this.i18nUnitOne = 'plan.one';
     this.i18nUnitMany = 'plan.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

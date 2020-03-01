@@ -9,6 +9,11 @@ class DepartmentController extends Controller {
     this.modelName = 'department';
     this.i18nUnitOne = 'department.one';
     this.i18nUnitMany = 'department.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

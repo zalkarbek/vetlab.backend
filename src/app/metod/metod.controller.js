@@ -9,6 +9,11 @@ class MetodController extends Controller {
     this.modelName = 'sMetod';
     this.i18nUnitOne = 'metod.one';
     this.i18nUnitMany = 'metod.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

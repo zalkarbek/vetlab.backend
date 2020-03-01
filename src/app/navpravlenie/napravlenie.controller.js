@@ -9,6 +9,11 @@ class NapravlenieController extends Controller {
     this.modelName = 'napravlenia';
     this.i18nUnitOne = 'napravlenia.one';
     this.i18nUnitMany = 'napravlenia.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {

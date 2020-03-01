@@ -3,13 +3,20 @@ const refService = Controller.getService('ref');
 const roleService = Controller.getService('role');
 const rest = Controller.getHelper('rest');
 
-class RolesController extends Controller {
 
+class RolesController extends Controller {
   constructor() {
     super();
     this.modelName = 'role';
-    this.i18nUnitOne = 'roles.one';
-    this.i18nUnitMany = 'roles.many';
+    this.i18nUnitOne = 'role.one';
+    this.i18nUnitMany = 'role.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
+    this.getUsers = this.getUsers.bind(this);
+    this.addUsers = this.addUsers.bind(this);
   }
 
   async id(req, res) {
@@ -19,8 +26,9 @@ class RolesController extends Controller {
   }
 
   async all(req, res) {
-    const roles = await refService.getAll(this.modelName);
-    res.json(roles);
+    const lists = await refService.getAll(this.modelName);
+    console.log('all');
+    res.json(lists);
   }
 
   async create(req, res) {

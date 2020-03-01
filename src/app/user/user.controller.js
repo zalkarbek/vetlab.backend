@@ -4,12 +4,11 @@ const userService = Controller.getService('user');
 const authService = Controller.getService('auth');
 const rest = Controller.getHelper('rest');
 
+const i18nUnitOne = 'user.one';
+
 class UserController extends Controller {
   constructor() {
     super();
-    this.modelName = 'user';
-    this.i18nUnitOne = 'user.one';
-    this.i18nUnitMany = 'user.many';
   }
 
   async getUserProfile(req, res) {
@@ -41,7 +40,7 @@ class UserController extends Controller {
     const token = await authService.userGetToken(user);
 
     return res.json(rest.responseWith({
-      unit:  this.i18nUnitOne,
+      unit: i18nUnitOne,
       message: 'create.success.one',
       data: {
         user,
@@ -56,7 +55,7 @@ class UserController extends Controller {
     const updated = await userService.updateUserById(data);
 
     return res.json(rest.responseWith({
-      unit: this.i18nUnitOne,
+      unit: i18nUnitOne,
       message: 'update.success.one',
       data: updated
     }));
@@ -67,7 +66,7 @@ class UserController extends Controller {
     const deleted = await userService.destroyUserById(id);
 
     return res.json(rest.responseWith({
-      unit: this.i18nUnitOne,
+      unit: i18nUnitOne,
       message: 'destroy.success.one',
       data: deleted
     }));

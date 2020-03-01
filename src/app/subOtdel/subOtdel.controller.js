@@ -9,6 +9,11 @@ class SubOtdelController extends Controller {
     this.modelName = 'subOtdel';
     this.i18nUnitOne = 'subOtdel.one';
     this.i18nUnitMany = 'subOtdel.many';
+    this.id = this.id.bind(this);
+    this.all = this.all.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.destroy = this.destroy.bind(this);
   }
 
   async id(req, res) {
