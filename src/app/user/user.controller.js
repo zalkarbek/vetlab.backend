@@ -90,7 +90,7 @@ class UserController extends Controller {
     }));
   }
 
-  async removeRolesToUser(req, res) {
+  async removeRoles(req, res) {
     const id = req.body.id || req.params.id;
     const roles = req.body.roles;
     const removed = await userService.removeRolesToUser(id, roles);

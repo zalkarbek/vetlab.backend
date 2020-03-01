@@ -1,12 +1,13 @@
 const Controller = require('../controller');
 const refService = Controller.getService('ref');
+const roleService = Controller.getService('role');
 const rest = Controller.getHelper('rest');
 
 class RolesController extends Controller {
 
   constructor() {
     super();
-    this.modelName = 'roles';
+    this.modelName = 'role';
     this.i18nUnitOne = 'roles.one';
     this.i18nUnitMany = 'roles.many';
   }
@@ -18,8 +19,8 @@ class RolesController extends Controller {
   }
 
   async all(req, res) {
-    const regions = await refService.getAll(this.modelName);
-    res.json(regions);
+    const roles = await refService.getAll(this.modelName);
+    res.json(roles);
   }
 
   async create(req, res) {
@@ -53,6 +54,24 @@ class RolesController extends Controller {
       data: deleted
     }));
   }
+
+  async getUsers(req, res) {
+    const id = req.body.id || req.params.id;
+    const users = await roleService.getUsersToRole(id);
+    return res.json(users);
+  }
+
+  async addUsers(req, res) {
+    const id = req.body.id || req.params.id;
+    const users = req.body.users;
+    const added = await roleService.addUsersToRole(id, users);
+    return res.json(rest.responseWith({
+      unit: 'users.many',
+      message: 'add.success.many',
+      data: added
+    }));
+  }
+
 }
 
 module.exports = new RolesController();

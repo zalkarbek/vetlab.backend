@@ -14,6 +14,7 @@ const socket =  {
     const { EVENTS } = this.SOCKS;
     socketHandler.bindingLocalSocket({ socket });
     if(socket.payload && socket.payload.userId && socket.payload.login) {
+      // eslint-disable-next-line no-unused-vars
       const { tokenId, ...payload } = socket.payload;
       socket.emit(EVENTS.USER_CLIENT_CONNECTED, payload);
     }

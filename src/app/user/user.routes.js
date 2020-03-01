@@ -20,7 +20,7 @@ module.exports = ({ routes }) => {
 
   routes.get('/v1/user/all/:id/roles/get', safeAsync(controller.getRoles));
   routes.post('/v1/user/all/:id/roles/add', safeAsync(controller.addRoles));
-  routes.delete('/v1/user/all/:id/roles/remove', safeAsync(controller.addRoles));
+  routes.delete('/v1/user/all/:id/roles/remove', safeAsync(controller.removeRoles));
 
   routes.post('/v1/user/create', safeAsync(controller.create));
   routes.put('/v1/user/update', safeAsync(controller.update));
