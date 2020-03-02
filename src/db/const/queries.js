@@ -1,4 +1,4 @@
-
+const FIELDS = require('./fields');
 
 const GET_REGION_BY_ID = (id) => {
   return {
@@ -34,9 +34,16 @@ const GET_ACTIVE_PROJECTS_LIKE = (status) => {
   };
 };
 
+const GET_USERS_WITH_ROLE = () => {
+  return {
+    Q: `SELECT ${FIELDS.USER_PUBLIC.join(', ')} FROM users`
+  };
+};
+
 module.exports = {
   GET_REGION_BY_ID,
   GET_ACTIVE_PROJECTS,
   GET_ACTIVE_PROJECTS_IN,
-  GET_ACTIVE_PROJECTS_LIKE
+  GET_ACTIVE_PROJECTS_LIKE,
+  GET_USERS_WITH_ROLE
 };

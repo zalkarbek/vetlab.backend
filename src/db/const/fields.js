@@ -114,6 +114,14 @@ const FIELDS = {
     ,'sOtdeleniaId'
   ],
 
+
+  PERSONAL_SHORT: [
+    'firstName'
+    ,'lastName'
+    ,'pol'
+    ,'imgFileId'
+  ],
+
   PERSONAL: [
     'firstName'
     ,'lastName'

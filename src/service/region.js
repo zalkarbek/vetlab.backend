@@ -15,7 +15,7 @@ class RegionService extends Service {
     return db.sRegionType.findByPk(id, { ...options });
   }
 
-  async getAllRegionType(options = {}) {
+  async getRegionTypes(options = {}) {
     return db.sRegionType.findAll(options);
   }
 
@@ -44,7 +44,7 @@ class RegionService extends Service {
     return db.sRegion.findByPk(id, { ...options });
   }
 
-  async getAllRegions(options) {
+  async getRegions(options) {
     return db.sRegion.findAll({
       ...options
     });

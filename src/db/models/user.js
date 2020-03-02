@@ -48,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'user_id',
       otherKey: 'role_id'
     });
+
+    schema.hasOne(models.personal, {
+      foreignKey: 'userId'
+    });
   };
 
   return schema;

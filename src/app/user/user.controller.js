@@ -24,8 +24,8 @@ class UserController extends Controller {
   }
 
   async all(req, res) {
-    const users = await userService.getUsers();
-    res.json(users);
+    const result = await userService.getUsers();
+    res.json(result);
   }
 
   async id(req, res) {
@@ -70,6 +70,23 @@ class UserController extends Controller {
       message: 'destroy.success.one',
       data: deleted
     }));
+  }
+
+  async getAllPaginate(req, res) {
+    const page = req.query.page || req.body.page || 1;
+    const pageSize = req.query.pageSize || req.body.pageSize || 10;
+    const result = await userService.getUsersPaginate({ page, pageSize });
+    res.json(result);
+  }
+
+  async getUsersWithRoles(req, res) {
+    const users = await userService.getUsersWithRoles();
+    res.json(users);
+  }
+
+  async getUsersWithPersonal(req, res) {
+    const users = await userService.getUsersWithPersonal();
+    res.json(users);
   }
 
   async getRoles(req, res) {

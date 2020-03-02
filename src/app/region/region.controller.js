@@ -18,7 +18,7 @@ class RegionController extends Controller {
   }
 
   async getRegionTypes(req, res) {
-    const regions = await regionService.getAllRegionType();
+    const regions = await regionService.getRegionTypes();
     res.json(regions);
   }
 
@@ -60,7 +60,7 @@ class RegionController extends Controller {
   }
 
   async getRegions(req, res) {
-    const regions = await regionService.getAllRegions();
+    const regions = await regionService.getRegions();
     res.json(regions);
   }
 

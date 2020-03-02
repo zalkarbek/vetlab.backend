@@ -2,10 +2,10 @@ const controller = require('./roles.controller');
 const safeAsync = require('../../middleware/async');
 
 module.exports = ({ routes }) => {
-  routes.get('/v1/roles/all', safeAsync(controller.all));
-  routes.get('/v1/roles/all/:id', safeAsync(controller.id));
-  routes.get('/v1/roles/all/:id/users/get', safeAsync(controller.getUsers));
-  routes.post('/v1/roles/all/:id/users/add', safeAsync(controller.addUsers));
+  routes.get('/v1/roles', safeAsync(controller.all));
+  routes.get('/v1/roles/:id', safeAsync(controller.id));
+  routes.get('/v1/roles/:id/users', safeAsync(controller.getUsers));
+  routes.post('/v1/roles/:id/users/add', safeAsync(controller.addUsers));
 
   routes.post('/v1/roles/create', safeAsync(controller.create));
   routes.put('/v1/roles/update', safeAsync(controller.update));

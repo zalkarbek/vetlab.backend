@@ -1,3 +1,3 @@
-const { EventEmitter } = require('../class/EventEmitter');
+const EventEmitter = require('../class/EventEmitter');
 
 module.exports = new EventEmitter();

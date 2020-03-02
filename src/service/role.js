@@ -1,5 +1,4 @@
 const Service = require('./service');
-const userService = require('./user');
 const db = Service.getInject('db');
 
 class RoleService extends Service {
@@ -9,14 +8,18 @@ class RoleService extends Service {
 
   // ========================= REFERENCE ================================//
 
+  async getRoles(options = {}) {
+    return db.role.findAll(options);
+  }
+
   async getRoleById(id, options = {}) {
     return db.role.findByPk(id, options);
   }
 
   async getUsersToRole(roleId) {
-    const safeAttributesUser = await userService.safeAttributes();
+    const safeAttributesUser = await this.safeAttributesForUser();
     const role = await this.getRoleById(roleId);
-    return role.getUsers(safeAttributesUser);
+    return role.getUsers({ ...safeAttributesUser });
   }
 
   async addUsersToRole(roleId, users) {

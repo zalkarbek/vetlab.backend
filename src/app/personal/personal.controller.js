@@ -20,7 +20,6 @@ class PersonalController extends Controller {
   async getPersonalProfile(req, res) {
     const { userId } = req.payload;
     const personal = await personalService.getPersonalByUserId(userId);
-
     return res.json(personal);
   }
 
@@ -38,7 +37,6 @@ class PersonalController extends Controller {
   async create(req, res) {
     const data = req.body;
     const created = await refService.create(this.modelName, data);
-
     return res.json(rest.responseWith({
       unit:  this.i18nUnitOne,
       message: 'create.success.one',
@@ -49,7 +47,6 @@ class PersonalController extends Controller {
   async update(req, res) {
     const data = req.body;
     const updated = await refService.updateById(this.modelName, data);
-
     return res.json(rest.responseWith({
       unit: this.i18nUnitOne,
       message: 'update.success.one',

@@ -1,7 +1,11 @@
 module.exports = {
   region: {
     one: 'регион',
-    many: 'регионы'
+    many: 'регионы',
+    type: {
+      one: 'тип региона',
+      many: 'тип регионов'
+    }
   },
 
   regionType: {

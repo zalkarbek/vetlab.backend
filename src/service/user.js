@@ -2,11 +2,11 @@ const Service = require('./service');
 const helpers = require('../helpers');
 const db = Service.getInject('db');
 const crypter = helpers.getHelper('crypter');
+const roleService = require('./role');
 
 class UserService extends Service {
   constructor() {
     super();
-    this.user_public_fields = db.FIELDS.USER_PUBLIC;
   }
 
   async _findByPk(id) {
@@ -14,49 +14,108 @@ class UserService extends Service {
   }
 
   // при получении пользователей удаляем поля password и tokenId для скрытья полей
-  async safeAttributes({ attributes = {}, ...otherOptions } = {}) {
+  async safeAttributes({ attributes = {} } = {}) {
     let { exclude = ['password', 'tokenId'], include = [] }  = attributes;
-    let filteredAttributes = {
-      exclude
-    };
+    let safe = { exclude };
 
-    if(include.length >= 1) {
+    if (include.length >= 1) {
       include = include.filter(value => value !== 'password' && value !== 'tokenId');
-      filteredAttributes = {
+      safe = {
         include
       };
     }
 
     if (exclude.length >= 1) {
-      filteredAttributes = {
+      safe = {
         exclude: [ 'password', 'tokenId', ...exclude ],
       };
     }
 
-    return { attributes: filteredAttributes, ...otherOptions };
+    return { attributes: safe };
   }
 
   // при обновлении пользователя убираем поле password и tokeId для безопасности
-  safeFields({ fields = [], ...otherOptions }) {
-    const filtered = fields.filter(value => value !== 'password' && value !== 'tokenId');
-    return { fields: filtered, ...otherOptions };
+  async safeFields({ fields = [] } = {}) {
+    const fd = fields.filter(value => value !== 'password' && value !== 'tokenId');
+    return { fields: fd };
   }
 
   async getUsers(options = {}) {
-    const filteredOptions = await this.safeAttributes(options);
-    return db.user.findAll(filteredOptions);
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributes({ attributes });
+
+    return db.user.findAll({
+      ...safeAttrs
+      , ...other
+    });
+  }
+
+  async getUsersPaginate({ page, pageSize }, options = {}) {
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributes({ attributes });
+    const paginate = await this.paginate({ page, pageSize });
+
+    return db.user.findAndCountAll({
+      ...safeAttrs
+      , ...other
+      , ...paginate
+    });
+  }
+
+  async getUsersWithRoles(options = {}) {
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributes({ attributes });
+
+    return db.user.findAll({
+      include: [
+        {
+          model: db.role,
+          attributes: ['id', 'role_name', 'role_key', 'active', 'priority'],
+          where: { active: 1 },
+          through: {
+            attributes: ['role_id', 'user_id']
+          }
+        }
+      ],
+      ...safeAttrs
+      , ...other
+    });
+  }
+
+  async getUsersWithPersonal(options = {}) {
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributes({ attributes });
+
+    return db.user.findAll({
+      include: [
+        {
+          model: db.personal,
+          attributes: ['id', 'firstName', 'lastName']
+        }
+      ],
+      ...safeAttrs
+      , ...other
+    });
   }
 
   async getUserById(id, options = {}) {
-    const filteredOptions = await this.safeAttributes(options);
-    return db.user.findByPk(id, filteredOptions);
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributes({ attributes });
+
+    return db.user.findByPk(id, {
+      ...safeAttrs
+      , ...other
+    });
   }
 
   async getUserByEmail(email, options = {}) {
-    const filteredOptions = await this.safeAttributes(options);
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributes({ attributes });
+
     return db.user.findOne({
       where: { email },
-      ...filteredOptions
+      ...safeAttrs
+      , ...other
     });
   }
 
@@ -74,27 +133,23 @@ class UserService extends Service {
     });
   }
 
-  async getRoles(options) {
-    return db.role.findAll(options);
-  }
-
   /**
    * Проверка входит ли роли пользователя к определенным ролям списке
    * Возвращает колучиство сопадениий с ролями
   */
   async checkAccessRole(userRoles, checkRoles) {
-    const Op = db.Sequelize.Op;
+    if (userRoles.length === 0) return 0;
 
-    if(userRoles.length === 0) return 0;
+    let accessCount = 0;
+    const Op = db.Sequelize.Op;
     const maxRole = this._.maxBy(userRoles, 'priority');
-    const roles = await this.getRoles({
+    const roles = await roleService.getRoles({
       where: {
         role_key: {
           [Op.in]: checkRoles
         }
       }
     });
-    let accessCount = 0;
 
     roles.forEach((role) => {
       if(role && Number(role.priority) <= Number(maxRole.priority)) {
@@ -119,11 +174,13 @@ class UserService extends Service {
   async updateUserById({ id, ...data }, options = {}) {
     delete data.password;
     delete data.tokenId;
-    const filteredOptions = this.safeFields(options);
+    const { fields, ...other } = options;
+    const safeFields = await this.safeFields({ fields });
 
     return db.user.update(data, {
       where: { id },
-      ...filteredOptions
+      ...safeFields
+      , ...other
     });
   }
 

@@ -24,8 +24,38 @@ class Service {
     this._ = lodash;
   }
 
+  async paginate({ page, pageSize }) {
+    const offset = Number((page - 1) * pageSize);
+    const limit = Number(pageSize);
+    return {
+      limit,
+      offset,
+    };
+  }
+
+  // при получении пользователей удаляем поля password и tokenId для скрытья полей
+  async safeAttributesForUser({ attributes = {} } = {}) {
+    let { exclude = ['password', 'tokenId'], include = [] }  = attributes;
+    let safe = { exclude };
+
+    if (include.length >= 1) {
+      include = include.filter(value => value !== 'password' && value !== 'tokenId');
+      safe = {
+        include
+      };
+    }
+
+    if (exclude.length >= 1) {
+      safe = {
+        exclude: [ 'password', 'tokenId', ...exclude ],
+      };
+    }
+
+    return { attributes: safe };
+  }
+
   // удаляем поля пароль и tokenId от списка
-  async safeOptions(options) {
+  async safeOptions(options = {}) {
     let { attributes = {}, fields = [], ...otherOptions } = options;
     let { exclude = [], include = [] }  = attributes;
     let updatedOptions = { ...otherOptions };

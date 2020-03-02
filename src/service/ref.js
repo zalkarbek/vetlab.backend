@@ -17,6 +17,15 @@ class RefService extends Service {
     return db[model].findAll(safeOptions);
   }
 
+  async getAllPaginate(model, { page, pageSize }, options = {}) {
+    const paginate = await this.paginate({ page, pageSize });
+
+    return db[model].findAndCountAll({
+      ...options
+      , ...paginate
+    });
+  }
+
   async create(model, data = {}) {
     return db[model].create(data);
   }

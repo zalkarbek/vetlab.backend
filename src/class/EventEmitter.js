@@ -6,4 +6,4 @@ class EventEmitter extends Events {
   }
 }
 
-module.exports.EventEmitter = EventEmitter;
+module.exports = EventEmitter;
