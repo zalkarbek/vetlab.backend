@@ -24,7 +24,7 @@ class MaterialController extends Controller {
 
   async all(req, res) {
     const regions = await refService.getAll(this.modelName);
-    res.json(regions);
+    return res.json(regions);
   }
 
   async create(req, res) {

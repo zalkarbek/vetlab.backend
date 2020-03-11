@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
     sRegionTypeId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
+      allowNull: false,
       defaultValue: null
     }
 

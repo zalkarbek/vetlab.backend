@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
 
     role_name: {
       type: DataTypes.STRING(255),
-      allowNull: true,
+      allowNull: false,
     },
 
     role_key: {
