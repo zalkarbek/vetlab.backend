@@ -62,11 +62,11 @@ const FIELDS = {
     ...BASE_FIELDS
   ],
 
-  S_BOLEZNI: [
+  S_BOLEZN: [
     ...BASE_FIELDS
   ],
 
-  S_POKAZATELY: [
+  S_POKAZATEL: [
     ...BASE_FIELDS
   ],
 

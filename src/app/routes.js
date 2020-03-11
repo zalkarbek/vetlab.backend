@@ -4,9 +4,9 @@ const userRoutes = require('./user/user.routes');
 const rolesRoutes = require('./roles/roles.routes');
 const testRoutes = require('./test/test.routes');
 
+const meraRoutes = require('./mera/mera.routes');
 const regionRoutes = require('./region/region.routes');
 const personalRoutes = require('./personal/personal.routes');
-const meraRoutes = require('./mera/mera.routes');
 
 module.exports = ({ routes }) => {
   routes.use('/api', authRoutes({ routes }));
