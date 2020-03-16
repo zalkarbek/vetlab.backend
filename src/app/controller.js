@@ -95,6 +95,7 @@ class Controller {
   }
 
   async all(req, res) {
+    console.log(this.map.get('modelName'));
     const regions = await refService.getAll(this.map.get('modelName'));
     res.json(regions);
   }

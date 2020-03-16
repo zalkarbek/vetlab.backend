@@ -1,6 +1,6 @@
 const baseApiRoutes = require('./baseApiRoutes');
 // Имя модели к которому привязан этот API
-const modelName = 'sDojlnost';
+const modelName = 'sDoljnost';
 // Превикс API маршрута
 const routePrefix = 'doljnost';
 // интернационализация на количество (один)
