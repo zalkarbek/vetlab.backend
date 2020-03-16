@@ -4,11 +4,13 @@ const userService = Controller.getService('user');
 const authService = Controller.getService('auth');
 const rest = Controller.getHelper('rest');
 
+const restDataName = 'user';
 const i18nUnitOne = 'user.one';
 
+
 class UserController extends Controller {
-  constructor() {
-    super();
+  constructor(params) {
+    super(params);
   }
 
   async getUserProfile(req, res) {
@@ -80,7 +82,9 @@ class UserController extends Controller {
   }
 
   async getUsersWithRoles(req, res) {
-    const users = await userService.getUsersWithRoles();
+    const page = req.query.page || req.body.page || 1;
+    const pageSize = req.query.pageSize || req.body.pageSize || 10;
+    const users = await userService.getUsersWithRoles({ page, pageSize });
     res.json(users);
   }
 
@@ -118,4 +122,4 @@ class UserController extends Controller {
   }
 }
 
-module.exports = new UserController();
+module.exports = new UserController({ restDataName });

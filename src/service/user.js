@@ -53,7 +53,7 @@ class UserService extends Service {
   async getUsersPaginate({ page, pageSize }, options = {}) {
     const { attributes, ...other } = options;
     const safeAttrs = await this.safeAttributes({ attributes });
-    const paginate = await this.paginate({ page, pageSize });
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
 
     return db.user.findAndCountAll({
       ...safeAttrs
@@ -62,9 +62,10 @@ class UserService extends Service {
     });
   }
 
-  async getUsersWithRoles(options = {}) {
+  async getUsersWithRoles({ page, pageSize }, options = {}) {
     const { attributes, ...other } = options;
     const safeAttrs = await this.safeAttributes({ attributes });
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
 
     return db.user.findAll({
       include: [
@@ -79,6 +80,7 @@ class UserService extends Service {
       ],
       ...safeAttrs
       , ...other
+      , ...paginate
     });
   }
 

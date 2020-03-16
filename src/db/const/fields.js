@@ -90,7 +90,7 @@ const FIELDS = {
     ,'sMaterialColor'
   ],
 
-  S_METOD_ISLEDOVANIE: [
+  S_METOD: [
     ...BASE_FIELDS
   ],
 

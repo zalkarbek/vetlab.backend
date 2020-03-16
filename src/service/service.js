@@ -24,7 +24,7 @@ class Service {
     this._ = lodash;
   }
 
-  async paginate({ page, pageSize }) {
+  async getPaginateAttrs({ page, pageSize }) {
     const offset = Number((page - 1) * pageSize);
     const limit = Number(pageSize);
     return {

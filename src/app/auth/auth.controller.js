@@ -1,7 +1,11 @@
 const Controller = require('../controller');
 const authService = Controller.getService('auth');
+const restDataName = 'auth';
 
 class AuthController extends Controller {
+  constructor(params) {
+    super(params);
+  }
   // Авторизация пользователей
   async userAuthenticate(req, res) {
     const { email, password } = req.body;
@@ -28,4 +32,4 @@ class AuthController extends Controller {
   }
 }
 
-module.exports = new AuthController();
+module.exports = new AuthController({ restDataName });

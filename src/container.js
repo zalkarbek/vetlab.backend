@@ -1,5 +1,6 @@
 const service = require('./service');
 const helpers = require('./helpers');
+const middleware = require('./middleware');
 const eventEmitter = require('./modules/event-module');
 
 const db = require('./db/models');
@@ -9,18 +10,21 @@ const pathResolve = require( '../pathResolve');
 const EVENTS = require('./data/eventData');
 const SOCKS = require('./data/socketData');
 const USER_ROLES = require('./data/userRoleData');
+const restApi = require('./data/rest');
 
 const injectMap = new Map();
 injectMap.set('inject', {
-  eventEmitter
+  service
   ,helpers
+  ,middleware
+  ,eventEmitter
+  ,db
+  ,i18n
+  ,pathResolve
   ,EVENTS
   ,SOCKS
   ,USER_ROLES
-  ,service
-  ,pathResolve
-  ,db
-  ,i18n
+  ,restApi
 });
 
 class Container {
@@ -43,6 +47,10 @@ class Container {
 
   static getHelper(name) {
     return this.getInject('helpers').getHelper(name);
+  }
+
+  static getMiddleware(name) {
+    return this.getInject('middleware').getMiddleware(name);
   }
 }
 

@@ -1,8 +1,12 @@
 const Controller = require('../controller');
 const socketEvents = require('../../data/socketData');
 const db = Controller.getInject('db');
+const restDataName = 'option';
 
 class OptController extends Controller {
+  constructor(params) {
+    super(params);
+  }
   async getSocketEvents(req, res) {
     return res.json({
       error: false,
@@ -18,4 +22,4 @@ class OptController extends Controller {
   }
 }
 
-module.exports = new OptController();
+module.exports = new OptController({ restDataName });

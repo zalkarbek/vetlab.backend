@@ -29,7 +29,9 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(cors());
 app.use(process.env.NODE_ENV === 'development' ? logger('dev') : logger('combined'));
 
-app.use(routes({ app, pathResolve, routes: express.Router() }));
+routes({ app, pathResolve, routes: express.Router() }).then((routes) => {
+  app.use(routes);
+});
 
 function logErrors(err, req, res, next) {
   console.error(err.stack);

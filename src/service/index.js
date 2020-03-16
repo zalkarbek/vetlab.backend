@@ -16,7 +16,6 @@ class ServiceBinder {
       personal: personalService,
     };
   }
-
   getService(name) {
     return this.services[name];
   }

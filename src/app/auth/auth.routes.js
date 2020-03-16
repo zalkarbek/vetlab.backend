@@ -1,7 +1,4 @@
 const controller = require('./auth.controller');
-const safeAsync = require('../../middleware/async');
+const restData = controller.getRestData();
 
-module.exports = ({ routes }) => {
-  routes.post('/v1/auth/user/login', safeAsync(controller.userAuthenticate));
-  return routes;
-};
+module.exports = { controller, restData };
