@@ -18,10 +18,11 @@ class RefService extends Service {
   }
 
   async getAllPaginate(model, { page, pageSize }, options = {}) {
-    const paginate = await this.paginate({ page, pageSize });
+    const safeOptions = await this.safeOptions(options);
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
 
     return db[model].findAndCountAll({
-      ...options
+      ...safeOptions
       , ...paginate
     });
   }
@@ -41,6 +42,34 @@ class RefService extends Service {
   async destroyById(model, id) {
     return db[model].destroy({
       where: { id }
+    });
+  }
+
+  async search(model, {  search, searchColumn, searchPosition = 'substring', ...options }) {
+    const safeOptions = await this.safeOptions(options);
+    let where;
+    if(searchPosition === 'startsWith')
+      where = {
+        [searchColumn]: {
+          [db.Op.startsWith]: search
+        }
+      };
+    else if(searchPosition === 'endsWith')
+      where = {
+        [searchColumn]: {
+          [db.Op.endsWith]: search
+        }
+      };
+    else
+      where = {
+        [searchColumn]: {
+          [db.Op.substring]: search
+        }
+      };
+
+    return db[model].findAll({
+      where,
+      ...safeOptions
     });
   }
 }

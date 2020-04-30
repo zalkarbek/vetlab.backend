@@ -2,7 +2,7 @@ const baseApiRoutes = require('./baseApiRoutes');
 // Имя модели к которому привязан этот API
 const modelName = 'sRegionType';
 // Превикс API маршрута
-const routePrefix = 'region/type';
+const routePrefix = 'regions/type';
 // интернационализация на количество (один)
 const i18nUnitOne = 'region.type.one';
 // интернационализация на количество (несколько)

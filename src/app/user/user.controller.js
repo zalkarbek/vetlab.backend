@@ -15,7 +15,7 @@ class UserController extends Controller {
 
   async getUserProfile(req, res) {
     const { email } = req.payload;
-    const user = await userService.getUserByEmail(email, {
+    const user = await userService.getUserByEmailWithPersonalWithRole(email, {
       attributes: { exclude: ['password', 'remember_token'] }
     });
 
@@ -31,7 +31,7 @@ class UserController extends Controller {
   }
 
   async id(req, res) {
-    const { id } = req.params;
+    const id = req.params.id;
     const user = await userService.getUserById(id);
     return res.json(user);
   }

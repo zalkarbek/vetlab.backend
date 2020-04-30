@@ -40,10 +40,20 @@ const GET_USERS_WITH_ROLE = () => {
   };
 };
 
+const GET_REGIONS_FULL_PATH_KG_BY_ID = (id) => {
+  return {
+    Q: 'SELECT * FROM view_regions_full_path_kg WHERE id = :id',
+    REPLACE: {
+      id
+    }
+  };
+};
+
 module.exports = {
   GET_REGION_BY_ID,
   GET_ACTIVE_PROJECTS,
   GET_ACTIVE_PROJECTS_IN,
   GET_ACTIVE_PROJECTS_LIKE,
-  GET_USERS_WITH_ROLE
+  GET_USERS_WITH_ROLE,
+  GET_REGIONS_FULL_PATH_KG_BY_ID
 };

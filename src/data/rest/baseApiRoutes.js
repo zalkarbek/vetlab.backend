@@ -1,4 +1,3 @@
-
 module.exports = ({ routePrefix }) => {
   return [
     {
@@ -7,6 +6,20 @@ module.exports = ({ routePrefix }) => {
       method: 'GET',
       middleware: [],
       controllerMethod: 'all'
+    },
+    {
+      name: 'allPaginate',
+      url: `/api/v1/${routePrefix}/paginate`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'allPaginate'
+    },
+    {
+      name: 'search',
+      url: `/api/v1/${routePrefix}/search`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'search'
     },
     {
       name: 'create',
@@ -29,24 +42,23 @@ module.exports = ({ routePrefix }) => {
       middleware: [],
       controllerMethod: 'destroy'
     },
-
     {
       name: 'id',
-      url: `/api/v1/${routePrefix}/:id`,
+      url: `/api/v1/${routePrefix}/id`,
       method: 'GET',
       middleware: [],
       controllerMethod: 'id'
     },
     {
       name: 'id',
-      url: `/api/v1/${routePrefix}/:id`,
+      url: `/api/v1/${routePrefix}/id`,
       method: 'PUT',
       middleware: [],
       controllerMethod: 'idUpdate'
     },
     {
       name: 'id',
-      url: `/api/v1/${routePrefix}/:id`,
+      url: `/api/v1/${routePrefix}/id`,
       method: 'DELETE',
       middleware: [],
       controllerMethod: 'idDestroy'

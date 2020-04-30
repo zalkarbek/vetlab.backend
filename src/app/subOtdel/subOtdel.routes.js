@@ -1,11 +1,4 @@
 const controller = require('./subOtdel.controller');
-const safeAsync = require('../../middleware/async');
+const restData = controller.getRestData();
 
-module.exports = ({ routes }) => {
-  routes.get('/v1/otdel/sub/all', safeAsync(controller.all));
-  routes.get('/v1/otdel/sub/all/:id', safeAsync(controller.id));
-  routes.post('/v1/otdel/sub/create', safeAsync(controller.create));
-  routes.put('/v1/otdel/sub/update', safeAsync(controller.update));
-  routes.delete('/v1/otdel/sub/destroy', safeAsync(controller.destroy));
-  return routes;
-};
+module.exports = { controller, restData };

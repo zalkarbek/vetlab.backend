@@ -1,5 +1,3 @@
-
-
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('sRegion', {
 
@@ -8,10 +6,23 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null,
       allowNull: true
     },
+
     name: {
       type: DataTypes.STRING(255),
       defaultValue: null,
       allowNull: true
+    },
+
+    shortName: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: null
+    },
+
+    parentId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: false,
+      defaultValue: null
     },
 
     sRegionTypeId: {
@@ -27,21 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   schema.associate = (models) => {
     // associations can be defined here
-
     schema.belongsTo(models.sRegionType, {
       foreignKey: 'sRegionTypeId'
-    });
-
-    schema.hasMany(models.otdel, {
-      foreignKey: 'sRegionId'
-    });
-
-    schema.hasMany(models.plan, {
-      foreignKey: 'sRegionId'
-    });
-
-    schema.hasMany(models.posMaterial, {
-      foreignKey: 'sRegionId'
     });
   };
 

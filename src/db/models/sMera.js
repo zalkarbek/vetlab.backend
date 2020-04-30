@@ -1,12 +1,12 @@
+const _ = require('lodash');
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('sMera', {
-
     i18n: {
       type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null,
       set(val) {
-        this.setDataValue('i18n', val.toLowerCase());
+        this.setDataValue('i18n', val && _.toLower(val));
       }
     },
 
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: null,
       set(val) {
-        this.setDataValue('shortName', val.toLowerCase());
+        this.setDataValue('shortName', _.toLower(val));
       }
     },
 
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: null,
       set(val) {
-        this.setDataValue('name', val.toLowerCase());
+        this.setDataValue('name', _.toLower(val));
       }
     },
 

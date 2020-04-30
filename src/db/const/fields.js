@@ -96,7 +96,7 @@ const FIELDS = {
 
   DEPARTMENT: [
     ...BASE_FIELDS
-    ,'sRegionId'
+    ,'regionJSON'
     ,'departmentDataJSON'
     ,'isCenter'
   ],
@@ -128,8 +128,8 @@ const FIELDS = {
     ,'pol'
     ,'personalDataJSON'
     ,'imgFileId'
-    ,'addressLiveSRegionId'
-    ,'addressBirthSRegionId'
+    ,'addressLiveRegionJSON'
+    ,'addressBirthRegionJSON'
     ,'userId'
     ,'sDoljnostId'
     ,'otdelId'
@@ -137,7 +137,7 @@ const FIELDS = {
   ],
 
   PLAN_RABOTY: [
-    'otdelId'
+    'departmentId'
     ,'planCount'
     ,'planKv'
     ,'planYear'
@@ -150,6 +150,7 @@ const FIELDS = {
     ,'prinyalPersonalId'
     ,'prinyalOtdelId'
     ,'prinyalDate'
+    ,'regionJSON'
     ,'otdelId'
     ,'perenapravilPersonalId'
     ,'dataZapolnenia'
@@ -166,7 +167,7 @@ const FIELDS = {
     'napravlenieId'
     ,'opPokazatelId'
     ,'ownerJSON'
-    ,'mestoOtboraSRegionId'
+    ,'mestoOtboraRegionJSON'
     ,'kemOtobranJSON'
     ,'lechenieInfo'
     ,'sMaterialId'

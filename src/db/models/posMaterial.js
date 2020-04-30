@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    mestoOtboraSRegionId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    mestoOtboraRegionJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -100,10 +100,6 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.sPokazatel, {
       foreignKey: 'opPokazatelId'
-    });
-
-    schema.belongsTo(models.sRegion, {
-      foreignKey: 'mestoOtboraSRegionId'
     });
 
     schema.belongsTo(models.sMaterial, {

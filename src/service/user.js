@@ -14,25 +14,7 @@ class UserService extends Service {
   }
 
   // при получении пользователей удаляем поля password и tokenId для скрытья полей
-  async safeAttributes({ attributes = {} } = {}) {
-    let { exclude = ['password', 'tokenId'], include = [] }  = attributes;
-    let safe = { exclude };
-
-    if (include.length >= 1) {
-      include = include.filter(value => value !== 'password' && value !== 'tokenId');
-      safe = {
-        include
-      };
-    }
-
-    if (exclude.length >= 1) {
-      safe = {
-        exclude: [ 'password', 'tokenId', ...exclude ],
-      };
-    }
-
-    return { attributes: safe };
-  }
+  // async safeAttributes({ attributes = {} } = {}) {}
 
   // при обновлении пользователя убираем поле password и tokeId для безопасности
   async safeFields({ fields = [] } = {}) {
@@ -42,7 +24,7 @@ class UserService extends Service {
 
   async getUsers(options = {}) {
     const { attributes, ...other } = options;
-    const safeAttrs = await this.safeAttributes({ attributes });
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
 
     return db.user.findAll({
       ...safeAttrs
@@ -52,7 +34,7 @@ class UserService extends Service {
 
   async getUsersPaginate({ page, pageSize }, options = {}) {
     const { attributes, ...other } = options;
-    const safeAttrs = await this.safeAttributes({ attributes });
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
     const paginate = await this.getPaginateAttrs({ page, pageSize });
 
     return db.user.findAndCountAll({
@@ -64,7 +46,7 @@ class UserService extends Service {
 
   async getUsersWithRoles({ page, pageSize }, options = {}) {
     const { attributes, ...other } = options;
-    const safeAttrs = await this.safeAttributes({ attributes });
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
     const paginate = await this.getPaginateAttrs({ page, pageSize });
 
     return db.user.findAll({
@@ -84,25 +66,26 @@ class UserService extends Service {
     });
   }
 
-  async getUsersWithPersonal(options = {}) {
+  async getUsersWithPersonal({ page, pageSize }, options = {}) {
     const { attributes, ...other } = options;
-    const safeAttrs = await this.safeAttributes({ attributes });
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
 
     return db.user.findAll({
       include: [
         {
-          model: db.personal,
-          attributes: ['id', 'firstName', 'lastName']
+          model: db.personal
         }
       ],
       ...safeAttrs
       , ...other
+      , ...paginate
     });
   }
 
   async getUserById(id, options = {}) {
     const { attributes, ...other } = options;
-    const safeAttrs = await this.safeAttributes({ attributes });
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
 
     return db.user.findByPk(id, {
       ...safeAttrs
@@ -112,10 +95,31 @@ class UserService extends Service {
 
   async getUserByEmail(email, options = {}) {
     const { attributes, ...other } = options;
-    const safeAttrs = await this.safeAttributes({ attributes });
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
 
     return db.user.findOne({
       where: { email },
+      ...safeAttrs
+      , ...other
+    });
+  }
+
+  async getUserByEmailWithPersonalWithRole(email, options = {}) {
+    const { attributes, ...other } = options;
+    const safeAttrs = await this.safeAttributesForUser({ attributes });
+
+    return db.user.findOne({
+      where: { email },
+      include: [
+        {
+          model: db.role,
+          attributes: ['role_i18n', 'role_name', 'role_key', 'active', 'priority'],
+          where: { active: 1 }
+        },
+        {
+          model: db.personal
+        }
+      ],
       ...safeAttrs
       , ...other
     });

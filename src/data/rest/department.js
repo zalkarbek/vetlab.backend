@@ -1,12 +1,12 @@
 const baseApiRoutes = require('./baseApiRoutes');
 // Имя модели к которому привязан этот API
-const modelName = 'sMaterialType';
+const modelName = 'department';
 // Превикс API маршрута
-const routePrefix = 'material/type';
+const routePrefix = 'departments';
 // интернационализация на количество (один)
-const i18nUnitOne = 'materialType.one';
+const i18nUnitOne = 'department.one';
 // интернационализация на количество (несколько)
-const i18nUnitMany = 'materialType.many';
+const i18nUnitMany = 'department.many';
 
 // базовые машрутры для всех api
 const baseApi = baseApiRoutes({ modelName, routePrefix });

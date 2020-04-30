@@ -1,5 +1,3 @@
-
-
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('department', {
 
@@ -21,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    sRegionId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    regionJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -47,22 +45,17 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
-    schema.belongsTo(models.sRegion, {
-      foreignKey: 'sRegionId'
-    });
-
     schema.hasMany(models.otdel, {
       foreignKey: 'departmentId'
     });
 
     schema.hasMany(models.napravlenie, {
-      foreignKey: 'departmentId'
+      foreignKey: 'zapolnilDepartmentId'
     });
 
     schema.hasMany(models.vnytNapravlenie, {
       foreignKey: 'departmentId'
     });
-
   };
 
   return schema;

@@ -20,9 +20,11 @@ class Controller {
     this.idUpdate = this.id.bind(this);
     this.idDestroy = this.id.bind(this);
     this.all = this.all.bind(this);
+    this.allPaginate = this.allPaginate.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.destroy = this.destroy.bind(this);
+    this.search = this.search.bind(this);
   }
 
   static getService(name) {
@@ -66,13 +68,14 @@ class Controller {
   }
 
   async id(req, res) {
-    const { id } = req.params;
+    const id = req.params.id || req.query.id || req.body.id;
+    console.log(id);
     const unit = await refService.getById( this.map.get('modelName'), id);
     return res.json(unit);
   }
 
   async idUpdate(req, res) {
-    const { id } = req.params;
+    const id = req.params.id || req.query.id || req.body.id;
     const data = req.body;
     data.id = id;
     const updated = await refService.updateById(this.map.get('modelName'), data);
@@ -85,7 +88,7 @@ class Controller {
   }
 
   async idDestroy(req, res) {
-    const { id } = req.params;
+    const id = req.params.id || req.query.id || req.body.id;
     const deleted = await refService.destroyById(this.map.get('modelName'), id);
     return res.json(rest.responseWith({
       unit:  this.map.get('i18nUnitOne'),
@@ -95,8 +98,24 @@ class Controller {
   }
 
   async all(req, res) {
-    console.log(this.map.get('modelName'));
-    const regions = await refService.getAll(this.map.get('modelName'));
+    const attributes = req.query.attributes || req.body.attributes;
+    const options = req.body.options || req.query.options || {};
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const regions = await refService.getAll(this.map.get('modelName'), options);
+    res.json(regions);
+  }
+
+  async allPaginate(req, res) {
+    const page = req.query.page || req.body.page || 1;
+    const pageSize = req.query.pageSize || req.body.pageSize || 10;
+    const attributes = req.query.attributes || req.body.attributes;
+    const options = req.body.options || req.query.options || {};
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const regions = await refService.getAllPaginate(this.map.get('modelName'), { page, pageSize }, options);
     res.json(regions);
   }
 
@@ -123,13 +142,24 @@ class Controller {
   }
 
   async destroy(req, res) {
-    const { id } = req.body;
+    const id = req.body.id;
     const deleted = await refService.destroyById(this.map.get('modelName'), id);
     return res.json(rest.responseWith({
       unit:  this.map.get('i18nUnitOne'),
       message: 'destroy.success.one',
       data: deleted
     }));
+  }
+
+  async search(req, res) {
+    const { search, searchColumn, searchPosition, attributes } = req.query || req.body;
+    const searchResult = await refService.search(this.map.get('modelName'), {
+      search,
+      searchColumn,
+      searchPosition,
+      attributes
+    });
+    res.json(searchResult);
   }
 }
 

@@ -39,5 +39,6 @@ db.vetdb = vetdb;
 db.Sequelize = Sequelize;
 db.FIELDS = FIELDS;
 db.QUERY = QUERY;
+db.Op = Sequelize.Op;
 
 module.exports = db;

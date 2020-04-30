@@ -11,12 +11,16 @@ const materialTypeRoutes = require('./materialType/materialType.routes');
 const meraRoutes = require('./mera/mera.routes');
 const metodRoutes = require('./metod/metod.routes');
 const otdeleniaRoutes = require('./otdelenia/otdelenia.routes');
-const pokazatelRoutes = require('./otdelenia/otdelenia.routes');
+const pokazatelRoutes = require('./pokazatel/pokazatel.routes');
 const regionTypeRoutes = require('./regionType/regionType.routes');
 const regionRoutes = require('./region/region.routes');
+const napravlenieRoutes = require('./napravlenie/napravlenie.routes');
+const departmentRoutes = require('./department/department.routes');
+const otdelRoutes = require('./otdel/otdel.routes');
+const subOtdelRoutes = require('./subOtdel/subOtdel.routes');
+const planRabotyRoutes = require('./plan/plan.routes');
 
 module.exports = async ({ routes }) => {
-
   await bindMethodToRoute(optionRoutes, routes);
   await bindMethodToRoute(authRoutes, routes);
   await bindMethodToRoute(userRoutes, routes);
@@ -32,5 +36,10 @@ module.exports = async ({ routes }) => {
   await bindMethodToRoute(pokazatelRoutes, routes);
   await bindMethodToRoute(regionTypeRoutes, routes);
   await bindMethodToRoute(regionRoutes, routes);
+  await bindMethodToRoute(napravlenieRoutes, routes);
+  await bindMethodToRoute(departmentRoutes, routes);
+  await bindMethodToRoute(otdelRoutes, routes);
+  await bindMethodToRoute(subOtdelRoutes, routes);
+  await bindMethodToRoute(planRabotyRoutes, routes);
   return routes;
 };

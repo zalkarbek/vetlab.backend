@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    otdelData: {
+    otdelDataJSON: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
@@ -59,10 +59,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.hasMany(models.personal, {
-      foreignKey: 'otdelId'
-    });
-
-    schema.hasMany(models.plan, {
       foreignKey: 'otdelId'
     });
 

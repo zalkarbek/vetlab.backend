@@ -31,6 +31,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    regionJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
     otdelId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,

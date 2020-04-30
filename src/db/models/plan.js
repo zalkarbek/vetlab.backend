@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('plan', {
 
-    otdelId: {
+    departmentId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null,
@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-
   }, {
     tableName: 'plan_raboty',
     modelName: 'plan',
@@ -30,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   schema.associate = (models) => {
     // associations can be defined here
-    schema.belongsTo(models.otdel, {
-      foreignKey: 'otdelId'
+    schema.belongsTo(models.department, {
+      foreignKey: 'departmentId'
     });
   };
 

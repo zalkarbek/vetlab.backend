@@ -29,14 +29,14 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    addressLiveSRegionId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    addressLiveRegionJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
 
-    addressBirthSRegionId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    addressBirthRegionJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -76,14 +76,6 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     schema.belongsTo(models.fileStorage, {
       foreignKey: 'imgFileId'
-    });
-
-    schema.belongsTo(models.sRegion, {
-      foreignKey: 'addressLiveSRegionId'
-    });
-
-    schema.belongsTo(models.sRegion, {
-      foreignKey: 'addressBirthSRegionId'
     });
 
     schema.belongsTo(models.user, {

@@ -16,10 +16,10 @@ class RoleService extends Service {
     return db.role.findByPk(id, options);
   }
 
-  async getUsersToRole(roleId) {
-    const safeAttributesUser = await this.safeAttributesForUser();
+  async getUsersToRole(roleId, options = {}) {
+    const safeOptions = await this.safeOptions(options);
     const role = await this.getRoleById(roleId);
-    return role.getUsers({ ...safeAttributesUser });
+    return role.getUsers({ ...safeOptions });
   }
 
   async addUsersToRole(roleId, users) {

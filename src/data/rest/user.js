@@ -1,3 +1,4 @@
+const middlewareFunction = require('../../middleware');
 // Имя модели к которому привязан этот API
 const modelName = 'user';
 // Превикс API маршрута
@@ -40,6 +41,13 @@ module.exports = {
       method: 'GET',
       middleware: [],
       controllerMethod: 'getUsersWithPersonal'
+    },
+    {
+      name: 'getUserProfile',
+      url: '/api/v1/users/profile',
+      method: 'GET',
+      middleware: [middlewareFunction.getMiddleware('restTokenVerify')],
+      controllerMethod: 'getUserProfile'
     },
     {
       name: 'id',
