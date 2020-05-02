@@ -1,3 +1,4 @@
+const middleware = require('../../middleware');
 module.exports = ({ routePrefix }) => {
   return [
     {
@@ -25,7 +26,7 @@ module.exports = ({ routePrefix }) => {
       name: 'create',
       url: `/api/v1/${routePrefix}/create`,
       method: 'POST',
-      middleware: [],
+      middleware: [middleware.getMiddleware('restTokenVerify')],
       controllerMethod: 'create'
     },
     {
