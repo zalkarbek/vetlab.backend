@@ -47,6 +47,10 @@ class Controller {
     return restData;
   }
 
+  static getRestDataByName(name) {
+    return restData[name];
+  }
+
   getService(name) {
     return Container.getService(name);
   }

@@ -165,14 +165,13 @@ class UserService extends Service {
     return accessCount;
   }
 
-  async createUser({ name, email, password } = {}) {
+  async createUser({ name, email, password } = {}, options = {}) {
     const { password_hashed } = await crypter.hashPwd(password);
     const newUser = db.user.build({
       name,
       email,
       password: password_hashed
-    });
-
+    }, options);
     await newUser.save();
     return newUser;
   }

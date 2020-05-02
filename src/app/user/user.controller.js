@@ -1,4 +1,3 @@
-
 const Controller = require('../controller');
 const userService = Controller.getService('user');
 const authService = Controller.getService('auth');
