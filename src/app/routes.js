@@ -19,27 +19,34 @@ const departmentRoutes = require('./department/department.routes');
 const otdelRoutes = require('./otdel/otdel.routes');
 const subOtdelRoutes = require('./subOtdel/subOtdel.routes');
 const planRabotyRoutes = require('./plan/plan.routes');
+const personalRoutes = require('./personal/personal.routes');
 
 module.exports = async ({ routes }) => {
-  await bindMethodToRoute(optionRoutes, routes);
-  await bindMethodToRoute(authRoutes, routes);
-  await bindMethodToRoute(userRoutes, routes);
-  await bindMethodToRoute(rolesRoutes, routes);
-  await bindMethodToRoute(boleznRoutes, routes);
-  await bindMethodToRoute(doljnostRoutes, routes);
-  await bindMethodToRoute(materialAnimalTypeRoutes, routes);
-  await bindMethodToRoute(materialTypeRoutes, routes);
-  await bindMethodToRoute(materialRoutes, routes);
-  await bindMethodToRoute(meraRoutes, routes);
-  await bindMethodToRoute(metodRoutes, routes);
-  await bindMethodToRoute(otdeleniaRoutes, routes);
-  await bindMethodToRoute(pokazatelRoutes, routes);
-  await bindMethodToRoute(regionTypeRoutes, routes);
-  await bindMethodToRoute(regionRoutes, routes);
-  await bindMethodToRoute(napravlenieRoutes, routes);
-  await bindMethodToRoute(departmentRoutes, routes);
-  await bindMethodToRoute(otdelRoutes, routes);
-  await bindMethodToRoute(subOtdelRoutes, routes);
-  await bindMethodToRoute(planRabotyRoutes, routes);
+  await bindMethodToRoute(
+    [
+      optionRoutes,
+      authRoutes,
+      userRoutes,
+      rolesRoutes,
+      boleznRoutes,
+      doljnostRoutes,
+      materialAnimalTypeRoutes,
+      materialTypeRoutes,
+      materialRoutes,
+      meraRoutes,
+      metodRoutes,
+      otdeleniaRoutes,
+      pokazatelRoutes,
+      regionTypeRoutes,
+      regionRoutes,
+      napravlenieRoutes,
+      departmentRoutes,
+      otdelRoutes,
+      subOtdelRoutes,
+      planRabotyRoutes,
+      personalRoutes,
+    ],
+    routes
+  );
   return routes;
 };

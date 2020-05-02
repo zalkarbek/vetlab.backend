@@ -7,7 +7,21 @@ class BaseController extends Controller {
   }
 
   create(req, res) {
-    return res.json({ message: 'hello' });
+
+    // const zapolnilPersonalId;
+    // const zapolnilDepartmentId;
+    // const zapolnilDate;
+    //
+    // const prinyalPersonalId;
+    // const prinyalOtdelId;
+    // const prinyalDate;
+
+    console.log(req.payload);
+    return res.json({
+      message: 'hello',
+      user: req.payload,
+      userRoles: JSON.parse(req.userRoles)
+    });
   }
 }
 
