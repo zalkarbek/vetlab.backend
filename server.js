@@ -12,5 +12,5 @@ dispatcher({ socketServer, httpServer, socketClient, app });
 module.exports.httpServer = httpServer;
 module.exports.socketServer = socketServer;
 module.exports.socketClient = socketClient;
-module.exports.expressApp = app;
+module.exports.app = app;
 module.exports.db = db;

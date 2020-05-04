@@ -16,6 +16,15 @@ class REST {
       data
     };
   }
+
+  responseError({ statusCode, message, stack }) {
+    return {
+      error: true,
+      message: i18n.t(message),
+      code: statusCode,
+      stack
+    };
+  }
 }
 
 module.exports = new REST();

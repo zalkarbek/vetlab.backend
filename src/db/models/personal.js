@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    fullName: {
+      type: DataTypes.VIRTUAL,
+      allowNull: true,
+      get() {
+        return this.lastName + ' ' + this.firstName;
+      }
+    },
+
     personalDataJSON: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -95,6 +103,5 @@ module.exports = (sequelize, DataTypes) => {
     });
 
   };
-
   return schema;
 };

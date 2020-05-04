@@ -1,5 +1,4 @@
 const Controller = require('../controller');
-const userService = Controller.getService('user');
 const personalService = Controller.getService('personal');
 const rest = Controller.getHelper('rest');
 const restDataName = 'personal';
@@ -11,14 +10,14 @@ class BaseController extends Controller {
   }
 
   async create(req, res) {
-    const { user, ...personalData } = req.body.user;
-    const newUser = userService.createUser(user);
-    const newPersonal = personalService.createPersonal();
+    const { user, ...personalData } = req.body;
+    const newPersonal = await personalService.createPersonalWithUser({ user, personal: personalData });
 
-    return res.json({
-      message: 'hello'
-    });
-    // return super.create(req, res);
+    return res.json(rest.responseWith({
+      unit: restData.i18nUnitOne,
+      message: 'create.success.one',
+      data: newPersonal
+    }));
   }
 }
 

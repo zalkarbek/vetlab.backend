@@ -28,38 +28,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(cors());
 app.use(process.env.NODE_ENV === 'development' ? logger('dev') : logger('combined'));
+app.use(routes({ app, pathResolve, routes: express.Router() }));
 
-routes({ app, pathResolve, routes: express.Router() }).then((routes) => {
-  app.use(routes);
-});
+const { handleError } = require('./helper/error');
 
-function logErrors(err, req, res, next) {
+function showErrorInConsole(err, req, res, next) {
   console.error(err.stack);
   next(err);
 }
-
-function clientErrorHandler(err, req, res, next) {
-  res.status(500).json({
-    error: true,
-    message: err.message,
-    data: err.data,
-    err: process.env.NODE_ENV === 'development' ? err : {},
-  });
-}
-
-function error404(err, req, res, next) {
-  res.status(404).json({
-    error: true,
-    message: 'Not Found',
-    data: err.data,
-    err: process.env.NODE_ENV === 'development' ? err : {},
-  });
-}
-
-function errorHandler(err, req, res, next) {
-  res.json({ error: true, message: 'Unknown error' });
-}
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
@@ -84,11 +60,11 @@ function onError(error) {
   }
 }
 
-app.use(logErrors);
-app.use(clientErrorHandler);
-app.use(error404);
-app.use(errorHandler);
-
+app.use(showErrorInConsole);
+app.use((err, req, res, next) => {
+  const stack = process.env.NODE_ENV === 'development' ? err.stack : {};
+  handleError({ err, res, stack });
+});
 app.on('error', onError);
 
 module.exports.app = app;

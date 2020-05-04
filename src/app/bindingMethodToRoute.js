@@ -1,11 +1,10 @@
 const Container = require('../container');
 const safeAsync = Container.getMiddleware('safeAsync');
 
-module.exports = async (routeDataArray = [], routes) => {
+module.exports = (routeDataArray = [], routes) => {
   routeDataArray.forEach((routeData) => {
     const restData = routeData.restData;
     const controller = routeData.controller;
-
     restData.api.forEach((api) => {
       if(api.method === 'GET')
         routes.get(api.url, ...api.middleware, safeAsync(controller[api.controllerMethod]));

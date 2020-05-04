@@ -21,8 +21,8 @@ const subOtdelRoutes = require('./subOtdel/subOtdel.routes');
 const planRabotyRoutes = require('./plan/plan.routes');
 const personalRoutes = require('./personal/personal.routes');
 
-module.exports = async ({ routes }) => {
-  await bindMethodToRoute(
+module.exports = ({ routes }) => {
+  return bindMethodToRoute(
     [
       optionRoutes,
       authRoutes,
@@ -48,5 +48,4 @@ module.exports = async ({ routes }) => {
     ],
     routes
   );
-  return routes;
 };

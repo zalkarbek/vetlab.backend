@@ -29,7 +29,7 @@ class PersonalService extends Service {
       return new Error('Personal Not Saved');
     } catch (e) {
       transaction.rollback();
-      return e;
+      throw e;
     }
   }
 }
