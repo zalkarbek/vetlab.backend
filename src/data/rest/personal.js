@@ -16,5 +16,21 @@ module.exports = {
   routePrefix,
   i18nUnitOne,
   i18nUnitMany,
-  api: [ ...baseApi ]
+  api: [
+    ...baseApi,
+    {
+      name: 'getPersonalWithUser',
+      url: `/api/v1/${routePrefix}/id/withUser`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getPersonalWithUser'
+    },
+    {
+      name: 'changePassword',
+      url: `/api/v1/${routePrefix}/change-password`,
+      method: 'POST',
+      middleware: [],
+      controllerMethod: 'changePassword'
+    },
+  ]
 };

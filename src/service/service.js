@@ -19,9 +19,12 @@ injectMap.set('inject', {
 });
 
 class Service {
-  constructor() {
+  constructor({ modelName } = {}) {
     this.tokenGenerator = tokenGenerator;
     this._ = lodash;
+    this.protectedAttributes = ['password', 'tokenId'];
+    this.protectedAttributesUser = ['password', 'tokenId'];
+    this.modelName = modelName;
   }
 
   async getPaginateAttrs({ page = 1, pageSize = 10 } = {}) {
@@ -57,29 +60,29 @@ class Service {
   }
 
   async setWhereOptions(condition) {
-    let whereResult = {};
+    let where = {};
     if(condition.action === 'substring') {
-      whereResult = {
+      where = {
         [condition.column]: {
           [db.Op.substring]: condition.value
         }
       };
     }
     if(condition.action === 'startsWith') {
-      whereResult = {
+      where = {
         [condition.column]: {
           [db.Op.startsWith]: condition.value
         }
       };
     }
     if(condition.action === 'endsWith') {
-      whereResult = {
+      where = {
         [condition.column]: {
           [db.Op.endsWith]: condition.value
         }
       };
     }
-    return whereResult;
+    return where;
   }
 
   async safeWhere(options = {}) {
@@ -104,11 +107,15 @@ class Service {
     // }
   }
 
-  async safeAttributes(attributes = []) {
+  async safeAttributes(attributes = [], protectedAttrs) {
     let safe = [];
+    const protectedAttributes = protectedAttrs || this.protectedAttributes;
     if (Array.isArray(attributes) && attributes.length >= 1) {
       safe = attributes.filter((value) => {
-        return value !== 'password' && value !== 'tokenId';
+        const compare = protectedAttributes.filter((attr) => {
+          return value === attr;
+        });
+        return compare.length === 0;
       });
     }
 
@@ -116,15 +123,20 @@ class Service {
       let { exclude = [], include = [] }  = attributes;
 
       if(include.length >= 1) {
-        include = include.filter(value => value !== 'password' && value !== 'tokenId');
+        include = include.filter((value) => {
+          const compare = protectedAttributes.filter((attr) => {
+            return value === attr;
+          });
+          return compare.length === 0;
+        });
         safe = { include };
       }
 
       if (exclude.length >= 1) {
-        safe = { exclude: [ 'password', 'tokenId', ...exclude ] };
+        const unique = new Set([...protectedAttributes, ...exclude]);
+        safe = { exclude: [ ...unique ] };
       }
     }
-
     return safe;
   }
 
@@ -136,26 +148,16 @@ class Service {
     return safe;
   }
   // при получении пользователей удаляем поля password и tokenId для скрытья полей
-  async safeAttributesForUser({ attributes = {} } = {}) {
-    let { exclude = ['password', 'tokenId'], include = [] }  = attributes;
-    let safe = { exclude };
-    if (include.length >= 1) {
-      include = include.filter(value => value !== 'password' && value !== 'tokenId');
-      safe = {
-        include
-      };
-    }
-    if (exclude.length >= 1) {
-      safe = {
-        exclude: [ 'password', 'tokenId', ...exclude ],
-      };
-    }
-    return { attributes: safe };
+  async safeAttributesForUser({ attributes = {}, protectedAttrs } = {}) {
+    const protectedAttributes = protectedAttrs || this.protectedAttributesUser;
+    const { exclude = [...protectedAttributes], include = [] }  = attributes;
+
+    return { attributes: await this.safeAttributes({ exclude, include }) };
   }
 
   // удаляем поля пароль и tokenId от списка
   async safeOptions(options = {}) {
-    let newOptions = {};
+    let newOptions = { ...options };
 
     if(options && options.attributes) {
       newOptions.attributes = await this.safeAttributes(options.attributes);

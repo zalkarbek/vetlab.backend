@@ -1,5 +1,6 @@
 const Service = require('./service');
 const userService = require('./user');
+const refService = require('./ref');
 const db = Service.getInject('db');
 
 class PersonalService extends Service {
@@ -11,27 +12,110 @@ class PersonalService extends Service {
     });
   }
 
+  async getPersonalByUser(user) {
+    return this.getPersonalByUserId(user.id);
+  }
+
+  async getPersonalById(id, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.personal.findByPk(id, { ...safeOptions });
+  }
+
+  async getAllPersonalWithUser(options = {}) {
+    const userAttrsSafe = await this.safeAttributesForUser();
+    const updatedOptions = {
+      include: [
+        {
+          model: db.user,
+          ...userAttrsSafe
+        }
+      ],
+      ...options
+    };
+    return refService.getAll(this.modelName, updatedOptions);
+  }
+
+  async getAllPersonalWithUserPaginate({ page, pageSize }, options = {}) {
+    const userAttrsSafe = await this.safeAttributesForUser();
+    const updatedOptions = {
+      include: [
+        {
+          model: db.user,
+          ...userAttrsSafe
+        }
+      ],
+      ...options
+    };
+    return refService.getAllPaginate(this.modelName, { page, pageSize }, updatedOptions);
+  }
+
+  async getPersonalWithUser(id) {
+    const safeAttrs = await this.safeAttributesForUser();
+    return db.personal.findOne({
+      where: { id },
+      include: [
+        {
+          model: db.user,
+          ...safeAttrs
+        }
+      ]
+    });
+  }
+
   async createPersonal(data, options = {}) {
     return db.personal.create(data, options);
   }
 
+  async updatePersonal({ id, ...data }, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.personal.update(data, {
+      where: { id },
+      ...safeOptions
+    });
+  }
+
   async createPersonalWithUser({ user, personal }) {
-    const transaction = await db.vetdb.transaction();
+    let transaction;
     try {
+      transaction = await db.vetdb.transaction();
       const newUser = await userService.createUser(user, { transaction });
       if (newUser && newUser.id) {
         personal.userId = newUser.id;
         const newPersonal = await this.createPersonal(personal, { transaction });
-        transaction.commit();
+        await transaction.commit();
         return newPersonal;
       }
-      transaction.rollback();
+      await transaction.rollback();
       return new Error('Personal Not Saved');
     } catch (e) {
-      transaction.rollback();
+      if (transaction) await transaction.rollback();
       throw e;
     }
   }
+
+  async updatePersonalWithUser({ user, personal }) {
+    let transaction;
+    try {
+      transaction = await db.vetdb.transaction();
+      user.id = personal.userId;
+      await userService.updateUserWithoutPassword(user, { transaction });
+      const updatedPersonal = await this.updatePersonal(personal, { transaction });
+      await transaction.commit();
+      return updatedPersonal;
+    } catch (e) {
+      if (transaction) await transaction.rollback();
+      throw e;
+    }
+  }
+
+  async changePassword({ user, personalId }) {
+    const personal = await this.getPersonalById(personalId);
+    let changed = 0;
+    if(Number(personal.userId) === Number(user.id)) {
+      changed = await userService.changeUserPassword(user);
+    }
+    return changed;
+  }
 }
 
-module.exports = new PersonalService();
+module.exports = new PersonalService({ modelName: 'personal' });

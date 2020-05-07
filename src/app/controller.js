@@ -73,7 +73,6 @@ class Controller {
 
   async id(req, res) {
     const id = req.params.id || req.query.id || req.body.id;
-    console.log(id);
     const unit = await refService.getById( this.map.get('modelName'), id);
     return res.json(unit);
   }
@@ -107,8 +106,8 @@ class Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const regions = await refService.getAll(this.map.get('modelName'), options);
-    res.json(regions);
+    const result = await refService.getAll(this.map.get('modelName'), options);
+    res.json(result);
   }
 
   async allPaginate(req, res) {
@@ -119,8 +118,8 @@ class Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const regions = await refService.getAllPaginate(this.map.get('modelName'), { page, pageSize }, options);
-    res.json(regions);
+    const result = await refService.getAllPaginate(this.map.get('modelName'), { page, pageSize }, options);
+    res.json(result);
   }
 
   async create(req, res) {

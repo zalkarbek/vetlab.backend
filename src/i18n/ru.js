@@ -54,6 +54,12 @@ module.exports = {
     }
   },
 
+  auth: {
+    fail: 'Ошибка логин или пароль неверны',
+    personal: {
+      notConnected: 'Пользователь не с сотрудником'
+    }
+  },
   region: {
     one: 'регион',
     many: 'регионы',

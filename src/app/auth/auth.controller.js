@@ -1,5 +1,7 @@
 const Controller = require('../controller');
 const authService = Controller.getService('auth');
+const personalService = Controller.getService('personal');
+const rest = Controller.getHelper('rest');
 const restDataName = 'auth';
 
 class AuthController extends Controller {
@@ -11,12 +13,25 @@ class AuthController extends Controller {
     const { email, password } = req.body;
     const user = await authService.userAuthenticate({ email, password });
     if (!user) {
-      return res.json({
+      return res.json(rest.response({
         error: true,
-        message: 'Authorization failed login or password wrong'
-      });
+        message: 'auth.fail'
+      }));
     }
-    const token = await authService.userGetToken(user);
+    const personal = await personalService.getPersonalByUser(user);
+    if(!personal) {
+      return res.json(rest.response({
+        error: true,
+        message: 'auth.personal.notConnected'
+      }));
+    }
+    const personalData = {
+      id: personal.id,
+      otdelId: personal.otdelId,
+      subOtdelId: personal.subOtdelId,
+      sDoljnostId: personal.sDoljnostId,
+    };
+    const token = await authService.userGetToken(user, { personal: personalData });
     return res.json({
       error: false,
       message: 'Authorization success',
@@ -26,7 +41,7 @@ class AuthController extends Controller {
         name: user.name,
         email: user.email,
         roles: user.roles,
-        personal: {}
+        personal: personalData
       }
     });
   }

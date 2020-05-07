@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     zapolnilDate: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+      type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null
     },

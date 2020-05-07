@@ -46,7 +46,7 @@ class AuthService extends Service {
     return crypter.hashPwd(password);
   }
 
-  async userGetToken(user) {
+  async userGetToken(user, otherParams) {
     if(!user) return null;
     user.tokenId = this.tokenGenerator.uid();
     await user.save();
@@ -54,7 +54,8 @@ class AuthService extends Service {
       userId: user.id,
       name: user.name,
       email: user.email,
-      tokenId: user.tokenId
+      tokenId: user.tokenId,
+      ...otherParams
     });
   }
 }

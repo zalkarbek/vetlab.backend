@@ -189,6 +189,21 @@ class UserService extends Service {
     });
   }
 
+  async changeUserPassword({ id, email, password }, options = {}) {
+    const { password_hashed } = await crypter.hashPwd(password);
+    return db.user.update({ id, email, password: password_hashed }, {
+      where: { id },
+      ...options
+    });
+  }
+
+  async updateUserWithoutPassword({ id, name, email } = {}, options = {}) {
+    return db.user.update({ id, name, email }, {
+      where: { id },
+      ...options
+    });
+  }
+
   async destroyUserById(id) {
     return db.user.destroy({
       where: { id }
@@ -213,4 +228,4 @@ class UserService extends Service {
   }
 }
 
-module.exports = new UserService();
+module.exports = new UserService({ modelName: 'user' });
