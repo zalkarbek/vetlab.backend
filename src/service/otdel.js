@@ -6,7 +6,6 @@ class OtdelService extends Service {
   // ========================= REFERENCE ================================//
   async getOtdelById(otdelId, options = {}) {
     const safeOptions = await this.safeOptions(options);
-    console.log(this.modelName);
     return db[this.modelName].findByPk(otdelId, { ...safeOptions });
   }
 

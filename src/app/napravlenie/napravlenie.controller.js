@@ -18,6 +18,7 @@ class BaseController extends Controller {
     const department = await otdelService.getDepartmentByOtdelId(personal.otdelId);
 
     const zapolnilPersonalId = personal.id;
+    console.log(personal.otdelId);
     const zapolnilDepartmentId = department.id;
     const zapolnilDate = new Date();
     // const prinyalPersonalId;
