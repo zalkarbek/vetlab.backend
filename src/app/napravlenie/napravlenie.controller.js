@@ -1,5 +1,6 @@
 const Controller = require('../controller');
 const rest = Controller.getHelper('rest');
+const refService = Controller.getService('ref');
 const otdelService = Controller.getService('otdel');
 const personalService = Controller.getService('personal');
 const directionService = Controller.getService('napravlenie');
@@ -11,9 +12,17 @@ class BaseController extends Controller {
     super(params);
   }
 
+  async all(req, res) {
+    const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await directionService.getAllWithPosMaterial(options);
+    res.json(result);
+  }
+
   async allWithPosMaterial(req, res) {
-    const attributes = req.query.attributes || req.body.attributes;
-    const options = req.body.options || req.query.options || {};
+    const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
@@ -22,10 +31,7 @@ class BaseController extends Controller {
   }
 
   async allWithPosMaterialWithPaginate(req, res) {
-    const page = req.query.page || req.body.page || 1;
-    const pageSize = req.query.pageSize || req.body.pageSize || 10;
-    const attributes = req.query.attributes || req.body.attributes;
-    const options = req.body.options || req.query.options || {};
+    const  { page, pageSize, attributes, options } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
