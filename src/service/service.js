@@ -27,6 +27,14 @@ class Service {
     this.modelName = modelName;
   }
 
+  getObjectOneOfTwo(obj1, obj2, defaultObj = {}) {
+    if(Object.keys(obj1).length >= 1)
+      return obj1;
+    if(Object.keys(obj2).length >= 1)
+      return obj2;
+    return defaultObj;
+  }
+
   async getPaginateAttrs({ page = 1, pageSize = 10 } = {}) {
     const offset = Number((page - 1) * pageSize);
     const limit = Number(pageSize);
@@ -85,26 +93,21 @@ class Service {
     return where;
   }
 
-  async safeWhere(options = {}) {
+  async safeWhere(where = {}) {
     let searchWhere = {};
     let safeWhere = {};
-    if(options.searchColumn && options.search) {
+    if(where.searchColumn && where.search) {
       safeWhere = await this.setSearchPositions(options);
     }
-    if(options && options.where && Object.keys(options.where).length >= 1) {
+    if(where && Object.keys(where).length >= 1) {
       safeWhere = {
-        ...options.where
+        ...where
       };
     }
     return {
       ...searchWhere,
       ...safeWhere
     };
-    // where: {
-    //   column: 'name',
-    //   action: 'searchColumn',
-    //   value: 'text'
-    // }
   }
 
   async safeAttributes(attributes = [], protectedAttrs) {
@@ -163,10 +166,14 @@ class Service {
       newOptions.attributes = await this.safeAttributes(options.attributes);
     }
 
+    if(options && options.where) {
+      newOptions.where = await this.safeWhere(options.where);
+    }
+
     if(options && options.fields) {
       newOptions.fields = this.safeFields(options.fields);
     }
-
+    console.log(newOptions);
     return newOptions;
   }
 

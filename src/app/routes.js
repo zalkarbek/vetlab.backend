@@ -20,6 +20,8 @@ const otdelRoutes = require('./otdel/otdel.routes');
 const subOtdelRoutes = require('./subOtdel/subOtdel.routes');
 const planRabotyRoutes = require('./plan/plan.routes');
 const personalRoutes = require('./personal/personal.routes');
+const posMaterialRoutes = require('./posMaterial/posMaterial.routes');
+const preparatRoutes = require('./preparat/preparat.routes');
 
 module.exports = ({ routes }) => {
   return bindMethodToRoute(
@@ -45,6 +47,8 @@ module.exports = ({ routes }) => {
       subOtdelRoutes,
       planRabotyRoutes,
       personalRoutes,
+      posMaterialRoutes,
+      preparatRoutes
     ],
     routes
   );

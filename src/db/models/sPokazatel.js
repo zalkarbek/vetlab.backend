@@ -27,22 +27,6 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
-    schema.hasMany(models.napravlenie, {
-      foreignKey: 'opPokazatelId'
-    });
-
-    schema.hasMany(models.vnytNapravlenie, {
-      foreignKey: 'opPokazatelId'
-    });
-
-    schema.hasMany(models.posMaterial, {
-      foreignKey: 'opPokazatelId'
-    });
-
-    schema.hasMany(models.isledovanie, {
-      foreignKey: 'opPokazatelId'
-    });
-
   };
 
   return schema;

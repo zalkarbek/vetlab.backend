@@ -101,8 +101,7 @@ class Controller {
   }
 
   async all(req, res) {
-    const attributes = req.query.attributes || req.body.attributes;
-    const options = req.body.options || req.query.options || {};
+    const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
@@ -111,10 +110,12 @@ class Controller {
   }
 
   async allPaginate(req, res) {
-    const page = req.query.page || req.body.page || 1;
-    const pageSize = req.query.pageSize || req.body.pageSize || 10;
-    const attributes = req.query.attributes || req.body.attributes;
-    const options = req.body.options || req.query.options || {};
+    const {
+      page = 1,
+      pageSize = 10,
+      attributes,
+      options
+    } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
@@ -155,7 +156,7 @@ class Controller {
   }
 
   async search(req, res) {
-    const { search, searchColumn, searchPosition, attributes } = req.query || req.body;
+    const { search, searchColumn, searchPosition, attributes } = refService.getObjectOneOfTwo(req.query, req.body);
     const searchResult = await refService.search(this.map.get('modelName'), {
       search,
       searchColumn,

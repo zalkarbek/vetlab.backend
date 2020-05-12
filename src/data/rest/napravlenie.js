@@ -1,3 +1,4 @@
+const middleware = require('../../middleware');
 const baseApiRoutes = require('./baseApiRoutes');
 // Имя модели к которому привязан этот API
 const modelName = 'napravlenie';
@@ -16,5 +17,28 @@ module.exports = {
   routePrefix,
   i18nUnitOne,
   i18nUnitMany,
-  api: [ ...baseApi ]
+  api: [
+    ...baseApi,
+    {
+      name: 'allWithPosMaterial',
+      url: `/api/v1/${routePrefix}/pos`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'allWithPosMaterial'
+    },
+    {
+      name: 'allWithPosMaterialWithPaginate',
+      url: `/api/v1/${routePrefix}/pos/withPaginate`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'allWithPosMaterialWithPaginate'
+    },
+    {
+      name: 'sendToOtdel',
+      url: `/api/v1/${routePrefix}/vnyt/sendToOtdel`,
+      method: 'POST',
+      middleware: [middleware.getMiddleware('restTokenVerify')],
+      controllerMethod: 'sendToOtdel'
+    }
+  ]
 };

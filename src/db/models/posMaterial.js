@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    opPokazatelId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    opPokazatelIdJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -73,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    dateOtbora: {
+    dateVremyaOtbora: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null
@@ -96,10 +96,6 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     schema.belongsTo(models.napravlenie, {
       foreignKey: 'napravlenieId'
-    });
-
-    schema.belongsTo(models.sPokazatel, {
-      foreignKey: 'opPokazatelId'
     });
 
     schema.belongsTo(models.sMaterial, {

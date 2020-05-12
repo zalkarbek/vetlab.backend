@@ -1,12 +1,12 @@
 const baseApiRoutes = require('./baseApiRoutes');
 // Имя модели к которому привязан этот API
-const modelName = 'otdel';
-// Превикс API маршрута
-const routePrefix = 'otdel';
+const modelName = 'sPreparat';
+// Превикс api маршрута
+const routePrefix = 'preparat';
 // интернационализация на количество (один)
-const i18nUnitOne = 'otdel.one';
+const i18nUnitOne = 'preparat.one';
 // интернационализация на количество (несколько)
-const i18nUnitMany = 'otdel.many';
+const i18nUnitMany = 'preparat.many';
 
 // базовые машрутры для всех api
 const baseApi = baseApiRoutes({ modelName, routePrefix });
@@ -16,14 +16,5 @@ module.exports = {
   routePrefix,
   i18nUnitOne,
   i18nUnitMany,
-  api: [
-    ...baseApi,
-    {
-      name: 'getWithOtdelenia',
-      url: `/api/v1/${routePrefix}/with/otdelenia`,
-      method: 'GET',
-      middleware: [],
-      controllerMethod: 'getWithOtdelenia'
-    },
-  ]
+  api: [ ...baseApi ]
 };

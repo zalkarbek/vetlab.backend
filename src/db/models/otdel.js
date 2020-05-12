@@ -51,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.belongsTo(models.sOtdelenia, {
-      foreignKey: 'sOtdeleniaId'
+      foreignKey: 'sOtdeleniaId',
+      as: 'sOtdelenia'
     });
 
     schema.hasMany(models.subOtdel, {

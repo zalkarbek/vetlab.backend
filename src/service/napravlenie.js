@@ -4,9 +4,47 @@ const db = Service.getInject('db');
 
 class NapravlenieService extends Service {
   // ========================= REFERENCE ================================//
+
+  async getAllWithPosMaterial(options) {
+    const safeOptions = await this.safeOptions(options);
+    return db[this.modelName].findAll({
+      include: [
+        {
+          model: db.posMaterial,
+          include: [
+            {
+              model: db.sMaterial
+            }
+          ]
+          // where: { isArchive: 0 }
+        }
+      ],
+      ...safeOptions
+    });
+  }
+
+  async getAllWithPosMaterialWithPaginate({ page, pageSize }, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
+
+    return db[this.modelName].findAndCountAll({
+      include: [
+        {
+          model: db.posMaterial,
+          include: [
+            {
+              model: db.sMaterial
+            }
+          ]
+        }
+      ],
+      ...safeOptions
+      , ...paginate
+    });
+  }
+
   async createNapravlenie(napravlenie, options) {
     const safeOptions = await this.safeOptions(options);
-    console.log(safeOptions);
     return db[this.modelName].create(napravlenie, { ...safeOptions });
   }
 
@@ -35,6 +73,11 @@ class NapravlenieService extends Service {
       if (transaction) await transaction.rollback();
       return false;
     }
+  }
+
+  async createVnytNapravlenie(data, options) {
+    const safeOptions = await this.safeOptions(options);
+    return db.vnytNapravlenie.create(data, { ...safeOptions });
   }
 }
 

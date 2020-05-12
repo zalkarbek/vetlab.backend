@@ -9,6 +9,20 @@ class OtdelService extends Service {
     return db[this.modelName].findByPk(otdelId, { ...safeOptions });
   }
 
+  async getWithOtdelenia(id, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db[this.modelName].findByPk(id, {
+      ...safeOptions,
+      where: { id },
+      include: [
+        {
+          model: db.sOtdelenia,
+          as: 'sOtdelenia'
+        }
+      ]
+    });
+  }
+
   async getDepartmentByOtdelId(otdelId, options = {}) {
     const otd = await this.getOtdelById(otdelId, options);
     if(otd && otd.departmentId) {

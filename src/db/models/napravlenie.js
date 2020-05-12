@@ -55,8 +55,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    opPokazatelId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    opPokazatelIdJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -126,10 +126,6 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.personal, {
       foreignKey: 'perenapravilPersonalId'
-    });
-
-    schema.belongsTo(models.sPokazatel, {
-      foreignKey: 'opPokazatelId'
     });
 
     schema.belongsTo(models.personal, {

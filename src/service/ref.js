@@ -2,10 +2,6 @@ const Service = require('./service');
 const db = Service.getInject('db');
 
 class RefService extends Service {
-  constructor() {
-    super();
-  }
-
   // ========================= REFERENCE ================================//
   async getById(model, id, options = {}) {
     const safeOptions = await this.safeOptions(options);

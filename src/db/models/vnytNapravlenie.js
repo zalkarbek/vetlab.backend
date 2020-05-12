@@ -49,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    opPokazatelId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    opPokazatelIdJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -84,6 +84,59 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: null
     },
+
+    dateVremyaOtpravki: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Date.now()
+    },
+
+    dateDeworming: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+    dateVaccination: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+    dateObrabotki: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+    dateLechenia: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    anthelminticTypeJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+    antibioticTypeJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+    disinfectantTypeJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+    vaccineTypeJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+    isledovanieProvoditsaJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    }
 
 
   }, {
@@ -119,10 +172,6 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.subOtdel, {
       foreignKey: 'prinyalSubOtdelId'
-    });
-
-    schema.belongsTo(models.sPokazatel, {
-      foreignKey: 'opPokazatelId'
     });
 
     schema.belongsTo(models.posMaterial, {
