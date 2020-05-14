@@ -1,63 +1,30 @@
 const Controller = require('../controller');
 const refService = Controller.getService('ref');
-const rest = Controller.getHelper('rest');
+const napravlenieService = Controller.getService('napravlenie');
+const restDataName = 'vnytNapravlenie';
 
-class VnytController extends Controller {
-
-  constructor() {
-    super();
-    this.modelName = 'vnytNapravlenie';
-    this.i18nUnitOne = 'vnytNapravlenie.one';
-    this.i18nUnitMany = 'vnytNapravlenie.many';
-    this.id = this.id.bind(this);
-    this.all = this.all.bind(this);
-    this.create = this.create.bind(this);
-    this.update = this.update.bind(this);
-    this.destroy = this.destroy.bind(this);
+class BaseController extends Controller {
+  constructor(params) {
+    super(params);
   }
 
-  async id(req, res) {
-    const { id } = req.params;
-    const unit = await refService.getById(this.modelName, id);
-    return res.json(unit);
+  async getAllVnytNapravlenieWith(req, res) {
+    const {attributes, options } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await napravlenieService.getAllVnytNapravlenieRel();
+    res.json(result);
   }
 
-  async all(req, res) {
-    const regions = await refService.getAll(this.modelName);
-    res.json(regions);
-  }
-
-  async create(req, res) {
-    const data = req.body;
-    const created = await refService.create(this.modelName, data);
-
-    return res.json(rest.responseWith({
-      unit:  this.i18nUnitOne,
-      message: 'create.success.one',
-      data: created
-    }));
-  }
-
-  async update(req, res) {
-    const data = req.body;
-    const updated = await refService.updateById(this.modelName, data);
-
-    return res.json(rest.responseWith({
-      unit: this.i18nUnitOne,
-      message: 'update.success.one',
-      data: updated
-    }));
-  }
-
-  async destroy(req, res) {
-    const { id } = req.body;
-    const deleted = await refService.destroyById(this.modelName, id);
-    return res.json(rest.responseWith({
-      unit: this.i18nUnitOne,
-      message: 'destroy.success.one',
-      data: deleted
-    }));
+  async getAllVnytNapravlenieRelPaginate(req, res) {
+    const { page = 1, pageSize = 10, attributes, options } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await napravlenieService.getAllVnytNapravlenieRelPaginate({ page, pageSize }, options);
+    res.json(result);
   }
 }
 
-module.exports = new VnytController();
+module.exports = new BaseController({ restDataName });

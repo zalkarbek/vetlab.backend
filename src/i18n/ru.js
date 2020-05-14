@@ -69,6 +69,10 @@ module.exports = {
     }
   },
 
+  napravlenie: {
+    one: 'Направление'
+  },
+
   regionType: {
     one: 'тип региона',
     many: 'тип регионов'

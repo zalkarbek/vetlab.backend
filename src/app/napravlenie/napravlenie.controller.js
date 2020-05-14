@@ -40,7 +40,7 @@ class BaseController extends Controller {
   }
 
   async create(req, res) {
-    const { pos_material, ...napravlenie } = req.body;
+    const { posMaterials, ...napravlenie } = req.body;
     const payload = req.payload;
     const personal = await personalService.getPersonalById(payload.personal.id);
     const department = await otdelService.getDepartmentByOtdelId(personal.otdelId);
@@ -53,11 +53,12 @@ class BaseController extends Controller {
       zapolnilPersonalId,
       zapolnilDepartmentId,
       zapolnilDate,
-      dataZapolnenia
+      dataZapolnenia,
+      status: 'new'
     };
     const createdDirection = await directionService.createNapravlenieWithPosMaterial(
       updatedDirection,
-      pos_material
+      posMaterials
     );
     if(!createdDirection) {
       throw new Error('napravlenie not saved');
@@ -69,18 +70,35 @@ class BaseController extends Controller {
     }));
   }
 
+  async update(req, res) {
+    const { posMaterials, ...napravlenie } = req.body;
+    console.log(posMaterials);
+    const updatedDirection = await directionService.updateNapravlenieWithPosMaterial(napravlenie, posMaterials);
+    if(!updatedDirection) {
+      throw new Error('napravlenie not updated');
+    }
+    return res.json(rest.responseWith({
+      unit: restData.i18nUnitOne,
+      message: 'update.success.one',
+      data: updatedDirection
+    }));
+  }
+
   async sendToOtdel(req, res) {
     const postData = req.body || {};
     const payload = req.payload;
     const department = await otdelService.getDepartmentByOtdelId(postData.napravlenOtdelId);
     const napravilPersonalId = payload.personal.id;
     const napravlenDepartmentId = department && department.id;
+    const napravlenieId = postData.napravlenieId;
 
     const createdVnytNapravlenie = await directionService.createVnytNapravlenie({
       ...postData,
       napravilPersonalId,
-      napravlenDepartmentId
+      napravlenDepartmentId,
+      status: 'pending'
     });
+    await directionService.updateNapravlenieStatus(napravlenieId, 'sended');
 
     if(!createdVnytNapravlenie) {
       throw new Error('vnytNapravlenie not sended');

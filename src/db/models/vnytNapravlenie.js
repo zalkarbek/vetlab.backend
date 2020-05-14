@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('vnytNapravlenie', {
+    napravlenieId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
 
     napravilPersonalId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
@@ -146,32 +151,43 @@ module.exports = (sequelize, DataTypes) => {
   });
   schema.associate = (models) => {
     // associations can be defined here
+    schema.belongsTo(models.napravlenie, {
+      foreignKey: 'napravlenieId'
+    });
+
     schema.belongsTo(models.personal, {
-      foreignKey: 'napravilPersonalId'
+      foreignKey: 'napravilPersonalId',
+      as: 'napravilPersonal'
     });
 
     schema.belongsTo(models.department, {
-      foreignKey: 'napravlenDepartmentId'
+      foreignKey: 'napravlenDepartmentId',
+      as: 'napravlenDepartment'
     });
 
     schema.belongsTo(models.otdel, {
-      foreignKey: 'napravlenOtdelId'
+      foreignKey: 'napravlenOtdelId',
+      as: 'napravlenOtdel'
     });
 
     schema.belongsTo(models.subOtdel, {
-      foreignKey: 'napravlenSubOtdelId'
+      foreignKey: 'napravlenSubOtdelId',
+      as: 'napravlenSubOtdel'
     });
 
     schema.belongsTo(models.personal, {
-      foreignKey: 'prinyalPersonalId'
+      foreignKey: 'prinyalPersonalId',
+      as: 'prinyalPersonal'
     });
 
-    schema.belongsTo(models.personal, {
-      foreignKey: 'prinyalOtdelId'
+    schema.belongsTo(models.otdel, {
+      foreignKey: 'prinyalOtdelId',
+      as: 'prinyalOtdel'
     });
 
     schema.belongsTo(models.subOtdel, {
-      foreignKey: 'prinyalSubOtdelId'
+      foreignKey: 'prinyalSubOtdelId',
+      as: 'prinyalSubOtdel'
     });
 
     schema.belongsTo(models.posMaterial, {

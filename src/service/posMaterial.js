@@ -40,6 +40,14 @@ class PosMaterialService extends Service {
   async createMaterialsBulk(materials, options) {
     return db[this.modelName].bulkCreate(materials, options);
   }
+
+  async updatePosMaterial({ id, ...data }, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db[this.modelName].update(data, {
+      where: { id },
+      ...safeOptions
+    });
+  }
 }
 
 module.exports = new PosMaterialService({ modelName: 'posMaterial' });

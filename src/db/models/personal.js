@@ -102,6 +102,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'subOtdelId'
     });
 
+    schema.hasMany(models.vnytNapravlenie, {
+      foreignKey: 'napravilPersonalId'
+    });
+
+    schema.hasMany(models.napravlenie, {
+      foreignKey: 'zapolnilPersonalId'
+    });
+
+    schema.hasMany(models.napravlenie, {
+      foreignKey: 'prinyalPersonalId'
+    });
+
   };
   return schema;
 };

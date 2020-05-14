@@ -105,38 +105,50 @@ module.exports = (sequelize, DataTypes) => {
   schema.associate = (models) => {
     // associations can be defined here
     schema.belongsTo(models.personal, {
-      foreignKey: 'zapolnilPersonalId'
+      foreignKey: 'zapolnilPersonalId',
+      as: 'zapolnilPersonal'
     });
 
     schema.belongsTo(models.department, {
-      foreignKey: 'zapolnilDepartmentId'
+      foreignKey: 'zapolnilDepartmentId',
+      as: 'zapolnilDepartment'
     });
 
     schema.belongsTo(models.personal, {
-      foreignKey: 'prinyalPersonalId'
+      foreignKey: 'prinyalPersonalId',
+      as: 'prinyalPersonal'
     });
 
     schema.belongsTo(models.otdel, {
-      foreignKey: 'prinyalOtdelId'
+      foreignKey: 'prinyalOtdelId',
+      as: 'prinyalOtdel'
     });
 
     schema.belongsTo(models.otdel, {
-      foreignKey: 'otdelId'
+      foreignKey: 'otdelId',
+      as: 'otdel'
     });
 
     schema.belongsTo(models.personal, {
-      foreignKey: 'perenapravilPersonalId'
+      foreignKey: 'perenapravilPersonalId',
+      as: 'perenapravilPersonal'
     });
 
     schema.belongsTo(models.personal, {
-      foreignKey: 'oldPrinyalPersonalId'
+      foreignKey: 'oldPrinyalPersonalId',
+      as: 'oldPrinyalPersonal'
     });
 
     schema.belongsTo(models.otdel, {
-      foreignKey: 'oldPrinyalOtdelId'
+      foreignKey: 'oldPrinyalOtdelId',
+      as: 'oldPrinyalOtdel'
     });
 
     schema.hasMany(models.posMaterial, {
+      foreignKey: 'napravlenieId'
+    });
+
+    schema.hasMany(models.vnytNapravlenie, {
       foreignKey: 'napravlenieId'
     });
 

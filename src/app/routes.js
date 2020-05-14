@@ -15,6 +15,7 @@ const pokazatelRoutes = require('./pokazatel/pokazatel.routes');
 const regionTypeRoutes = require('./regionType/regionType.routes');
 const regionRoutes = require('./region/region.routes');
 const napravlenieRoutes = require('./napravlenie/napravlenie.routes');
+const vnytNapravlenieRoutes = require('./vnytNapravlenie/vnyt.routes');
 const departmentRoutes = require('./department/department.routes');
 const otdelRoutes = require('./otdel/otdel.routes');
 const subOtdelRoutes = require('./subOtdel/subOtdel.routes');
@@ -42,6 +43,7 @@ module.exports = ({ routes }) => {
       regionTypeRoutes,
       regionRoutes,
       napravlenieRoutes,
+      vnytNapravlenieRoutes,
       departmentRoutes,
       otdelRoutes,
       subOtdelRoutes,

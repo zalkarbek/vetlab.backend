@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.hasMany(models.vnytNapravlenie, {
-      foreignKey: 'departmentId'
+      foreignKey: 'napravlenDepartmentId'
     });
   };
 
