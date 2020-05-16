@@ -114,7 +114,7 @@ class Controller {
       page = 1,
       pageSize = 10,
       attributes,
-      options
+      options = {}
     } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;

@@ -4,6 +4,7 @@ const refService = Controller.getService('ref');
 const otdelService = Controller.getService('otdel');
 const personalService = Controller.getService('personal');
 const directionService = Controller.getService('napravlenie');
+const vnytNapravlenieService = Controller.getService('vnytNapravlenie');
 const restDataName = 'napravlenie';
 const restData = Controller.getRestDataByName(restDataName);
 
@@ -31,7 +32,7 @@ class BaseController extends Controller {
   }
 
   async allWithPosMaterialWithPaginate(req, res) {
-    const  { page, pageSize, attributes, options } = refService.getObjectOneOfTwo(req.query, req.body);
+    const  { page, pageSize, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
@@ -72,7 +73,6 @@ class BaseController extends Controller {
 
   async update(req, res) {
     const { posMaterials, ...napravlenie } = req.body;
-    console.log(posMaterials);
     const updatedDirection = await directionService.updateNapravlenieWithPosMaterial(napravlenie, posMaterials);
     if(!updatedDirection) {
       throw new Error('napravlenie not updated');
@@ -92,7 +92,7 @@ class BaseController extends Controller {
     const napravlenDepartmentId = department && department.id;
     const napravlenieId = postData.napravlenieId;
 
-    const createdVnytNapravlenie = await directionService.createVnytNapravlenie({
+    const createdVnytNapravlenie = await vnytNapravlenieService.createVnytNapravlenie({
       ...postData,
       napravilPersonalId,
       napravlenDepartmentId,

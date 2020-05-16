@@ -9,7 +9,7 @@ class BaseController extends Controller {
   }
 
   async getAllVnytNapravlenieWith(req, res) {
-    const {attributes, options } = refService.getObjectOneOfTwo(req.query, req.body);
+    const {attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
@@ -18,13 +18,23 @@ class BaseController extends Controller {
   }
 
   async getAllVnytNapravlenieRelPaginate(req, res) {
-    const { page = 1, pageSize = 10, attributes, options } = refService.getObjectOneOfTwo(req.query, req.body);
+    const { page = 1, pageSize = 10, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
     const result = await napravlenieService.getAllVnytNapravlenieRelPaginate({ page, pageSize }, options);
     res.json(result);
   }
+
+  async getVnytNapravlenieById(req, res) {
+    const { id, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await napravlenieService.getVnytNapravlenieById(id, options);
+  }
+
+
 }
 
 module.exports = new BaseController({ restDataName });
