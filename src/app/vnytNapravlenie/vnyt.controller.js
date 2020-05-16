@@ -1,6 +1,6 @@
 const Controller = require('../controller');
 const refService = Controller.getService('ref');
-const napravlenieService = Controller.getService('napravlenie');
+const vnytNapravlenieService = Controller.getService('vnytNapravlenie');
 const restDataName = 'vnytNapravlenie';
 
 class BaseController extends Controller {
@@ -13,7 +13,7 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await napravlenieService.getAllVnytNapravlenieRel();
+    const result = await vnytNapravlenieService.getAllVnytNapravlenieRel();
     res.json(result);
   }
 
@@ -22,7 +22,7 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await napravlenieService.getAllVnytNapravlenieRelPaginate({ page, pageSize }, options);
+    const result = await vnytNapravlenieService.getAllVnytNapravlenieRelPaginate({ page, pageSize }, options);
     res.json(result);
   }
 
@@ -31,7 +31,8 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await napravlenieService.getVnytNapravlenieById(id, options);
+    const result = await vnytNapravlenieService.getVnytNapravlenieById(id, options);
+    return res.json(result);
   }
 
 
