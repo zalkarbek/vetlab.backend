@@ -72,7 +72,6 @@ class RolesController extends Controller {
       data: added
     }));
   }
-
 }
 
 module.exports = new RolesController({ restDataName });
