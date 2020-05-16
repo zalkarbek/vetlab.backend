@@ -1,11 +1,8 @@
 const Controller = require('../controller');
-const refService = Controller.getService('ref');
 const roleService = Controller.getService('role');
 const rest = Controller.getHelper('rest');
 const restDataName = 'roles';
-const modelName = 'role';
 const i18nUnitOne = 'role.one';
-const i18nUnitMany = 'role.many';
 
 class RolesController extends Controller {
   constructor(params) {
@@ -14,20 +11,18 @@ class RolesController extends Controller {
 
   async id(req, res) {
     const { id } = req.params;
-    const unit = await refService.getById(modelName, id);
+    const unit = await roleService.getRoleById(id);
     return res.json(unit);
   }
 
   async all(req, res) {
-    const lists = await refService.getAll(modelName);
-    console.log('all');
+    const lists = await roleService.getRoles();
     res.json(lists);
   }
 
   async create(req, res) {
     const data = req.body;
-    const created = await refService.create(modelName, data);
-
+    const created = await roleService.createRole(data);
     return res.json(rest.responseWith({
       unit:  this.i18nUnitOne,
       message: 'create.success.one',
@@ -37,8 +32,7 @@ class RolesController extends Controller {
 
   async update(req, res) {
     const data = req.body;
-    const updated = await refService.updateById(modelName, data);
-
+    const updated = await roleService.updateRole(data);
     return res.json(rest.responseWith({
       unit: i18nUnitOne,
       message: 'update.success.one',
@@ -48,7 +42,7 @@ class RolesController extends Controller {
 
   async destroy(req, res) {
     const { id } = req.body;
-    const deleted = await refService.destroyById(modelName, id);
+    const deleted = roleService.destroyRoleById(id);
     return res.json(rest.responseWith({
       unit: i18nUnitOne,
       message: 'destroy.success.one',

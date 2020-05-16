@@ -34,8 +34,6 @@ class BaseController extends Controller {
     const result = await vnytNapravlenieService.getVnytNapravlenieById(id, options);
     return res.json(result);
   }
-
-
 }
 
 module.exports = new BaseController({ restDataName });

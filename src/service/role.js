@@ -2,18 +2,44 @@ const Service = require('./service');
 const db = Service.getInject('db');
 
 class RoleService extends Service {
-  constructor() {
-    super();
-  }
-
   // ========================= REFERENCE ================================//
 
   async getRoles(options = {}) {
-    return db.role.findAll(options);
+    const safeOptions = await this.safeOptions(options);
+    return db.role.findAll({
+      ...safeOptions,
+      where: {
+        priority: {
+          [db.Op.lt]: 770
+        }
+      }
+    });
+  }
+
+  async createRole(data, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.role.create(data, {
+      ...safeOptions
+    });
+  }
+
+  async updateRole({ id, ...data }, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.role.update(data, {
+      where: { id },
+      ...safeOptions
+    });
+  }
+
+  async destroyRoleById(id) {
+    return db.role.destroy({
+      where: { id }
+    });
   }
 
   async getRoleById(id, options = {}) {
-    return db.role.findByPk(id, options);
+    const safeOptions = await this.safeOptions(options);
+    return db.role.findByPk(id, { ...safeOptions });
   }
 
   async getUsersToRole(roleId, options = {}) {
@@ -30,4 +56,4 @@ class RoleService extends Service {
 
 }
 
-module.exports = new RoleService();
+module.exports = new RoleService({ modelName: 'role' });

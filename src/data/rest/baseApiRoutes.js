@@ -33,7 +33,7 @@ module.exports = ({ routePrefix }) => {
       name: 'update',
       url: `/api/v1/${routePrefix}/update`,
       method: 'PUT',
-      middleware: [],
+      middleware: [middleware.getMiddleware('restTokenVerify')],
       controllerMethod: 'update'
     },
     {

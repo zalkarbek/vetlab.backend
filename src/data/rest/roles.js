@@ -23,7 +23,7 @@ module.exports = {
 
     {
       name: 'id',
-      url: '/api/v1/roles/:id',
+      url: '/api/v1/roles/id',
       method: 'GET',
       middleware: [],
       controllerMethod: 'id'
@@ -31,7 +31,7 @@ module.exports = {
 
     {
       name: 'getUsers',
-      url: '/api/v1/roles/:id/users',
+      url: '/api/v1/roles/id/users',
       method: 'GET',
       middleware: [],
       controllerMethod: 'getUsers'
@@ -39,7 +39,7 @@ module.exports = {
 
     {
       name: 'addUsers',
-      url: '/api/v1/roles/:id/users/add',
+      url: '/api/v1/roles/id/users/add',
       method: 'POST',
       middleware: [],
       controllerMethod: 'addUsers'
