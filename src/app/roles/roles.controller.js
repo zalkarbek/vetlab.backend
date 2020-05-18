@@ -1,5 +1,6 @@
 const Controller = require('../controller');
 const roleService = Controller.getService('role');
+const refService = Controller.getService('ref');
 const rest = Controller.getHelper('rest');
 const restDataName = 'roles';
 const i18nUnitOne = 'role.one';
@@ -16,7 +17,11 @@ class RolesController extends Controller {
   }
 
   async all(req, res) {
-    const lists = await roleService.getRoles();
+    const { attributes = [], options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const lists = await roleService.getRoles(options);
     res.json(lists);
   }
 

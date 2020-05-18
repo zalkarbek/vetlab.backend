@@ -221,6 +221,30 @@ class UserService extends Service {
     return user.addRoles(roles);
   }
 
+  async updateRolesToUser({ id }, roles = []) {
+    if(id) {
+      await db.userInRoles.destroy({
+        where: { id }
+      });
+      roles.forEach((role) => {
+        db.userInRoles.create({
+          user_id: id,
+          role_id: role
+        });
+      });
+      return true;
+    }
+    return false;
+  }
+
+  async addRolesToUserObject(user, roles) {
+    if (user && user.id) {
+      const id = user.id;
+      const user = await this.getUserById(id);
+      return user.addRoles(roles);
+    }
+  }
+
   async removeRolesToUser(userId, roles) {
     const user = await this.getUserById(userId);
     if (!user) return null;

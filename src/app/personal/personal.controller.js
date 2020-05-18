@@ -39,7 +39,10 @@ class BaseController extends Controller {
 
   async create(req, res) {
     const { user, ...personalData } = req.body;
-    const newPersonal = await personalService.createPersonalWithUser({ user, personal: personalData });
+    const newPersonal = await personalService.createPersonalWithUser({
+      user,
+      personal: personalData
+    });
 
     return res.json(rest.responseWith({
       unit: restData.i18nUnitOne,

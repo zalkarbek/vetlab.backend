@@ -72,7 +72,7 @@ class Controller {
   }
 
   async id(req, res) {
-    const id = req.params.id || req.query.id || req.body.id;
+    const { id } = (req.params, req.query, req.body);
     const unit = await refService.getById( this.map.get('modelName'), id);
     return res.json(unit);
   }
@@ -101,7 +101,7 @@ class Controller {
   }
 
   async all(req, res) {
-    const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    const { attributes = [], options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }

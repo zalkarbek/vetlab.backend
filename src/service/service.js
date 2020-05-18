@@ -35,6 +35,14 @@ class Service {
     return defaultObj;
   }
 
+  getTrueObjectInArray() {
+    if(arguments.length >= 1) {
+      const arr = [ ...arguments ];
+      return arr.find((obj) => Object.keys(obj).length >= 1);
+    }
+    return {};
+  }
+
   async getPaginateAttrs({ page = 1, pageSize = 10 } = {}) {
     const offset = Number((page - 1) * pageSize);
     const limit = Number(pageSize);

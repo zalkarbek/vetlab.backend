@@ -56,7 +56,11 @@ class PersonalService extends Service {
       include: [
         {
           model: db.user,
-          ...safeAttrs
+          ...safeAttrs,
+          include: {
+            model: db.role,
+            through: 'roles'
+          }
         }
       ]
     });
@@ -81,6 +85,7 @@ class PersonalService extends Service {
       const newUser = await userService.createUser(user, { transaction });
       if (newUser && newUser.id) {
         personal.userId = newUser.id;
+        await userService.addRolesToUser(newUser.id, newUser.roles);
         const newPersonal = await this.createPersonal(personal, { transaction });
         await transaction.commit();
         return newPersonal;
@@ -93,12 +98,13 @@ class PersonalService extends Service {
     }
   }
 
-  async updatePersonalWithUser({ user, personal }) {
+  async updatePersonalWithUser({ user, roles, personal }) {
     let transaction;
     try {
       transaction = await db.vetdb.transaction();
       user.id = personal.userId;
       await userService.updateUserWithoutPassword(user, { transaction });
+      await userService.updateRolesToUser(user, roles);
       const updatedPersonal = await this.updatePersonal(personal, { transaction });
       await transaction.commit();
       return updatedPersonal;
