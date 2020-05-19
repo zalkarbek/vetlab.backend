@@ -27,10 +27,22 @@ class PersonalService extends Service {
       include: [
         {
           model: db.user,
-          ...userAttrsSafe
+          ...userAttrsSafe,
+          include: {
+            model: db.role,
+            where: {
+              priority: {
+                [db.Op.lt]: 770
+              }
+            },
+            through: 'roles'
+          }
         }
       ],
-      ...options
+      ...options,
+      where: {
+        isAdmin: 0
+      }
     };
     return refService.getAll(this.modelName, updatedOptions);
   }
@@ -44,7 +56,10 @@ class PersonalService extends Service {
           ...userAttrsSafe
         }
       ],
-      ...options
+      ...options,
+      where: {
+        isAdmin: 0
+      }
     };
     return refService.getAllPaginate(this.modelName, { page, pageSize }, updatedOptions);
   }
@@ -52,13 +67,18 @@ class PersonalService extends Service {
   async getPersonalWithUser(id) {
     const safeAttrs = await this.safeAttributesForUser();
     return db.personal.findOne({
-      where: { id },
+      where: { id, isAdmin: 0 },
       include: [
         {
           model: db.user,
           ...safeAttrs,
           include: {
             model: db.role,
+            where: {
+              priority: {
+                [db.Op.lt]: 770
+              }
+            },
             through: 'roles'
           }
         }
@@ -73,8 +93,8 @@ class PersonalService extends Service {
   async updatePersonal({ id, ...data }, options = {}) {
     const safeOptions = await this.safeOptions(options);
     return db.personal.update(data, {
-      where: { id },
-      ...safeOptions
+      ...safeOptions,
+      where: { id, isAdmin: 0 }
     });
   }
 
@@ -85,7 +105,7 @@ class PersonalService extends Service {
       const newUser = await userService.createUser(user, { transaction });
       if (newUser && newUser.id) {
         personal.userId = newUser.id;
-        await userService.addRolesToUser(newUser.id, newUser.roles);
+        await userService.addRolesToUser(newUser.id, user.roles);
         const newPersonal = await this.createPersonal(personal, { transaction });
         await transaction.commit();
         return newPersonal;
@@ -98,13 +118,13 @@ class PersonalService extends Service {
     }
   }
 
-  async updatePersonalWithUser({ user, roles, personal }) {
+  async updatePersonalWithUser({ user, personal }) {
     let transaction;
     try {
       transaction = await db.vetdb.transaction();
       user.id = personal.userId;
       await userService.updateUserWithoutPassword(user, { transaction });
-      await userService.updateRolesToUser(user, roles);
+      await userService.updateRolesToUser(user, user.roles);
       const updatedPersonal = await this.updatePersonal(personal, { transaction });
       await transaction.commit();
       return updatedPersonal;
@@ -121,6 +141,14 @@ class PersonalService extends Service {
       changed = await userService.changeUserPassword(user);
     }
     return changed;
+  }
+
+  async destroyById(id) {
+    const personal = await this.getPersonalWithUser(id);
+    if(personal) {
+      return userService.destroyUserById(personal.userId);
+    }
+    return false;
   }
 }
 

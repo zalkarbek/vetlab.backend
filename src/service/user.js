@@ -198,9 +198,10 @@ class UserService extends Service {
   }
 
   async updateUserWithoutPassword({ id, name, email } = {}, options = {}) {
+    const safeOptions = this.safeOptionsCreateUpdate(options);
     return db.user.update({ id, name, email }, {
       where: { id },
-      ...options
+      ...safeOptions
     });
   }
 
@@ -215,16 +216,25 @@ class UserService extends Service {
     return user.getRoles();
   }
 
-  async addRolesToUser(userId, roles) {
+  async addRolesToUser(userId, roles = []) {
     const user = await this.getUserById(userId);
-    if ( !user) return null;
-    return user.addRoles(roles);
+    if ( !user) throw new Error('error.user.notFound');
+    if(roles && Array.isArray(roles) && roles.length >= 1) {
+      roles.forEach((role) => {
+        db.userInRoles.create({
+          user_id: user.id,
+          role_id: role
+        });
+      });
+      return true;
+    }
+    return false;
   }
 
   async updateRolesToUser({ id }, roles = []) {
     if(id) {
       await db.userInRoles.destroy({
-        where: { id }
+        where: { user_id: id }
       });
       roles.forEach((role) => {
         db.userInRoles.create({
@@ -237,18 +247,13 @@ class UserService extends Service {
     return false;
   }
 
-  async addRolesToUserObject(user, roles) {
-    if (user && user.id) {
-      const id = user.id;
-      const user = await this.getUserById(id);
-      return user.addRoles(roles);
+  async removeRolesToUser(userId) {
+    if(userId) {
+      return db.userInRoles.destroy({
+        where: { user_id: userId }
+      });
     }
-  }
-
-  async removeRolesToUser(userId, roles) {
-    const user = await this.getUserById(userId);
-    if (!user) return null;
-    return user.removeRoles(roles);
+    return false;
   }
 }
 

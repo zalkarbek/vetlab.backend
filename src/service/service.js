@@ -22,8 +22,9 @@ class Service {
   constructor({ modelName } = {}) {
     this.tokenGenerator = tokenGenerator;
     this._ = lodash;
-    this.protectedAttributes = ['password', 'tokenId'];
-    this.protectedAttributesUser = ['password', 'tokenId'];
+    this.protectedAttributes = ['password', 'tokenId', 'isAdmin'];
+    this.protectedAttributesUser = ['password', 'tokenId', 'isAdmin'];
+    this.protectedFields = ['password', 'tokenId', 'isAdmin'];
     this.modelName = modelName;
   }
 
@@ -151,10 +152,16 @@ class Service {
     return safe;
   }
 
-  async safeFields(fields = []) {
+  async safeFields(fields = [], protectedFields) {
     let safe = [];
+    const protectedFs = protectedFields || this.protectedFields;
     if (fields && fields.length >= 1) {
-      safe = fields.filter(value => value !== 'password' && value !== 'tokenId');
+      safe = fields.filter((value) => {
+        const compare = protectedFs.filter((field) => {
+          return value === field;
+        });
+        return compare.length === 0;
+      });
     }
     return safe;
   }
@@ -181,7 +188,24 @@ class Service {
     if(options && options.fields) {
       newOptions.fields = this.safeFields(options.fields);
     }
-    console.log(newOptions);
+    return newOptions;
+  }
+
+  //
+  async safeOptionsGet(options = {}) {
+    const { where, attributes, ...other } = options;
+    let newOptions = { ...other };
+    newOptions.where = await this.safeWhere(where);
+    newOptions.attributes = this.safeFields(attributes);
+    return newOptions;
+  }
+
+  //
+  async safeOptionsCreateUpdate(options = {}) {
+    const { where, fields, ...other } = options;
+    let newOptions = { ...other };
+    newOptions.where = await this.safeWhere(where);
+    newOptions.fields = this.safeFields(fields);
     return newOptions;
   }
 

@@ -70,6 +70,16 @@ class BaseController extends Controller {
       data: changed
     }));
   }
+
+  async destroy(req, res) {
+    const id = req.body.id;
+    const deleted = await personalService.destroyById(id);
+    return res.json(rest.responseWith({
+      unit: restData.i18nUnitOne,
+      message: 'destroy.success.one',
+      data: deleted
+    }));
+  }
 }
 
 module.exports = new BaseController({ restDataName });
