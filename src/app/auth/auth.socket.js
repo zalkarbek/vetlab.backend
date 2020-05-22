@@ -14,7 +14,6 @@ class AuthSocket {
   onConnect(socket) {
     const { EVENTS } = SOCKS;
     socketHandler.bindingLocalSocket({ socket });
-
     socket.emit(EVENTS.GUEST_CLIENT_CONNECTED, { message: 'Welcome Guest' });
     socket.on(EVENTS.GUEST_SERVER_LOGIN, socketHandler.onAuthenticate);
   }

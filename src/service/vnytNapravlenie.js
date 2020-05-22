@@ -2,7 +2,6 @@ const Service = require('./service');
 const db = Service.getInject('db');
 
 class NapravlenieService extends Service {
-
   constructor(params) {
     super(params);
     this.relations = {
@@ -73,6 +72,14 @@ class NapravlenieService extends Service {
     });
   }
 
+  async getVnytNapravlenieById(id, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.vnytNapravlenie.findByPk(id, {
+      ...safeOptions,
+      include: this.relations.includeWithAll,
+    });
+  }
+
   async getAllVnytNapravlenieRel(options = {}) {
     const safeOptions = await this.safeOptions(options);
     return db.vnytNapravlenie.findAll({
@@ -89,6 +96,20 @@ class NapravlenieService extends Service {
       ...safeOptions
       , ...paginate,
       include: this.relations.includeWithAll
+    });
+  }
+
+  async personalAcceptVnytNapravlenie({ id, personalId, otdelId, subOtdelId }, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.vnytNapravlenie.update({
+      prinyalPersonalId: personalId,
+      prinyalOtdelId: otdelId,
+      prinyalSubOtdelId: subOtdelId,
+      prinyalDate: new Date(),
+      status: 'accepted'
+    }, {
+      where: { id },
+      ...safeOptions
     });
   }
 }

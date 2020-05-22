@@ -1,5 +1,5 @@
 const Controller = require('../controller');
-const socketEvents = require('../../data/socketData');
+const SOCKS = require('../../data/socketData');
 const db = Controller.getInject('db');
 const restDataName = 'option';
 
@@ -10,8 +10,12 @@ class OptController extends Controller {
   async getSocketEvents(req, res) {
     return res.json({
       error: false,
-      socketEvents: socketEvents.EVENTS
+      socketEvents: SOCKS.EVENTS
     });
+  }
+
+  async getSocks(req, res) {
+    return res.json(SOCKS);
   }
 
   async getModelFields(req, res) {

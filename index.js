@@ -1,8 +1,9 @@
 const env = require('dotenv');
 env.config();
 
-const { httpServer, db } = require('./server');
+const { httpServer, httpsServer, db } = require('./server');
 const port = Number(process.env.SERVER_PORT);
+const https_port = Number(process.env.SERVER_HTTPS_PORT);
 
 db
   .vetdb
@@ -12,7 +13,11 @@ db
     // await db.vetdb.sync();
 
     httpServer.listen({ port }, () => {
-      console.log('Server starting');
+      console.log('Server Over HTTP starting');
+    });
+
+    httpsServer.listen({ port: https_port }, () => {
+      console.log('Server Over HTTPS starting');
     });
 
     console.log(`Сервер запущен на порту: ${port}`);

@@ -28,7 +28,6 @@ injectMap.set('inject', {
 });
 
 class Container {
-
   static binding(bindingInjection) {
     const injects = injectMap.get('inject');
     injectMap.set('inject', { ...bindingInjection, ...injects });

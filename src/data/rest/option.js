@@ -22,6 +22,14 @@ module.exports = {
     },
 
     {
+      name: 'getSocks',
+      url: '/api/v1/option/socks',
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getSocks'
+    },
+
+    {
       name: 'getModelFields',
       url: '/api/v1/option/model/fields',
       method: 'GET',

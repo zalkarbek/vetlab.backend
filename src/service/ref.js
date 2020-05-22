@@ -41,31 +41,17 @@ class RefService extends Service {
     });
   }
 
-  async search(model, {  search, searchColumn, searchPosition = 'substring', ...options }) {
+  async search(model, {
+    page, pageSize,  search, searchColumn, searchPosition = 'substring', ...options
+  }) {
     const safeOptions = await this.safeOptions(options);
-    let where;
-    if(searchPosition === 'startsWith')
-      where = {
-        [searchColumn]: {
-          [db.Op.startsWith]: search
-        }
-      };
-    else if(searchPosition === 'endsWith')
-      where = {
-        [searchColumn]: {
-          [db.Op.endsWith]: search
-        }
-      };
-    else
-      where = {
-        [searchColumn]: {
-          [db.Op.substring]: search
-        }
-      };
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
+    let where = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
-    return db[model].findAll({
+    return db[model].findAndCountAll({
       where,
       ...safeOptions
+      , ...paginate
     });
   }
 }

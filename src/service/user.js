@@ -32,7 +32,7 @@ class UserService extends Service {
     });
   }
 
-  async getUsersPaginate({ page, pageSize }, options = {}) {
+  async getUsersPaginate({ page = 1, pageSize = 10 }, options = {}) {
     const { attributes, ...other } = options;
     const safeAttrs = await this.safeAttributesForUser({ attributes });
     const paginate = await this.getPaginateAttrs({ page, pageSize });
@@ -44,7 +44,7 @@ class UserService extends Service {
     });
   }
 
-  async getUsersWithRoles({ page, pageSize }, options = {}) {
+  async getUsersWithRoles({ page = 1, pageSize = 10 }, options = {}) {
     const { attributes, ...other } = options;
     const safeAttrs = await this.safeAttributesForUser({ attributes });
     const paginate = await this.getPaginateAttrs({ page, pageSize });
@@ -66,7 +66,7 @@ class UserService extends Service {
     });
   }
 
-  async getUsersWithPersonal({ page, pageSize }, options = {}) {
+  async getUsersWithPersonal({ page = 1, pageSize = 10 }, options = {}) {
     const { attributes, ...other } = options;
     const safeAttrs = await this.safeAttributesForUser({ attributes });
     const paginate = await this.getPaginateAttrs({ page, pageSize });

@@ -1,6 +1,6 @@
 const Container = require('../../container');
 const inject = new Map();
-const authService = Container.getInject('service').getService('auth');
+const authService = Container.getService('auth');
 const { EVENTS } = Container.getInject('SOCKS');
 
 class AuthSocketHandler {

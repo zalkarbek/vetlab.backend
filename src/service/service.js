@@ -53,7 +53,21 @@ class Service {
     };
   }
 
-  async setSearchPositions({ searchColumn, search, searchPosition } = {}) {
+  async setSearchOptions({ searchColumn, search, searchPosition }) {
+    let wheres = {};
+    if(searchColumn && Array.isArray(searchColumn)) {
+      searchColumn.forEach((column) => {
+        wheres = {
+          ...wheres,
+          ...this.setSearchPositions({ searchColumn: column, search, searchPosition })
+        };
+      });
+      return wheres;
+    }
+    return this.setSearchPositions({ searchColumn, search, searchPosition });
+  }
+
+  setSearchPositions({ searchColumn, search, searchPosition } = {}) {
     let where = {};
     if(searchPosition === 'startsWith')
       where = {
@@ -106,7 +120,7 @@ class Service {
     let searchWhere = {};
     let safeWhere = {};
     if(where.searchColumn && where.search) {
-      safeWhere = await this.setSearchPositions(options);
+      safeWhere = this.setSearchPositions(options);
     }
     if(where && Object.keys(where).length >= 1) {
       safeWhere = {

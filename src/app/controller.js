@@ -72,7 +72,7 @@ class Controller {
   }
 
   async id(req, res) {
-    const { id } = (req.params, req.query, req.body);
+    const { id } = req.params.id || req.query.id || req.body.id;
     const unit = await refService.getById( this.map.get('modelName'), id);
     return res.json(unit);
   }
@@ -156,8 +156,18 @@ class Controller {
   }
 
   async search(req, res) {
-    const { search, searchColumn, searchPosition, attributes } = refService.getObjectOneOfTwo(req.query, req.body);
+    const {
+      page,
+      pageSize,
+      search,
+      searchColumn,
+      searchPosition,
+      attributes
+    } = refService.getObjectOneOfTwo(req.query, req.body);
+    console.log(searchColumn);
     const searchResult = await refService.search(this.map.get('modelName'), {
+      page,
+      pageSize,
       search,
       searchColumn,
       searchPosition,

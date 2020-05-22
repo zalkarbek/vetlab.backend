@@ -12,25 +12,25 @@ module.exports = async (socket, next) => {
       if(!user && !user.email) {
         let error = new Error('Authentication Error');
         error.data = { type: 'user_not_found', message: 'User not found' };
-        next(error);
+        return next(error);
       }
 
       if(user.tokenId === payload.tokenId) {
         socket.payload = payload;
         socket.userRoles = JSON.stringify(user.roles);
-        next();
+        return next();
       } else {
         let error = new Error('Authentication Error');
         error.data = { type: 'auth_error_token_expired', message: 'Token is expired' };
-        next(error);
+        return next(error);
       }
 
     } catch (e) {
       let error = new Error('Authentication Error');
       error.data = { type: 'auth_error', message: e.message };
-      next(error);
+      return next(error);
     }
   }
   const error = new Error('Forbidden');
-  next(error);
+  return next(error);
 };
