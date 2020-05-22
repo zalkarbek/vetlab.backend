@@ -13,6 +13,12 @@ class BaseController extends Controller {
     super(params);
   }
 
+  async id(req, res) {
+    const id = req.params.id || req.query.id || req.body.id;
+    const result = await directionService.getById(id);
+    return res.json(result);
+  }
+
   async all(req, res) {
     const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {

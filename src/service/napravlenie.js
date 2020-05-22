@@ -5,6 +5,23 @@ const db = Service.getInject('db');
 
 class NapravlenieService extends Service {
   // ========================= REFERENCE ================================//
+  async getById(id, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db[this.modelName].findByPk(id, {
+      ...safeOptions,
+      include: [
+        {
+          model: db.posMaterial,
+          include: [
+            {
+              model: db.sMaterial
+            }
+          ]
+        }
+      ]
+    });
+  }
+
   async getAllWithPosMaterial(options = {}) {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findAll({
