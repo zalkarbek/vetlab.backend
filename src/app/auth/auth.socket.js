@@ -1,26 +1,18 @@
-const socketHandler = require('./auth.socket.handler');
-const Container = require('../../container');
-const SOCKS = Container.getInject('SOCKS');
+const SocketHandler = require('../SocketHandler');
+const handler = require('./socket-handlers');
 
-class AuthSocket {
-  binding(injection) {
-    this.handle(injection);
-  }
-
-  handle({ socketIO }) {
-    socketIO.on('connect', this.onConnect);
-  }
-
-  onConnect(socket) {
-    const { EVENTS } = SOCKS;
-    socketHandler.bindingLocalSocket({ socket });
+class AuthSocket extends SocketHandler {
+  async onConnect(socket) {
+    await super.onConnect(socket);
+    const EVENTS = this.getSocksEvents();
     socket.emit(EVENTS.GUEST_CLIENT_CONNECTED, { message: 'Welcome Guest' });
-    socket.on(EVENTS.GUEST_SERVER_LOGIN, socketHandler.onAuthenticate);
+  }
+
+  async bindingEvents({ socket }) {
+    await super.bindingEvents({ socket });
+    const EVENTS = this.getSocksEvents();
+    socket.on(EVENTS.GUEST_SERVER_LOGIN, handler.onAuthenticate.bind(this, { socket }));
   }
 }
 
-const authSocket = new AuthSocket();
-
-module.exports = (injection) => {
-  authSocket.binding(injection);
-};
+module.exports = new AuthSocket();

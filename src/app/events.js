@@ -1,8 +1,10 @@
-const authEvents = require('./auth/auth.events');
+const userEvents = require('./user/user-events');
+const Handler = require('./Handler');
 
 class Events {
-  binding(injection) {
-    authEvents(injection);
+  async binding() {
+    const eventEmitter = Handler.getInject('eventEmitter');
+    await userEvents.bindingEvents({ eventEmitter });
   }
 }
 

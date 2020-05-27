@@ -1,5 +1,4 @@
-
 module.exports = {
-  USER_LOGGED_IN: 'user_logged_in',
-  USER_LOGGED_OUT: 'user_logged_out'
+  ON_USER_LOGIN: 'on_user_login',
+  ON_USER_LOGOUT: 'on_user_logout'
 };

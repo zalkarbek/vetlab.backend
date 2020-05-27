@@ -109,6 +109,7 @@ class BaseController extends Controller {
     if(!createdVnytNapravlenie) {
       throw new Error('vnytNapravlenie not sended');
     }
+
     return res.json(rest.response({
       message: 'vnytNapravlenie.send.success',
       data: createdVnytNapravlenie

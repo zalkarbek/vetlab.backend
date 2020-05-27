@@ -80,6 +80,18 @@ class NapravlenieService extends Service {
     });
   }
 
+  async getVnytByNapravlenieIdAndNapravlenOtdelId(napravlenieId, napravlenOtdelId, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db.vnytNapravlenie.findAll({
+      ...safeOptions,
+      where: {
+        napravlenieId,
+        napravlenOtdelId
+      },
+      include: this.relations.includeWithAll,
+    });
+  }
+
   async getAllVnytNapravlenieRel(options = {}) {
     const safeOptions = await this.safeOptions(options);
     return db.vnytNapravlenie.findAll({

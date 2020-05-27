@@ -1,4 +1,3 @@
-
 const tokenGenerator = require('../helpers/token-generator');
 const userService = require('../service/user');
 

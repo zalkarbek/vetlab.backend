@@ -1,4 +1,4 @@
-const Container = require('../container');
+const Container = require('./Handler');
 const refService = Container.getService('ref');
 const rest = Container.getHelper('rest');
 const restData = Container.getInject('restApi');

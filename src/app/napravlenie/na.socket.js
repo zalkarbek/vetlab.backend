@@ -2,22 +2,22 @@ const SocketHandler = require('../SocketHandler');
 const handler = require('./socket-handlers');
 const socketSafeAsync = SocketHandler.getMiddleware('socketSafeAsync');
 
-class VnytSocket extends SocketHandler {
+class Socket extends SocketHandler {
   async bindingEvents({ socket }) {
     await super.bindingEvents({ socket });
     const EVENTS = this.getSocksEvents();
     socket.on(
-      EVENTS.SERVER_VNYT_NAPRAVLENIE_ACCEPT,
+      EVENTS.SERVER_NAPRAVLENIE_SEND_TO_OTDEL,
       socketSafeAsync(
-        handler.onAccept.bind(this, { socket }),
+        handler.onSendToOtdel.bind(this, { socket }),
         {
           socket,
           errorEvent: 'response:error',
-          successEvent: EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS
+          successEvent: EVENTS.CLIENT_NAPRAVLENIE_SEND_TO_OTDEL
         }
       )
     );
   }
 }
 
-module.exports = new VnytSocket();
+module.exports = new Socket();

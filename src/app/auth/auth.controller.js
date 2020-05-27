@@ -1,7 +1,10 @@
 const Controller = require('../controller');
 const authService = Controller.getService('auth');
 const personalService = Controller.getService('personal');
+const otdelService = Controller.getService('otdel');
 const rest = Controller.getHelper('rest');
+const LOCAL_EVENTS = Controller.getInject('LOCAL_EVENTS');
+const eventEmitter = Controller.getInject('eventEmitter');
 const restDataName = 'auth';
 
 class AuthController extends Controller {
@@ -19,6 +22,7 @@ class AuthController extends Controller {
       }));
     }
     const personal = await personalService.getPersonalByUser(user);
+    const otdel = await otdelService.getOtdelById(personal.otdelId);
     if(!personal) {
       return res.json(rest.response({
         error: true,
@@ -30,8 +34,15 @@ class AuthController extends Controller {
       otdelId: personal.otdelId,
       subOtdelId: personal.subOtdelId,
       sDoljnostId: personal.sDoljnostId,
+      departmentId: otdel.departmentId
     };
     const token = await authService.userGetToken(user, { personal: personalData });
+    eventEmitter.emit(LOCAL_EVENTS.ON_USER_LOGIN, {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      fullName: personal.fullName
+    });
     return res.json({
       error: false,
       message: 'Authorization success',

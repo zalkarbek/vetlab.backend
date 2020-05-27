@@ -1,9 +1,9 @@
 const SocketHandler = require('../SocketHandler');
-const handler = require('./socketHandlers');
+const handler = require('./socket-handlers');
 
 class UserSocket extends SocketHandler {
   async onConnect(socket) {
-    super.onConnect(socket);
+    await super.onConnect(socket);
     if(socket.payload && socket.payload.userId) {
       const SOCKS = this.getSocks();
       const { EVENTS } = SOCKS;

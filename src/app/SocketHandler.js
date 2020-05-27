@@ -1,8 +1,7 @@
-const inject = new Map();
+const Handler = require('./Handler');
 
-class SocketHandler {
-  binding({ Container, socketIO, ...injection }) {
-    this.bindingInject({ Container, socketIO, ...injection });
+class SocketHandler extends Handler {
+  binding({ socketIO }) {
     socketIO.on('connect', this.onConnect.bind(this));
   }
 
@@ -10,11 +9,6 @@ class SocketHandler {
     if(socket.payload && socket.payload.userId) {
       await this.bindingEvents({ socket });
     }
-  }
-
-  bindingInject({ Container, socketIO }) {
-    inject.set('container', Container);
-    inject.set('socketIO', socketIO);
   }
 
   async bindingEvents({ socket }) {
@@ -32,23 +26,6 @@ class SocketHandler {
       socket.removeAllListeners();
     };
   }
-
-  getInject(injectName) {
-    if(inject.has(injectName)) {
-      return inject.get(injectName);
-    }
-    return inject.get('container').getInject(injectName);
-  }
-  getService(name) {
-    return inject.get('container').getService(name);
-  }
-  getSocks() {
-    return this.getInject('SOCKS');
-  }
-  getSocksEvents() {
-    return this.getSocks().EVENTS;
-  }
-
 }
 
 module.exports = SocketHandler;

@@ -9,6 +9,5 @@ module.exports = async function({ socket }, data) {
     subOtdelId
   });
   const vnytNapravlenie = await vnytNapravlenieService.getVnytNapravlenieById(id);
-  socket.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS, vnytNapravlenie);
-  // socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS, vnytNapravlenie);
+  socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS, vnytNapravlenie);
 };
