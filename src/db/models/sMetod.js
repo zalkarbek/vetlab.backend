@@ -19,6 +19,18 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    gosStandard: {
+      type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null
+    },
+
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    }
+
   }, {
     tableName: 's_metod_isledovanie',
     modelName: 'sMetod',

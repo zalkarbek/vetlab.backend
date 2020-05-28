@@ -19,6 +19,18 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    pokazatel: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+      defaultValue: null
+    },
+
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    }
+
   }, {
     tableName: 's_pokazately',
     modelName: 'sPokazatel',
