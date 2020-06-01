@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.hasMany(models.isledovanie, {
-      foreignKey: 'subOtdelId'
+      foreignKey: 'isSubOtdelId'
     });
   };
 

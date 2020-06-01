@@ -7,44 +7,62 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    otdelId: {
+    isOtdelId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    subOtdelId: {
+    isSubOtdelId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    provelIsPersonalId: {
+    isPersonalId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    isMaterialCount: {
-      type: DataTypes.INTEGER,
+    opPokazatelIdJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
 
-    positiveCount: {
-      type: DataTypes.INTEGER,
+    metodIdJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
 
-    metodId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    isResultJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
 
-    opPokazatelId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    researchJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    researchIdJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    isDescription: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    status: {
+      type: DataTypes.STRING(100),
       allowNull: true,
       defaultValue: null
     },
@@ -59,13 +77,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null
-    },
-
-    status: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-      defaultValue: null
-    },
+    }
 
   }, {
     tableName: 'isledovanie',
@@ -79,27 +91,15 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.belongsTo(models.otdel, {
-      foreignKey: 'otdelId'
+      foreignKey: 'isOtdelId'
     });
 
     schema.belongsTo(models.subOtdel, {
-      foreignKey: 'subOtdelId'
+      foreignKey: 'isSubOtdelId'
     });
 
     schema.belongsTo(models.personal, {
-      foreignKey: 'provelIsPersonalId'
-    });
-
-    schema.belongsTo(models.sMetod, {
-      foreignKey: 'metodId'
-    });
-
-    schema.belongsTo(models.sPokazatel, {
-      foreignKey: 'opPokazatelId'
-    });
-
-    schema.hasMany(models.protocol, {
-      foreignKey: 'isledovanieId'
+      foreignKey: 'isPersonalId'
     });
 
   };

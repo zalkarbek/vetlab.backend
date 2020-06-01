@@ -238,6 +238,12 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.posMaterial, {
       foreignKey: 'posMaterialId'
     });
+
+    schema.hasMany(models.isledovanie, {
+      foreignKey: 'vnytNapravlenieId',
+      as: 'isledovanies'
+    });
+
   };
 
   return schema;

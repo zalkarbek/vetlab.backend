@@ -28,6 +28,18 @@ class VnytSocket extends SocketHandler {
         }
       )
     );
+
+    socket.on(
+      EVENTS.SERVER_START_ISLEDOVANIE,
+      socketSafeAsync(
+        handler.onStartIsledovanie.bind(this, { socket }),
+        {
+          socket,
+          errorEvent: 'response:error',
+          successEvent: EVENTS.CLIENT_START_ISLEDOVANIE
+        }
+      )
+    );
   }
 }
 

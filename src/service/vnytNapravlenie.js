@@ -74,6 +74,10 @@ class NapravlenieService extends Service {
         {
           model: db.subOtdel,
           as: 'rejectSubOtdel'
+        },
+        {
+          model: db.isledovanie,
+          as: 'isledovanies'
         }
       ]
     };

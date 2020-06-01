@@ -9,6 +9,7 @@ const departmentService = require('./department');
 const napravlenieService = require('./napravlenie');
 const vnytNapravlenieService = require('./vnytNapravlenie');
 const posMaterialService = require('./posMaterial');
+const isledovanieService = require('./isledovanie');
 
 class ServiceBinder {
   constructor() {
@@ -23,7 +24,8 @@ class ServiceBinder {
       department: departmentService,
       napravlenie: napravlenieService,
       vnytNapravlenie: vnytNapravlenieService,
-      posMaterial: posMaterialService
+      posMaterial: posMaterialService,
+      isledovanie: isledovanieService
     };
   }
   getService(name) {
