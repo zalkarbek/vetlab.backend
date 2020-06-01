@@ -17,6 +17,7 @@ class NapravlenieService extends Service {
             }
           ]
         },
+        // ============= Направил =====================//
         {
           model: db.personal,
           as: 'napravilPersonal',
@@ -38,6 +39,7 @@ class NapravlenieService extends Service {
           model: db.subOtdel,
           as: 'napravlenSubOtdel'
         },
+        // ============= Принял =====================//
         {
           model: db.personal,
           as: 'prinyalPersonal',
@@ -54,6 +56,24 @@ class NapravlenieService extends Service {
         {
           model: db.subOtdel,
           as: 'prinyalSubOtdel'
+        },
+        // ============= Отклонил =====================//
+        {
+          model: db.personal,
+          as: 'rejectPersonal',
+          include: [
+            {
+              model: db.sDoljnost
+            }
+          ]
+        },
+        {
+          model: db.otdel,
+          as: 'rejectOtdel'
+        },
+        {
+          model: db.subOtdel,
+          as: 'rejectSubOtdel'
         }
       ]
     };
@@ -100,14 +120,24 @@ class NapravlenieService extends Service {
     });
   }
 
-  async getAllVnytNapravlenieRelPaginate({ page, pageSize }, options = {}) {
+  async getAllVnytNapravlenieRelPaginate(
+    { page, pageSize, search, searchColumn, searchPosition = 'substring' },
+    options = {}
+    ) {
     const safeOptions = await this.safeOptions(options);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
+    const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
     return db.vnytNapravlenie.findAndCountAll({
       ...safeOptions
-      , ...paginate,
-      include: this.relations.includeWithAll
+      , ...paginate
+      ,where: {
+        ...searchWhere
+      }
+      ,include: this.relations.includeWithAll
+      ,order: [
+        ['createdAt', 'DESC']
+      ]
     });
   }
 
@@ -122,6 +152,19 @@ class NapravlenieService extends Service {
     }, {
       where: { id },
       ...safeOptions
+    });
+  }
+
+  async personalRejectNapravlenie({ id, personalId, otdelId, subOtdelId, rejectionDescription }) {
+    return db.vnytNapravlenie.update({
+      rejectPersonalId: personalId,
+      rejectOtdelId: otdelId,
+      rejectSubOtdelId: subOtdelId,
+      rejectDate: new Date(),
+      rejectionDescription: rejectionDescription,
+      status: 'rejected'
+    }, {
+      where: { id }
     });
   }
 }

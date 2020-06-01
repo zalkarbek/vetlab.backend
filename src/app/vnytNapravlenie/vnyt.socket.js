@@ -4,7 +4,6 @@ const socketSafeAsync = SocketHandler.getMiddleware('socketSafeAsync');
 
 class VnytSocket extends SocketHandler {
   async bindingEvents({ socket }) {
-    await super.bindingEvents({ socket });
     const EVENTS = this.getSocksEvents();
     socket.on(
       EVENTS.SERVER_VNYT_NAPRAVLENIE_ACCEPT,
@@ -14,6 +13,18 @@ class VnytSocket extends SocketHandler {
           socket,
           errorEvent: 'response:error',
           successEvent: EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS
+        }
+      )
+    );
+
+    socket.on(
+      EVENTS.SERVER_VNYT_NAPRAVLENIE_REJECT,
+      socketSafeAsync(
+        handler.onReject.bind(this, { socket }),
+        {
+          socket,
+          errorEvent: 'response:error',
+          successEvent: EVENTS.CLIENT_VNYT_NAPRAVLENIE_REJECT
         }
       )
     );

@@ -85,6 +85,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    }
+
 
   }, {
     tableName: 'pos_materialy',

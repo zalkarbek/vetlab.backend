@@ -6,25 +6,25 @@ class SocketHandler extends Handler {
   }
 
   async onConnect(socket) {
+    await this.onConnectEvent(socket);
     if(socket.payload && socket.payload.userId) {
+      await this.bindingDisconnectEvents({ socket });
       await this.bindingEvents({ socket });
     }
   }
 
-  async bindingEvents({ socket }) {
-    socket.on('disconnect', this.onDisconnect({ socket }));
-    socket.on('disconnecting', this.onDisconnecting({ socket }));
+  async onConnectEvent() {}
+
+  async bindingDisconnectEvents({ socket }) {
+    socket.on('disconnect', this.onDisconnect.bind(this, { socket }));
+    socket.on('disconnecting', this.onDisconnecting.bind(this, { socket }));
   }
 
   onDisconnect({ socket }) {
-    return () => {
-      socket.removeAllListeners();
-    };
+    socket.removeAllListeners();
   }
   onDisconnecting({ socket }) {
-    return () => {
-      socket.removeAllListeners();
-    };
+    socket.removeAllListeners();
   }
 }
 

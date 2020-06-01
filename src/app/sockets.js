@@ -1,5 +1,5 @@
 const userSocket = require('./user/user.socket');
-const inDirection = require('./vnytNapravlenie/vnyt.socket');
+const vnytSocket = require('./vnytNapravlenie/vnyt.socket');
 const naSocket = require('./napravlenie/na.socket');
 const Handler = require('./Handler');
 
@@ -23,7 +23,7 @@ class Sockets {
     // HANDLING
     // authSocket.binding({ socketIO:guestIO });
     userSocket.binding({ socketIO: authIO });
-    inDirection.binding({ socketIO: authIO });
+    vnytSocket.binding({ socketIO: authIO });
     naSocket.binding({ socketIO: authIO });
   }
 }

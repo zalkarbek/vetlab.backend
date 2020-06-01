@@ -22,8 +22,13 @@ module.exports = {
     USER_SERVER_GET_PROFILE: 'user:server:get_profile',
     USER_CLIENT_GET_PROFILE: 'user:client:get_profile',
 
+    // принятие внутреннего направления
     SERVER_VNYT_NAPRAVLENIE_ACCEPT: 'server:vnyt_napravlenie:accept',
     CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS: 'client:vnyt_napravlenie:accept:success',
+
+    // отклонение внутреннего направления
+    SERVER_VNYT_NAPRAVLENIE_REJECT: 'server:vnyt_napravlenie:reject',
+    CLIENT_VNYT_NAPRAVLENIE_REJECT: 'server:vnyt_napravlenie:reject',
 
     // когда врач отправляет направление на внутренний
     SERVER_NAPRAVLENIE_SEND_TO_OTDEL: 'server:napravlenie:send_to_otdel',

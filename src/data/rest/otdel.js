@@ -25,5 +25,12 @@ module.exports = {
       middleware: [],
       controllerMethod: 'getWithOtdelenia'
     },
+    {
+      name: 'getWithNonSpec',
+      url: `/api/v1/${routePrefix}/with/nonspec`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getWithNonSpec'
+    },
   ]
 };

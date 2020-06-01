@@ -14,7 +14,10 @@ class NapravlenieService extends Service {
           model: db.posMaterial,
           include: [
             {
-              model: db.sMaterial
+              model: db.sMaterial,
+            },
+            {
+              model: db.sMera
             }
           ]
         }
@@ -30,33 +33,105 @@ class NapravlenieService extends Service {
           model: db.posMaterial,
           include: [
             {
-              model: db.sMaterial
+              model: db.sMaterial,
+            },
+            {
+              model: db.sMera
             }
           ]
-          // where: { isArchive: 0 }
         }
       ],
-      ...safeOptions
+      ...safeOptions,
+      order: [
+        ['createdAt', 'DESC']
+      ]
     });
   }
 
-  async getAllWithPosMaterialWithPaginate({ page, pageSize }, options = {}) {
+  async getAllWithPosMaterialWithPaginate(
+    {
+      page,
+      pageSize,
+      search,
+      searchColumn,
+      searchPosition = 'substring'
+    },
+    options = {}
+  ) {
     const safeOptions = await this.safeOptions(options);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
+    const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
     return db[this.modelName].findAndCountAll({
-      include: [
+      ...safeOptions
+      , ...paginate
+      ,where: {
+        ...searchWhere
+      }
+      ,include: [
         {
           model: db.posMaterial,
           include: [
             {
               model: db.sMaterial
+            },
+            {
+              model: db.sMera
             }
           ]
         }
-      ],
+      ]
+      , order: [
+        ['createdAt', 'DESC']
+      ]
+    });
+  }
+
+  async getAllWithPosMaterialWithPaginateAndVnyt(
+    {
+      page,
+      pageSize,
+      search,
+      searchColumn,
+      searchPosition = 'substring'
+    },
+    options = {}
+  ) {
+    const safeOptions = await this.safeOptions(options);
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
+    const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
+
+    return db[this.modelName].findAndCountAll({
       ...safeOptions
       , ...paginate
+      ,where: {
+        ...searchWhere
+      }
+      ,include: [
+        {
+          model: db.posMaterial,
+          include: [
+            {
+              model: db.sMaterial
+            },
+            {
+              model: db.sMera
+            }
+          ]
+        },
+        {
+          model: db.vnytNapravlenie,
+          include: [
+            {
+              model: db.otdel,
+              as: 'napravlenOtdel'
+            }
+          ]
+        }
+      ]
+      , order: [
+        ['createdAt', 'DESC']
+      ]
     });
   }
 
@@ -128,6 +203,13 @@ class NapravlenieService extends Service {
     return db[this.modelName].update({ status }, {
       where: { id },
       ...safeOptions
+    });
+  }
+
+  async destroyById(id) {
+    await posMaterialService.removesByNapravlenieId(id);
+    return db[this.modelName].destroy({
+      where: { id }
     });
   }
 }

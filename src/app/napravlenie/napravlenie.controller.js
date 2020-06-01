@@ -38,11 +38,42 @@ class BaseController extends Controller {
   }
 
   async allWithPosMaterialWithPaginate(req, res) {
-    const  { page, pageSize, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    const  {
+      page,
+      pageSize,
+      attributes,
+      search,
+      searchColumn,
+      searchPosition,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await directionService.getAllWithPosMaterialWithPaginate({ page, pageSize }, options);
+    const result = await directionService.getAllWithPosMaterialWithPaginate(
+      { page, pageSize, search, searchColumn, searchPosition },
+      options
+    );
+    res.json(result);
+  }
+
+  async allWithPosMaterialWithPaginateAndVnyt(req, res) {
+    const  {
+      page,
+      pageSize,
+      attributes,
+      search,
+      searchColumn,
+      searchPosition,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await directionService.getAllWithPosMaterialWithPaginateAndVnyt(
+      { page, pageSize, search, searchColumn, searchPosition },
+      options
+    );
     res.json(result);
   }
 
@@ -70,10 +101,11 @@ class BaseController extends Controller {
     if(!createdDirection) {
       throw new Error('napravlenie not saved');
     }
+    const direction = await directionService.getById(createdDirection.id);
     return res.json(rest.responseWith({
       unit: restData.i18nUnitOne,
       message: 'create.success.one',
-      data: createdDirection
+      data: direction
     }));
   }
 
@@ -87,6 +119,16 @@ class BaseController extends Controller {
       unit: restData.i18nUnitOne,
       message: 'update.success.one',
       data: updatedDirection
+    }));
+  }
+
+  async destroy(req, res) {
+    const id = req.body.id;
+    const deleted = await directionService.destroyById(id);
+    return res.json(rest.responseWith({
+      unit:  restData.i18nUnitOne,
+      message: 'destroy.success.one',
+      data: deleted
     }));
   }
 

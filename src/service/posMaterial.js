@@ -48,6 +48,12 @@ class PosMaterialService extends Service {
       ...safeOptions
     });
   }
+
+  async removesByNapravlenieId(napravlenieId) {
+    return db[this.modelName].destroy({
+      where: { napravlenieId }
+    });
+  }
 }
 
 module.exports = new PosMaterialService({ modelName: 'posMaterial' });

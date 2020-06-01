@@ -164,7 +164,6 @@ class Controller {
       searchPosition,
       attributes
     } = refService.getObjectOneOfTwo(req.query, req.body);
-    console.log(searchColumn);
     const searchResult = await refService.search(this.map.get('modelName'), {
       page,
       pageSize,

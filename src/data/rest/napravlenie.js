@@ -34,6 +34,13 @@ module.exports = {
       controllerMethod: 'allWithPosMaterialWithPaginate'
     },
     {
+      name: 'allWithPosMaterialWithPaginateAndVnyt',
+      url: `/api/v1/${routePrefix}/pos/withPaginateAndVnyt`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'allWithPosMaterialWithPaginateAndVnyt'
+    },
+    {
       name: 'sendToOtdel',
       url: `/api/v1/${routePrefix}/vnyt/sendToOtdel`,
       method: 'POST',

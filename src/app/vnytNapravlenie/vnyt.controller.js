@@ -18,11 +18,22 @@ class BaseController extends Controller {
   }
 
   async getAllVnytNapravlenieRelPaginate(req, res) {
-    const { page = 1, pageSize = 10, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    const  {
+      page,
+      pageSize,
+      attributes,
+      search,
+      searchColumn,
+      searchPosition,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await vnytNapravlenieService.getAllVnytNapravlenieRelPaginate({ page, pageSize }, options);
+    const result = await vnytNapravlenieService.getAllVnytNapravlenieRelPaginate(
+      { page, pageSize, search, searchColumn, searchPosition },
+      options
+    );
     res.json(result);
   }
 

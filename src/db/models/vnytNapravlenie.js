@@ -54,6 +54,36 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    rejectPersonalId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    rejectOtdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    rejectSubOtdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    rejectDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    rejectionDescription: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: null
+    },
+
     opPokazatelIdJSON: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -188,6 +218,21 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.subOtdel, {
       foreignKey: 'prinyalSubOtdelId',
       as: 'prinyalSubOtdel'
+    });
+
+    schema.belongsTo(models.personal, {
+      foreignKey: 'rejectPersonalId',
+      as: 'rejectPersonal'
+    });
+
+    schema.belongsTo(models.otdel, {
+      foreignKey: 'rejectOtdelId',
+      as: 'rejectOtdel'
+    });
+
+    schema.belongsTo(models.subOtdel, {
+      foreignKey: 'rejectSubOtdelId',
+      as: 'rejectSubOtdel'
     });
 
     schema.belongsTo(models.posMaterial, {

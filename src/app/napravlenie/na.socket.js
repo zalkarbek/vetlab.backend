@@ -4,7 +4,6 @@ const socketSafeAsync = SocketHandler.getMiddleware('socketSafeAsync');
 
 class Socket extends SocketHandler {
   async bindingEvents({ socket }) {
-    await super.bindingEvents({ socket });
     const EVENTS = this.getSocksEvents();
     socket.on(
       EVENTS.SERVER_NAPRAVLENIE_SEND_TO_OTDEL,
