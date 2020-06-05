@@ -50,6 +50,7 @@ module.exports = {
 
     SERVER_GENERATE_PROTOCOL:       'server:generate:protocol',
     CLIENT_GENERATE_PROTOCOL:       'client:generate:protocol',
-    CLIENT_GENERATE_PROTOCOL_SHARE: 'client:generate:protocol:share'
+    CLIENT_GENERATE_PROTOCOL_SHARE: 'client:generate:protocol:share',
+
   },
 };

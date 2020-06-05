@@ -21,9 +21,9 @@ class PersonalService extends Service {
     return db.personal.findByPk(id, { ...safeOptions });
   }
 
-  async getAllPersonalWithUser(options = {}) {
+  async getAllPersonalWithUser() {
     const userAttrsSafe = await this.safeAttributesForUser();
-    const updatedOptions = {
+    return db.personal.findAll({
       include: [
         {
           model: db.user,
@@ -37,14 +37,15 @@ class PersonalService extends Service {
             },
             through: 'roles'
           }
+        },
+        {
+          model: db.otdel
         }
       ],
-      ...options,
       where: {
         isAdmin: 0
       }
-    };
-    return refService.getAll(this.modelName, updatedOptions);
+    });
   }
 
   async getAllPersonalWithUserPaginate({ page, pageSize }, options = {}) {

@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('sMaterial', {
-
     i18n: {
       type: DataTypes.STRING(300),
       allowNull: true,
@@ -52,15 +51,6 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.sMaterialAnimalType, {
       foreignKey: 'sMaterialAnimalTypeId'
-    });
-
-    schema.hasMany(models.posMaterial, {
-      foreignKey: 'sMaterialId',
-      sourceKey: 'id'
-    });
-
-    schema.hasMany(models.vnytNapravlenie, {
-      foreignKey: 'posMaterialId'
     });
 
   };

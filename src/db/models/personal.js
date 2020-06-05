@@ -73,7 +73,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-
   }, {
     tableName: 'personal',
     modelName: 'personal',
@@ -103,15 +102,18 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     schema.hasMany(models.vnytNapravlenie, {
-      foreignKey: 'napravilPersonalId'
+      foreignKey: 'napravilPersonalId',
+      as: 'napravilPersonals'
     });
 
     schema.hasMany(models.napravlenie, {
-      foreignKey: 'zapolnilPersonalId'
+      foreignKey: 'zapolnilPersonalId',
+      as: 'zapolnilPersonals'
     });
 
     schema.hasMany(models.napravlenie, {
-      foreignKey: 'prinyalPersonalId'
+      foreignKey: 'prinyalPersonalId',
+      as: 'prinyalPersonals'
     });
 
   };

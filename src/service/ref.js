@@ -10,7 +10,12 @@ class RefService extends Service {
 
   async getAll(model, options = {}) {
     const safeOptions = await this.safeOptions(options);
-    return db[model].findAll(safeOptions);
+    return db[model].findAll({
+      ...safeOptions
+      ,order: [
+        ['createdAt', 'DESC']
+      ]
+    });
   }
 
   async getAllPaginate(model, { page, pageSize }, options = {}) {
@@ -20,6 +25,9 @@ class RefService extends Service {
     return db[model].findAndCountAll({
       ...safeOptions
       , ...paginate
+      , order: [
+        ['createdAt', 'DESC']
+      ]
     });
   }
 
@@ -52,6 +60,9 @@ class RefService extends Service {
       where,
       ...safeOptions
       , ...paginate
+      , order: [
+        ['createdAt', 'DESC']
+      ]
     });
   }
 }

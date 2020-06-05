@@ -15,8 +15,9 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const regions = await personalService.getAllPersonalWithUser(options);
-    res.json(regions);
+    const personal = await personalService.getAllPersonalWithUser(options);
+    console.log(personal);
+    res.json(personal);
   }
 
   async allPaginate(req, res) {

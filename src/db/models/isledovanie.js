@@ -25,13 +25,13 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    opPokazatelIdJSON: {
+    opPokazatelJSON: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
 
-    metodIdJSON: {
+    metodJSON: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
@@ -43,19 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    researchJSON: {
-      type: DataTypes.JSON,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    researchIdJSON: {
-      type: DataTypes.JSON,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    isDescription: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null

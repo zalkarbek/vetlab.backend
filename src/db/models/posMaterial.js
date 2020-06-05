@@ -7,9 +7,15 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    opPokazatelIdJSON: {
+    opPokazatelJSON: {
       type: DataTypes.JSON,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: null
+    },
+
+    sMaterialJSON: {
+      type: DataTypes.JSON,
+      allowNull: false,
       defaultValue: null
     },
 
@@ -37,15 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    sMaterialId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
-
     materialCount: {
       type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
+      allowNull: false,
       defaultValue: null
     },
 
@@ -104,12 +104,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'napravlenieId'
     });
 
-    schema.belongsTo(models.sMaterial, {
-      foreignKey: 'sMaterialId'
-    });
-
     schema.belongsTo(models.sMera, {
       foreignKey: 'sMeraId'
+    });
+
+    schema.hasMany(models.vnytNapravlenie, {
+      foreignKey: 'posMaterialId'
     });
   };
 

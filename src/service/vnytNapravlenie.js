@@ -10,9 +10,6 @@ class NapravlenieService extends Service {
           model: db.posMaterial,
           include: [
             {
-              model: db.sMaterial,
-            },
-            {
               model: db.sMera
             }
           ]

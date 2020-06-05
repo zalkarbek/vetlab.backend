@@ -8,11 +8,6 @@ class PosMaterialService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findAll({
       ...safeOptions,
-      include: [
-        {
-          model: db.sMaterial,
-        }
-      ],
       limit: 500
     });
   }
@@ -23,12 +18,7 @@ class PosMaterialService extends Service {
 
     return db[this.modelName].findAndCountAll({
       ...safeOptions
-      , ...paginate,
-      include: [
-        {
-          model: db.sMaterial,
-        }
-      ]
+      , ...paginate
     });
   }
 

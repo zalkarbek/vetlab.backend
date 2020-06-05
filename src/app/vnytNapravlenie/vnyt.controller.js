@@ -18,7 +18,7 @@ class BaseController extends Controller {
   }
 
   async getAllVnytNapravlenieRelPaginate(req, res) {
-    const  {
+    const {
       page,
       pageSize,
       attributes,

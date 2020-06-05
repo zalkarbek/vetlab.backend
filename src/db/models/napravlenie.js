@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    opPokazatelIdJSON: {
+    opPokazatelJSON: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null

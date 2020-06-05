@@ -1,63 +1,46 @@
 const Controller = require('../controller');
 const refService = Controller.getService('ref');
-const rest = Controller.getHelper('rest');
+const isledovanieService = Controller.getService('isledovanie');
+const restDataName = 'isledovanie';
 
-class IsledovanieController extends Controller {
-
-  constructor() {
-    super();
-    this.modelName = 'isledovanie';
-    this.i18nUnitOne = 'isledovanie.one';
-    this.i18nUnitMany = 'isledovanie.many';
-    this.id = this.id.bind(this);
-    this.all = this.all.bind(this);
-    this.create = this.create.bind(this);
-    this.update = this.update.bind(this);
-    this.destroy = this.destroy.bind(this);
-  }
-
-  async id(req, res) {
-    const { id } = req.params;
-    const unit = await refService.getById(this.modelName, id);
-    return res.json(unit);
+class BaseController extends Controller {
+  constructor(params) {
+    super(params);
   }
 
   async all(req, res) {
-    const regions = await refService.getAll(this.modelName);
-    res.json(regions);
+    const {
+      page = 1,
+      pageSize = 10,
+      attributes,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await isledovanieService.getAllPaginate({ page, pageSize }, options);
+    res.json(result);
   }
 
-  async create(req, res) {
-    const data = req.body;
-    const created = await refService.create(this.modelName, data);
-
-    return res.json(rest.responseWith({
-      unit:  this.i18nUnitOne,
-      message: 'create.success.one',
-      data: created
-    }));
-  }
-
-  async update(req, res) {
-    const data = req.body;
-    const updated = await refService.updateById(this.modelName, data);
-
-    return res.json(rest.responseWith({
-      unit: this.i18nUnitOne,
-      message: 'update.success.one',
-      data: updated
-    }));
-  }
-
-  async destroy(req, res) {
-    const { id } = req.body;
-    const deleted = await refService.destroyById(this.modelName, id);
-    return res.json(rest.responseWith({
-      unit: this.i18nUnitOne,
-      message: 'destroy.success.one',
-      data: deleted
-    }));
+  async allPaginate(req, res) {
+    const {
+      page,
+      pageSize,
+      attributes,
+      search,
+      searchColumn,
+      searchPosition,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await isledovanieService.getAllPaginateWithSearch(
+      { page, pageSize, search, searchColumn, searchPosition },
+      options
+    );
+    res.json(result);
   }
 }
 
-module.exports = new IsledovanieController();
+module.exports = new BaseController({ restDataName });

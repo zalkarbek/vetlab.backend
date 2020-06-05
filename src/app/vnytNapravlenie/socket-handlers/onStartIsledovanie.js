@@ -3,8 +3,8 @@ module.exports = async function({ socket }, data) {
   const {
     vnytNapravlenieId,
     napravlenieId,
-    metodIdJSON,
-    opPokazatelIdJSON,
+    metodJSON,
+    opPokazatelJSON,
     personalId,
     otdelId,
     subOtdelId
@@ -15,8 +15,8 @@ module.exports = async function({ socket }, data) {
   const newIs = await isService.startIsledovanie({
     vnytNapravlenieId,
     napravlenieId,
-    metodIdJSON,
-    opPokazatelIdJSON,
+    metodJSON,
+    opPokazatelJSON,
     personalId,
     otdelId,
     subOtdelId
