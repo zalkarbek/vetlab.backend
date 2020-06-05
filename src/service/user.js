@@ -237,9 +237,10 @@ class UserService extends Service {
         where: { user_id: id }
       });
       roles.forEach((role) => {
+        console.log(role);
         db.userInRoles.create({
           user_id: id,
-          role_id: role
+          role_id: role.id
         });
       });
       return true;
