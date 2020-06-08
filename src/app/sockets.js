@@ -1,12 +1,12 @@
 const userSocket = require('./user/user.socket');
 const vnytSocket = require('./vnytNapravlenie/vnyt.socket');
 const naSocket = require('./napravlenie/na.socket');
+const isSocket = require('./isledovanie/is.socket');
 const Handler = require('./Handler');
 
 class Sockets {
   async binding({ socketServer }) {
     const SOCKS = Handler.getInject('SOCKS');
-
     // Пространство авторизованных пользователей
     const authIO = socketServer.of(`/${SOCKS.NAMESPACES.AUTHORIZED}`);
 
@@ -25,6 +25,7 @@ class Sockets {
     userSocket.binding({ socketIO: authIO });
     vnytSocket.binding({ socketIO: authIO });
     naSocket.binding({ socketIO: authIO });
+    isSocket.binding({ socketIO: authIO });
   }
 }
 

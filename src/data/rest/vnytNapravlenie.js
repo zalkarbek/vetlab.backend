@@ -19,11 +19,18 @@ module.exports = {
   api: [
     ...baseApi,
     {
-      name: 'getAllVnytNapravlenieRelPaginate',
-      url: `/api/v1/${routePrefix}/rel/paginate`,
+      name: 'getAllVnytNapravlenieRelPaginateEpic',
+      url: `/api/v1/${routePrefix}/epic/rel/paginate`,
       method: 'GET',
       middleware: [],
-      controllerMethod: 'getAllVnytNapravlenieRelPaginate'
+      controllerMethod: 'getAllVnytNapravlenieRelPaginateEpic'
+    },
+    {
+      name: 'getAllVnytNapravlenieRelPaginatePub',
+      url: `/api/v1/${routePrefix}/pub/rel/paginate`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getAllVnytNapravlenieRelPaginatePub'
     },
   ]
 };

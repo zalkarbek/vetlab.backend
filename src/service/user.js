@@ -117,7 +117,12 @@ class UserService extends Service {
           where: { active: 1 }
         },
         {
-          model: db.personal
+          model: db.personal,
+          include: [
+            {
+              model: db.otdel
+            }
+          ]
         }
       ],
       ...safeAttrs

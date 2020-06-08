@@ -13,9 +13,25 @@ class PosMaterialService extends Service {
   }
 
   async getAllPaginate({ page, pageSize }, options = {}) {
-    const safeOptions = await this.safeOptions(options);
+    const safeOptions = await this.safeOptions({
+      ...options,
+    });
     const paginate = await this.getPaginateAttrs({ page, pageSize });
 
+    return db[this.modelName].findAndCountAll({
+      ...safeOptions
+      , ...paginate
+    });
+  }
+
+  async getAllPaginateExceptOwner({ page, pageSize }, options = {}) {
+    const safeOptions = await this.safeOptions({
+      ...options,
+      attributes: {
+        exclude: ['ownerJSON', 'kemOtobranJSON']
+      }
+    });
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
     return db[this.modelName].findAndCountAll({
       ...safeOptions
       , ...paginate

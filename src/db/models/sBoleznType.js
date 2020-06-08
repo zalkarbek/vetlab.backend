@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('sDoljnost', {
-
+  const schema = sequelize.define('sBoleznType', {
     i18n: {
       type: DataTypes.STRING(300),
       allowNull: true,
@@ -10,32 +9,23 @@ module.exports = (sequelize, DataTypes) => {
     shortName: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      defaultValue: null,
-      set(val) {
-        this.setDataValue('shortName', val.trim());
-      }
+      defaultValue: null
     },
 
     name: {
       type: DataTypes.STRING(300),
       allowNull: false,
-      defaultValue: null,
-      set(val) {
-        this.setDataValue('name', val.trim());
-      }
+      defaultValue: null
     },
 
   }, {
-    tableName: 's_doljnosti',
-    modelName: 'sDoljnost',
+    tableName: 's_bolezn_types',
+    modelName: 'sBoleznType',
     timestamps: true
   });
 
   schema.associate = (models) => {
     // associations can be defined here
-    schema.hasMany(models.personal, {
-      foreignKey: 'sDoljnostId'
-    });
   };
 
   return schema;

@@ -6,14 +6,6 @@ class NapravlenieService extends Service {
     super(params);
     this.relations = {
       includeWithAll: [
-        {
-          model: db.posMaterial,
-          include: [
-            {
-              model: db.sMera
-            }
-          ]
-        },
         // ============= Направил =====================//
         {
           model: db.personal,
@@ -76,6 +68,29 @@ class NapravlenieService extends Service {
           model: db.isledovanie,
           as: 'isledovanies'
         }
+      ],
+      includePub: [
+        {
+          model: db.posMaterial,
+          attributes: {
+            exclude: ['ownerJSON', 'kemOtobranJSON']
+          },
+          include: [
+            {
+              model: db.sMera
+            }
+          ]
+        },
+      ],
+      includeEpic: [
+        {
+          model: db.posMaterial,
+          include: [
+            {
+              model: db.sMera
+            }
+          ]
+        },
       ]
     };
   }
@@ -97,7 +112,10 @@ class NapravlenieService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db.vnytNapravlenie.findByPk(id, {
       ...safeOptions,
-      include: this.relations.includeWithAll,
+      include: [
+        ...this.relations.includeWithAll,
+        ...this.relations.includePub
+      ],
     });
   }
 
@@ -109,7 +127,10 @@ class NapravlenieService extends Service {
         napravlenieId,
         napravlenOtdelId
       },
-      include: this.relations.includeWithAll,
+      include: [
+        ...this.relations.includeWithAll,
+        ...this.relations.includePub
+      ],
     });
   }
 
@@ -117,11 +138,14 @@ class NapravlenieService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db.vnytNapravlenie.findAll({
       ...safeOptions,
-      include: this.relations.includeWithAll,
+      include: [
+        ...this.relations.includeWithAll,
+        ...this.relations.includePub
+      ],
     });
   }
 
-  async getAllVnytNapravlenieRelPaginate(
+  async getAllEpicRelPaginate(
     { page, pageSize, search, searchColumn, searchPosition = 'substring' },
     options = {}
     ) {
@@ -135,7 +159,34 @@ class NapravlenieService extends Service {
       ,where: {
         ...searchWhere
       }
-      ,include: this.relations.includeWithAll
+      ,include: [
+        ...this.relations.includeWithAll,
+        ...this.relations.includeEpic
+      ]
+      ,order: [
+        ['createdAt', 'DESC']
+      ]
+    });
+  }
+
+  async getAllPubRelPaginate(
+    { page, pageSize, search, searchColumn, searchPosition = 'substring' },
+    options = {}
+  ) {
+    const safeOptions = await this.safeOptions(options);
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
+    const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
+
+    return db.vnytNapravlenie.findAndCountAll({
+      ...safeOptions
+      , ...paginate
+      ,where: {
+        ...searchWhere
+      }
+      ,include: [
+        ...this.relations.includeWithAll,
+        ...this.relations.includePub
+      ]
       ,order: [
         ['createdAt', 'DESC']
       ]

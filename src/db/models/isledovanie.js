@@ -65,7 +65,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: null
-    }
+    },
+
+    finishedOtdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    finishedSubOtdelId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    finishedPersonalId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
 
   }, {
     tableName: 'isledovanie',
@@ -90,6 +108,21 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'isPersonalId'
     });
 
+
+    schema.belongsTo(models.otdel, {
+      foreignKey: 'finishedOtdelId',
+      as: 'finishedOtdel'
+    });
+
+    schema.belongsTo(models.subOtdel, {
+      foreignKey: 'finishedSubOtdelId',
+      as: 'finishedSubOtdel'
+    });
+
+    schema.belongsTo(models.personal, {
+      foreignKey: 'finishedPersonalId',
+      as: 'finishedPersonal'
+    });
   };
 
   return schema;

@@ -40,7 +40,7 @@ module.exports = ({ routePrefix }) => {
       name: 'destroy',
       url: `/api/v1/${routePrefix}/destroy`,
       method: 'DELETE',
-      middleware: [],
+      middleware: [middleware.getMiddleware('restTokenVerify')],
       controllerMethod: 'destroy'
     },
     {
@@ -54,14 +54,14 @@ module.exports = ({ routePrefix }) => {
       name: 'id',
       url: `/api/v1/${routePrefix}/id`,
       method: 'PUT',
-      middleware: [],
+      middleware: [middleware.getMiddleware('restTokenVerify')],
       controllerMethod: 'idUpdate'
     },
     {
       name: 'id',
       url: `/api/v1/${routePrefix}/id`,
       method: 'DELETE',
-      middleware: [],
+      middleware: [middleware.getMiddleware('restTokenVerify')],
       controllerMethod: 'idDestroy'
     },
   ];

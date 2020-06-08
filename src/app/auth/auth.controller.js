@@ -30,11 +30,12 @@ class AuthController extends Controller {
       }));
     }
     const personalData = {
+      fullName: personal.fullName,
       id: personal.id,
       otdelId: personal.otdelId,
       subOtdelId: personal.subOtdelId,
       sDoljnostId: personal.sDoljnostId,
-      departmentId: otdel.departmentId
+      otdel
     };
     const token = await authService.userGetToken(user, { personal: personalData });
     eventEmitter.emit(LOCAL_EVENTS.ON_USER_LOGIN, {

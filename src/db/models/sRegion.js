@@ -10,13 +10,19 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(255),
       defaultValue: null,
-      allowNull: true
+      allowNull: true,
+      set(val) {
+        this.setDataValue('name', val.trim());
+      }
     },
 
     shortName: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('shortName', val.trim());
+      }
     },
 
     parentId: {

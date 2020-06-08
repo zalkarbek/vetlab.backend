@@ -10,13 +10,19 @@ module.exports = (sequelize, DataTypes) => {
     shortName: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('shortName', val.trim());
+      }
     },
 
     name: {
       type: DataTypes.STRING(300),
       allowNull: false,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('name', val.trim());
+      }
     },
 
   }, {
@@ -27,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
-
     schema.hasMany(models.sPokazatel, {
       foreignKey: 'sOtdeleniaId',
       sourceKey: 'id'

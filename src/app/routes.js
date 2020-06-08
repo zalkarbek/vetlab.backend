@@ -23,8 +23,9 @@ const planRabotyRoutes = require('./plan/plan.routes');
 const personalRoutes = require('./personal/personal.routes');
 const posMaterialRoutes = require('./posMaterial/posMaterial.routes');
 const preparatRoutes = require('./preparat/preparat.routes');
-const isledovanieRoutes = require('./isledovanie/isledovanie.routes');
+const isledovanieRoutes = require('./isledovanie/is.routes');
 const isledovanieResultNamesRoutes = require('./isledovanieResultNames/isledovanieResult.routes');
+const isledovaniePdkNamesRoutes = require('./isledovaniePdkNames/isledovaniePdk.routes');
 
 module.exports = ({ routes }) => {
   return bindMethodToRoute(
@@ -54,7 +55,8 @@ module.exports = ({ routes }) => {
       posMaterialRoutes,
       preparatRoutes,
       isledovanieRoutes,
-      isledovanieResultNamesRoutes
+      isledovanieResultNamesRoutes,
+      isledovaniePdkNamesRoutes
     ],
     routes
   );

@@ -1,32 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('sMetod', {
+  const schema = sequelize.define('isledovaniePdkName', {
 
-    i18n: {
+    name: {
       type: DataTypes.STRING(300),
-      allowNull: true,
+      allowNull: false,
       defaultValue: null
     },
 
     shortName: {
       type: DataTypes.STRING(100),
-      allowNull: true,
-      defaultValue: null,
-      set(val) {
-        this.setDataValue('shortName', val.trim());
-      }
-    },
-
-    name: {
-      type: DataTypes.STRING(300),
-      allowNull: false,
-      defaultValue: null,
-      set(val) {
-        this.setDataValue('name', val.trim());
-      }
-    },
-
-    gosStandard: {
-      type: DataTypes.STRING(300),
       allowNull: true,
       defaultValue: null
     },
@@ -44,12 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }, {
-    tableName: 's_metod_isledovanie',
-    modelName: 'sMetod',
+    tableName: 'isledovanie_pdk_names',
+    modelName: 'isledovaniePdkName',
     timestamps: true
   });
   schema.associate = (models) => {
-    // associations can be defined here
     schema.belongsTo(models.sOtdelenia, {
       foreignKey: 'sOtdeleniaId',
       as: 'sOtdelenia'

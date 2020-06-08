@@ -73,6 +73,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    departmentId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
   }, {
     tableName: 'personal',
     modelName: 'personal',
@@ -99,6 +105,10 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.subOtdel, {
       foreignKey: 'subOtdelId'
+    });
+
+    schema.belongsTo(models.department, {
+      foreignKey: 'departmentId'
     });
 
     schema.hasMany(models.vnytNapravlenie, {

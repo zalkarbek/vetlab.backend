@@ -8,19 +8,6 @@ class IsledovanieService extends Service {
     this.relations = {
       includeWithAll: [
         {
-          model: db.vnytNapravlenie,
-          include: [
-            {
-              model: db.posMaterial,
-              include: [
-                {
-                  model: db.sMera
-                }
-              ]
-            },
-          ]
-        },
-        {
           model: db.otdel,
           include: [
             {
@@ -35,6 +22,56 @@ class IsledovanieService extends Service {
         {
           model: db.personal,
         },
+      ],
+      includePub: [
+        {
+          model: db.vnytNapravlenie,
+          include: [
+            {
+              model: db.posMaterial,
+              include: [
+                {
+                  model: db.sMera
+                }
+              ]
+            },
+          ]
+        },
+      ],
+      includeEpic: [
+        {
+          model: db.vnytNapravlenie,
+          include: [
+            {
+              model: db.posMaterial,
+              include: [
+                {
+                  model: db.sMera
+                }
+              ]
+            },
+          ]
+        },
+      ],
+      includeFinished: [
+        {
+          model: db.otdel,
+          as: 'finishedOtdel',
+          include: [
+            {
+              model: db.sOtdelenia,
+              as: 'sOtdelenia'
+            }
+          ]
+        },
+        {
+          model: db.subOtdel,
+          as: 'finishedSubOtdel',
+        },
+        {
+          model: db.personal,
+          as: 'finishedPersonal',
+        },
       ]
     };
   }
@@ -43,7 +80,11 @@ class IsledovanieService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findByPk(id, {
       ...safeOptions
-      , include: this.relations.includeWithAll
+      , include: [
+        ...this.relations.includeWithAll
+        ,...this.relations.includePub
+        ,...this.relations.includeFinished
+      ]
     });
   }
 
@@ -51,7 +92,11 @@ class IsledovanieService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findAll({
       ...safeOptions
-      , include: this.relations.includeWithAll
+      , include: [
+        ...this.relations.includeWithAll
+        ,...this.relations.includePub
+        ,...this.relations.includeFinished
+      ]
       , order: [
         ['createdAt', 'DESC']
       ]
@@ -65,7 +110,11 @@ class IsledovanieService extends Service {
     return db[this.modelName].findAndCountAll({
       ...safeOptions
       , ...paginate
-      , include: this.relations.includeWithAll
+      , include: [
+        ...this.relations.includeWithAll
+        ,...this.relations.includePub
+        ,...this.relations.includeFinished
+      ]
       , order: [
         ['createdAt', 'DESC']
       ]
@@ -86,7 +135,11 @@ class IsledovanieService extends Service {
       ,where: {
         ...searchWhere
       }
-      ,include: this.relations.includeWithAll
+      ,include: [
+        ...this.relations.includeWithAll
+        ,...this.relations.includePub
+        ,...this.relations.includeFinished
+      ]
       ,order: [
         ['createdAt', 'DESC']
       ]
@@ -118,13 +171,27 @@ class IsledovanieService extends Service {
     }, { ...safeOptions });
   }
 
-  async getIsledovanieWithVnytNapravlenie(id) {
-    return db[this.modelName].findByPk(id, {
-      include: [
-        {
-          model: db.vnytNapravlenie,
-        }
-      ]
+  async finishIsledovanie(
+    { id,
+      vnytNapravlenieId,
+      isResult,
+      personalId,
+      otdelId,
+      subOtdelId
+    }
+    , options = {}
+  ) {
+    const safeOptions = await this.safeOptions(options);
+    return db[this.modelName].update({
+      isResultJSON: isResult,
+      finishedOtdelId: otdelId,
+      finishedSubOtdelId: subOtdelId,
+      finishedPersonalId: personalId,
+      status:'finish',
+      dateFinish: new Date()
+    }, {
+      ...safeOptions,
+      where: { id }
     });
   }
 }

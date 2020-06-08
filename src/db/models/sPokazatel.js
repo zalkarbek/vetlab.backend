@@ -10,23 +10,32 @@ module.exports = (sequelize, DataTypes) => {
     shortName: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('shortName', val.trim());
+      }
     },
 
     name: {
       type: DataTypes.STRING(300),
       allowNull: false,
-      defaultValue: null
-    },
-
-    sOtdeleniaId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('name', val.trim());
+      }
     },
 
     pokazatel: {
       type: DataTypes.STRING(300),
+      allowNull: true,
+      defaultValue: null,
+      set(val) {
+        this.setDataValue('pokazatel', val.trim());
+      }
+    },
+
+    sOtdeleniaId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },

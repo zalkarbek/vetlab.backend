@@ -1,4 +1,4 @@
-const controller = require('./isledovanie.controller');
+const controller = require('./is.controller');
 const restData = controller.getRestData();
 
 module.exports = { controller, restData };

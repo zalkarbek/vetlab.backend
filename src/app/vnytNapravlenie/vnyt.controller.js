@@ -17,7 +17,7 @@ class BaseController extends Controller {
     res.json(result);
   }
 
-  async getAllVnytNapravlenieRelPaginate(req, res) {
+  async getAllVnytNapravlenieRelPaginateEpic(req, res) {
     const {
       page,
       pageSize,
@@ -30,7 +30,27 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await vnytNapravlenieService.getAllVnytNapravlenieRelPaginate(
+    const result = await vnytNapravlenieService.getAllEpicRelPaginate(
+      { page, pageSize, search, searchColumn, searchPosition },
+      options
+    );
+    res.json(result);
+  }
+
+  async getAllVnytNapravlenieRelPaginatePub(req, res) {
+    const {
+      page,
+      pageSize,
+      attributes,
+      search,
+      searchColumn,
+      searchPosition,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await vnytNapravlenieService.getAllPubRelPaginate(
       { page, pageSize, search, searchColumn, searchPosition },
       options
     );
