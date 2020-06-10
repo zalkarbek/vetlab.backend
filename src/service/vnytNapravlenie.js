@@ -95,9 +95,17 @@ class NapravlenieService extends Service {
     };
   }
   // ========================= REFERENCE ================================//
-  async createVnytNapravlenie(data, options = {}) {
+  async createVnytNapravlenie({ posMaterials = [], ...otherData }, options = {}) {
     const safeOptions = await this.safeOptions(options);
-    return db.vnytNapravlenie.create(data, { ...safeOptions });
+    const newNap =  await db.vnytNapravlenie.create(otherData, {
+      ...safeOptions,
+    });
+    const posMaterialIds = [];
+    posMaterials.forEach((pos) => {
+      posMaterialIds.push(pos.id);
+    });
+    await newNap.addPosMaterials(posMaterialIds);
+    return newNap;
   }
 
   async updateVnytNapravlenieStatus(id, status, options = {}) {

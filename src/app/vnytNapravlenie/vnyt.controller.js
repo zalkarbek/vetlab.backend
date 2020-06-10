@@ -8,6 +8,15 @@ class BaseController extends Controller {
     super(params);
   }
 
+  async id(req, res) {
+    const { id, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    const result = await vnytNapravlenieService.getVnytNapravlenieById(id, options);
+    return res.json(result);
+  }
+
   async getAllVnytNapravlenieWith(req, res) {
     const {attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
@@ -55,15 +64,6 @@ class BaseController extends Controller {
       options
     );
     res.json(result);
-  }
-
-  async getVnytNapravlenieById(req, res) {
-    const { id, attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
-    if (Array.isArray(attributes) && attributes.length >= 1) {
-      options.attributes = attributes;
-    }
-    const result = await vnytNapravlenieService.getVnytNapravlenieById(id, options);
-    return res.json(result);
   }
 }
 

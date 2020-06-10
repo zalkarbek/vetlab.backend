@@ -90,11 +90,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    posMaterialId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
+    // posMaterialId: {
+    //   type: DataTypes.INTEGER(11).UNSIGNED,
+    //   allowNull: true,
+    //   defaultValue: null
+    // },
 
     postMaterialCount: {
       type: DataTypes.INTEGER,
@@ -180,6 +180,13 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true
   });
   schema.associate = (models) => {
+
+    schema.belongsToMany(models.posMaterial, {
+      through: 'vnytNapravlenie_posMaterial',
+      foreignKey: 'vnytNapravlenieId',
+      otherKey: 'posMaterialId'
+    });
+
     // associations can be defined here
     schema.belongsTo(models.napravlenie, {
       foreignKey: 'napravlenieId'
@@ -235,9 +242,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'rejectSubOtdel'
     });
 
-    schema.belongsTo(models.posMaterial, {
-      foreignKey: 'posMaterialId'
-    });
+    // schema.belongsTo(models.posMaterial, {
+    //   foreignKey: 'posMaterialId'
+    // });
 
     schema.hasMany(models.isledovanie, {
       foreignKey: 'vnytNapravlenieId',

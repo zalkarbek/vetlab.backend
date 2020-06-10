@@ -17,6 +17,9 @@ const asyncMiddleware = (
           message: errorMessage || e.message,
           stack: config.isDev ? e : {}
         });
+      if(config.isDev) {
+        console.error(e);
+      }
     };
     const successCb = (data) => {
       if(successEvent)

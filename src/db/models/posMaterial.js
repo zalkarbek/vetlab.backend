@@ -99,6 +99,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   schema.associate = (models) => {
+    schema.belongsToMany(models.vnytNapravlenie, {
+      through: 'vnytNapravlenie_posMaterial',
+      foreignKey: 'posMaterialId',
+      otherKey: 'vnytNapravlenieId'
+    });
+
     // associations can be defined here
     schema.belongsTo(models.napravlenie, {
       foreignKey: 'napravlenieId'
@@ -108,9 +114,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sMeraId'
     });
 
-    schema.hasMany(models.vnytNapravlenie, {
-      foreignKey: 'posMaterialId'
-    });
+    // schema.hasMany(models.vnytNapravlenie, {
+    //   foreignKey: 'posMaterialId'
+    // });
   };
 
   return schema;

@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: null,
       set(val) {
-        this.setDataValue('shortName', val.trim());
+        if(val) {
+          this.setDataValue('shortName', val.trim());
+        } else {
+          this.setDataValue('shortName', val);
+        }
       }
     },
 
@@ -21,7 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: null,
       set(val) {
-        this.setDataValue('name', val.trim());
+        if(val) {
+          this.setDataValue('name', val.trim());
+        } else {
+          this.setDataValue('name', val);
+        }
       }
     },
 
@@ -30,7 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: null,
       set(val) {
-        this.setDataValue('pokazatel', val.trim());
+        if(val) {
+          this.setDataValue('pokazatel', val.trim());
+        } else {
+          this.setDataValue('pokazatel', val);
+        }
       }
     },
 

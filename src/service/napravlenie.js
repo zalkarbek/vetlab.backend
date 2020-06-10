@@ -28,6 +28,9 @@ class NapravlenieService extends Service {
       include: [
         {
           model: db.posMaterial,
+          order: [
+            ['createdAt', 'DESC']
+          ],
           include: [
             {
               model: db.sMera
