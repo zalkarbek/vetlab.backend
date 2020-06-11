@@ -95,6 +95,12 @@ class NapravlenieService extends Service {
     };
   }
   // ========================= REFERENCE ================================//
+  async getLastNomerByOtdelId(napravlenOtdelId) {
+    return db[this.modelName].findAll({
+      where: { napravlenOtdelId }
+    });
+  }
+
   async createVnytNapravlenie({ posMaterials = [], ...otherData }, options = {}) {
     const safeOptions = await this.safeOptions(options);
     const newNap =  await db.vnytNapravlenie.create(otherData, {

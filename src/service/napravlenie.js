@@ -5,6 +5,13 @@ const db = Service.getInject('db');
 
 class NapravlenieService extends Service {
   // ========================= REFERENCE ================================//
+
+  async getLastNomerByOtdelId(otdelId) {
+    return db[this.modelName].findAll({
+      where: { otdelId }
+    });
+  }
+
   async getById(id, options = {}) {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findByPk(id, {

@@ -3,6 +3,45 @@ const db = Service.getInject('db');
 
 class PosMaterialService extends Service {
   // ========================= REFERENCE ================================//
+  constructor(params) {
+    super(params);
+    this.relations = {
+      includePub: [
+        {
+          model: db.napravlenie,
+          attributes: {
+            exclude: [
+              'probyNapravilJSON',
+              'probyDostavilJSON'
+            ]
+          },
+        }
+      ]
+    };
+  }
+
+  async getLastNomerByOtdelId(otdelId) {
+    return db[this.modelName].findAll({
+      include: [
+        {
+          model: db.napravlenie,
+          attributes: {
+            exclude: [
+              'probyNapravilJSON',
+              'probyDostavilJSON'
+            ]
+          },
+          where: {
+            otdelId
+          }
+        }
+      ]
+      ,limit: 1
+      ,order: [
+        ['createdAt', 'DESC']
+      ]
+    });
+  }
 
   async getAll(options = {}) {
     const safeOptions = await this.safeOptions(options);
