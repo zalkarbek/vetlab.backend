@@ -1,19 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('posMaterial', {
 
-    napravlenieId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
-
     nomer: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    IndexNumber: {
+    indexNumber: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    napravlenieId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
