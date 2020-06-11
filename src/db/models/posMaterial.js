@@ -7,6 +7,18 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    nomer: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    IndexNumber: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
     opPokazatelJSON: {
       type: DataTypes.JSON,
       allowNull: false,
