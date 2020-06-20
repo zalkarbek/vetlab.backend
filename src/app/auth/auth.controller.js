@@ -35,6 +35,7 @@ class AuthController extends Controller {
       otdelId: personal.otdelId,
       subOtdelId: personal.subOtdelId,
       sDoljnostId: personal.sDoljnostId,
+      sOtdeleniaId: otdel.sOtdeleniaId,
       otdel
     };
     const token = await authService.userGetToken(user, { personal: personalData });
