@@ -1,13 +1,7 @@
-module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('sRMaterialName', {
-    i18n: {
-      type: DataTypes.STRING(300),
-      allowNull: true,
-      defaultValue: null
-    },
-
+module.exports = (DataTypes) => {
+  return {
     shortName: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
       set(val) {
@@ -20,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     name: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: null,
       set(val) {
@@ -37,17 +31,5 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: null
     }
-
-  }, {
-    tableName: 's_rmaterials_names',
-    modelName: 'sRMaterialName',
-    timestamps: true
-  });
-
-  schema.associate = (models) => {
-    // associations can be defined here
-
   };
-
-  return schema;
 };

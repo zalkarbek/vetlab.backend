@@ -56,7 +56,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null
-    }
+    },
+
+    timeCount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
 
   }, {
     tableName: 's_pokazately',

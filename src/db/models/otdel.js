@@ -1,12 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('otdel', {
-
-    i18n: {
-      type: DataTypes.STRING(300),
-      allowNull: true,
-      defaultValue: null
-    },
-
     shortName: {
       type: DataTypes.STRING(100),
       allowNull: true,

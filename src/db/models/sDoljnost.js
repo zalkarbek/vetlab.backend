@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('sDoljnost', {
-
     i18n: {
       type: DataTypes.STRING(300),
       allowNull: true,

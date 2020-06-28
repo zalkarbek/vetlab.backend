@@ -24,6 +24,7 @@ fs
   .filter(file => {
     return (file.indexOf('.') !== 0)
       && (file !== basename)
+      && (file !== 'baseFields')
       && (file.slice(-3) === '.js');
   })
   .forEach(file => {
