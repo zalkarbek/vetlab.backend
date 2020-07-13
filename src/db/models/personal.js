@@ -11,11 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    patronymicName: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null
+    },
+
     fullName: {
       type: DataTypes.VIRTUAL,
       allowNull: true,
       get() {
-        return this.lastName + ' ' + this.firstName;
+        return this.lastName + ' ' + this.firstName + ' ' + this.patronymicName;
       }
     },
 

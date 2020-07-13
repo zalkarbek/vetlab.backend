@@ -6,16 +6,30 @@ class OtdelService extends Service {
   // ========================= REFERENCE ================================//
   async getOtdelById(otdelId, options = {}) {
     const safeOptions = await this.safeOptions(options);
-    return db[this.modelName].findByPk(otdelId, { ...safeOptions });
+    return db[this.modelName].findByPk(otdelId, {
+      ...safeOptions
+      ,include: [
+        {
+          model: db.personal,
+          as: 'headPersonal'
+        }
+      ]
+    });
   }
 
   async getAll(model, options = {}) {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findAll({
-      ...safeOptions,
-      where: {
+      ...safeOptions
+      ,where: {
         nonSpecOtdel: 0
       }
+      ,include: [
+        {
+          model: db.personal,
+          as: 'headPersonal'
+        }
+      ]
     });
   }
 
@@ -28,6 +42,12 @@ class OtdelService extends Service {
       , where: {
         nonSpecOtdel: 0
       }
+      ,include: [
+        {
+          model: db.personal,
+          as: 'headPersonal'
+        }
+      ]
     });
   }
 
@@ -35,6 +55,12 @@ class OtdelService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].findAll({
       ...safeOptions
+      ,include: [
+        {
+          model: db.personal,
+          as: 'headPersonal'
+        }
+      ]
     });
   }
 
@@ -43,7 +69,13 @@ class OtdelService extends Service {
     const paginate = await this.getPaginateAttrs({ page, pageSize });
     return db[this.modelName].findAndCountAll({
       ...safeOptions
-      , ...paginate
+      ,...paginate
+      ,include: [
+        {
+          model: db.personal,
+          as: 'headPersonal'
+        }
+      ]
     });
   }
 
@@ -56,6 +88,10 @@ class OtdelService extends Service {
         {
           model: db.sOtdelenia,
           as: 'sOtdelenia'
+        },
+        {
+          model: db.personal,
+          as: 'headPersonal'
         }
       ]
     });

@@ -35,7 +35,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: 0
-    }
+    },
+
+    reportTitleName: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+      defaultValue: null
+    },
+
+    reportFooterName: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+      defaultValue: null
+    },
 
   }, {
     tableName: 'departments',

@@ -38,6 +38,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    headPersonalId: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
     otdelDataJSON: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -47,7 +53,14 @@ module.exports = (sequelize, DataTypes) => {
     nonSpecOtdel: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
-      defaultValue: 0
+      defaultValue: 0,
+      set(val) {
+        if(val) {
+          this.setDataValue('nonSpecOtdel', val);
+        } else {
+          this.setDataValue('nonSpecOtdel', 0);
+        }
+      }
     }
 
   }, {
@@ -58,7 +71,6 @@ module.exports = (sequelize, DataTypes) => {
 
   schema.associate = (models) => {
     // associations can be defined here
-
     schema.belongsTo(models.department, {
       foreignKey: 'departmentId'
     });
@@ -66,6 +78,11 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.sOtdelenia, {
       foreignKey: 'sOtdeleniaId',
       as: 'sOtdelenia'
+    });
+
+    schema.belongsTo(models.personal, {
+      foreignKey: 'headPersonalId',
+      as: 'headPersonal'
     });
 
     schema.hasMany(models.subOtdel, {
@@ -83,7 +100,6 @@ module.exports = (sequelize, DataTypes) => {
     schema.hasMany(models.isledovanie, {
       foreignKey: 'isOtdelId'
     });
-
   };
 
   return schema;

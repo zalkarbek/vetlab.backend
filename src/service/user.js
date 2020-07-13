@@ -1,8 +1,10 @@
 const Service = require('./service');
 const helpers = require('../helpers');
+const roleService = require('./role');
+
 const db = Service.getInject('db');
 const crypter = helpers.getHelper('crypter');
-const roleService = require('./role');
+const asyncForEach = Service.getHelper('asyncForEach');
 
 class UserService extends Service {
   constructor() {
@@ -225,10 +227,10 @@ class UserService extends Service {
     const user = await this.getUserById(userId);
     if ( !user) throw new Error('error.user.notFound');
     if(roles && Array.isArray(roles) && roles.length >= 1) {
-      roles.forEach((role) => {
-        db.userInRoles.create({
-          user_id: user.id,
-          role_id: role
+      await asyncForEach(roles, async (role) => {
+        await db.userInRoles.create({
+          user_id: userId,
+          role_id: role.id
         });
       });
       return true;
@@ -241,9 +243,8 @@ class UserService extends Service {
       await db.userInRoles.destroy({
         where: { user_id: id }
       });
-      roles.forEach((role) => {
-        console.log(role);
-        db.userInRoles.create({
+      await asyncForEach(roles, async (role) => {
+        await db.userInRoles.create({
           user_id: id,
           role_id: role.id
         });

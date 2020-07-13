@@ -33,6 +33,18 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+    reportTitleName: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+      defaultValue: null
+    },
+
+    reportFooterName: {
+      type: DataTypes.STRING(300),
+      allowNull: false,
+      defaultValue: null
+    },
+
   }, {
     tableName: 's_otdelenia',
     modelName: 'sOtdelenia',
@@ -55,7 +67,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sOtdeleniaId',
       sourceKey: 'id'
     });
-
   };
 
   return schema;
