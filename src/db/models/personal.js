@@ -25,6 +25,21 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+    fullShortName: {
+      type: DataTypes.VIRTUAL,
+      allowNull: true,
+      get() {
+        const firstLetterFirstName = this.firstName ? this.firstName[0] : '';
+        const firstLetterPatronymicName = this.patronymicName ? this.patronymicName[0] : '';
+
+        return this.lastName
+          + '.' +
+          firstLetterFirstName
+          + '.' +
+          firstLetterPatronymicName;
+      }
+    },
+
     personalDataJSON: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -107,6 +122,11 @@ module.exports = (sequelize, DataTypes) => {
 
     schema.belongsTo(models.otdel, {
       foreignKey: 'otdelId'
+    });
+
+    schema.hasOne(models.otdel, {
+      foreignKey: 'headPersonalId',
+      as: 'headedOtdel'
     });
 
     schema.belongsTo(models.subOtdel, {

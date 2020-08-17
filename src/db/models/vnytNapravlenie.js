@@ -1,5 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('vnytNapravlenie', {
+
+    nomer: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
     napravlenieId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,

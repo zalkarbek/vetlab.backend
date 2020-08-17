@@ -32,5 +32,41 @@ module.exports = {
       middleware: [],
       controllerMethod: 'changePassword'
     },
+
+    {
+      name: 'getLaborantsByOtdelId',
+      url: `/api/v1/${routePrefix}/laborants`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getLaborantsByOtdelId'
+    },
+    {
+      name: 'getChemistsByOtdelId',
+      url: `/api/v1/${routePrefix}/chemists`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getChemistsByOtdelId'
+    },
+    {
+      name: 'getSeniorsByOtdelId',
+      url: `/api/v1/${routePrefix}/seniors`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getSeniorsByOtdelId'
+    },
+    {
+      name: 'getHeadByOtdelId',
+      url: `/api/v1/${routePrefix}/head`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getHeadByOtdelId'
+    },
+    {
+      name: 'getHeadsByOtdelId',
+      url: `/api/v1/${routePrefix}/heads`,
+      method: 'GET',
+      middleware: [],
+      controllerMethod: 'getHeadsByOtdelId'
+    },
   ]
 };

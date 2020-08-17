@@ -26,6 +26,10 @@ const preparatRoutes = require('./preparat/preparat.routes');
 const isledovanieRoutes = require('./isledovanie/is.routes');
 const isledovanieResultNamesRoutes = require('./isledovanieResultNames/isledovanieResult.routes');
 const isledovaniePdkNamesRoutes = require('./isledovaniePdkNames/isledovaniePdk.routes');
+const pokazatelPdkRoutes = require('./pokazatelPdk/pokazatelPdk.routes');
+
+const otdelReportRoutes = require('./report/otdel.report.controller');
+const isledovanieReportRoutes = require('./report/is.report.controller');
 
 module.exports = ({ routes }) => {
   return bindMethodToRoute(
@@ -56,7 +60,11 @@ module.exports = ({ routes }) => {
       preparatRoutes,
       isledovanieRoutes,
       isledovanieResultNamesRoutes,
-      isledovaniePdkNamesRoutes
+      isledovaniePdkNamesRoutes,
+      pokazatelPdkRoutes,
+
+      otdelReportRoutes,
+      isledovanieReportRoutes
     ],
     routes
   );

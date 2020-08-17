@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Service = require('./service');
 const db = Service.getInject('db');
 
@@ -11,8 +12,11 @@ class IsledovanieService extends Service {
           model: db.otdel,
           include: [
             {
+              model: db.department
+            },
+            {
               model: db.sOtdelenia,
-              as: 'sOtdelenia'
+              as: 'sOtdelenia',
             }
           ]
         },
@@ -23,7 +27,27 @@ class IsledovanieService extends Service {
           model: db.personal,
         },
       ],
+
       includePub: [
+        {
+          model: db.vnytNapravlenie,
+          include: [
+            {
+              model: db.posMaterial,
+              attributes: {
+                exclude: ['ownerJSON', 'mestoOtboraRegionJSON', 'kemOtobranJSON']
+              },
+              include: [
+                {
+                  model: db.sMera
+                }
+              ]
+            },
+          ]
+        },
+      ],
+
+      includePubReport: [
         {
           model: db.vnytNapravlenie,
           include: [
@@ -35,9 +59,13 @@ class IsledovanieService extends Service {
                 }
               ]
             },
+            {
+              model: db.napravlenie
+            }
           ]
         },
       ],
+
       includeEpic: [
         {
           model: db.vnytNapravlenie,
@@ -53,6 +81,7 @@ class IsledovanieService extends Service {
           ]
         },
       ],
+
       includeFinished: [
         {
           model: db.otdel,
@@ -73,6 +102,7 @@ class IsledovanieService extends Service {
           as: 'finishedPersonal',
         },
       ]
+
     };
   }
 
@@ -83,6 +113,18 @@ class IsledovanieService extends Service {
       , include: [
         ...this.relations.includeWithAll
         ,...this.relations.includePub
+        ,...this.relations.includeFinished
+      ]
+    });
+  }
+
+  async getByIdReport(id, options = {}) {
+    const safeOptions = await this.safeOptions(options);
+    return db[this.modelName].findByPk(id, {
+      ...safeOptions
+      , include: [
+        ...this.relations.includeWithAll
+        ,...this.relations.includePubReport
         ,...this.relations.includeFinished
       ]
     });
@@ -121,8 +163,18 @@ class IsledovanieService extends Service {
     });
   }
 
+  async getLastNomerByOtdelId(isOtdelId) {
+    return db[this.modelName].findOne({
+      where: { isOtdelId }
+      ,limit: 1
+      ,order: [
+        ['nomer', 'DESC']
+      ]
+    });
+  }
+
   async getAllPaginateWithSearch(
-    { page, pageSize, search, searchColumn, searchPosition = 'substring' },
+    { page, pageSize, search, searchColumn, searchPosition = 'substring', where = {} },
     options = {}
   ) {
     const safeOptions = await this.safeOptions(options);
@@ -133,7 +185,8 @@ class IsledovanieService extends Service {
       ...safeOptions
       ,...paginate
       ,where: {
-        ...searchWhere
+        ...searchWhere,
+        ...where
       }
       ,include: [
         ...this.relations.includeWithAll
@@ -159,8 +212,13 @@ class IsledovanieService extends Service {
     options = {}
   ) {
     const safeOptions = await this.safeOptions(options);
+    const last = await this.getLastNomerByOtdelId(otdelId);
+    let nomer = _.get(last, 'nomer', 0) || 0;
+    nomer = nomer + 1;
+
     return db[this.modelName].create({
       vnytNapravlenieId,
+      nomer,
       isOtdelId: otdelId,
       isSubOtdelId: subOtdelId,
       isPersonalId: personalId,
@@ -172,9 +230,11 @@ class IsledovanieService extends Service {
   }
 
   async finishIsledovanie(
-    { id,
+    {
+      id,
       vnytNapravlenieId,
       isResult,
+      isledovanieDataJSON,
       personalId,
       otdelId,
       subOtdelId
@@ -184,6 +244,7 @@ class IsledovanieService extends Service {
     const safeOptions = await this.safeOptions(options);
     return db[this.modelName].update({
       isResultJSON: isResult,
+      isledovanieDataJSON,
       finishedOtdelId: otdelId,
       finishedSubOtdelId: subOtdelId,
       finishedPersonalId: personalId,

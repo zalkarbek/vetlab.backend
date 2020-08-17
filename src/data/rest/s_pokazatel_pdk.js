@@ -1,13 +1,13 @@
-const middleware = require('../../middleware');
 const baseApiRoutes = require('./baseApiRoutes');
+const middleware = require('../../middleware');
 // Имя модели к которому привязан этот API
-const modelName = 'isledovanie';
+const modelName = 'sPokazatelPdk';
 // Превикс API маршрута
-const routePrefix = 'isledovanie';
+const routePrefix = 'pokazatelPdk';
 // интернационализация на количество (один)
-const i18nUnitOne = 'isledovanie.one';
+const i18nUnitOne = 'pokazatelPdk.one';
 // интернационализация на количество (несколько)
-const i18nUnitMany = 'isledovanie.many';
+const i18nUnitMany = 'pokazatelPdk.many';
 
 // базовые машрутры для всех api
 const baseApi = baseApiRoutes({ modelName, routePrefix });
@@ -20,11 +20,14 @@ module.exports = {
   api: [
     ...baseApi,
     {
-      name: 'getLastByNomerToOtdel',
-      url: `/api/v1/${routePrefix}/lastByNomerToOtdel`,
+      name: 'getPdkByPokazatelAndMaterial',
+      url: `/api/v1/${routePrefix}/getPdkByPokazatelAndMaterial`,
       method: 'GET',
-      middleware: [middleware.getMiddleware('restTokenVerify')],
-      controllerMethod: 'getLastByNomerToOtdel'
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
+      controllerMethod: 'getPdkByPokazatelAndMaterial'
     },
   ]
 };

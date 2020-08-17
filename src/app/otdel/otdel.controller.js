@@ -41,6 +41,12 @@ class BaseController extends Controller {
     const result = await otdelService.getWithNonSpec();
     return res.json(result);
   }
+
+  async getOtdelData(req, res) {
+    const { otdelId } = refService.getObjectOneOfTwo(req.query, req.body);
+
+
+  }
 }
 
 module.exports = new BaseController({ restDataName });

@@ -90,6 +90,18 @@ class Service {
     return where;
   }
 
+  async setSearchManyOptions(searches = []) {
+    let wheres = {};
+    if(searches && Array.isArray(searches) && searches.length >= 1) {
+      searches.forEach((searchElement) => {
+        wheres = {
+          ...this.setSearchOptions(searchElement)
+        };
+      });
+    }
+    return wheres;
+  }
+
   async setWhereOptions(condition) {
     let where = {};
     if(condition.action === 'substring') {
@@ -117,18 +129,13 @@ class Service {
   }
 
   async safeWhere(where = {}) {
-    let searchWhere = {};
     let safeWhere = {};
-    if(where.searchColumn && where.search) {
-      safeWhere = this.setSearchPositions(options);
-    }
     if(where && Object.keys(where).length >= 1) {
       safeWhere = {
         ...where
       };
     }
     return {
-      ...searchWhere,
       ...safeWhere
     };
   }
@@ -232,6 +239,39 @@ class Service {
 
   static getHelper(name) {
     return Service.getInject('helpers').getHelper(name);
+  }
+
+  otdeleniaWhereFilter(sOtdeleniaId) {
+    return {
+      [db.Op.or]: [
+        {
+          sOtdeleniaId: {
+            [db.Op.eq]: sOtdeleniaId
+          }
+        },
+        {
+          sOtdeleniaId: {
+            [db.Op.is]: null
+          }
+        }
+      ]
+    };
+  }
+
+  otdeleniaWhereBuild(where = {}, sOtdeleniaId = null) {
+    let wh = {};
+    if(where && where === 'object') {
+      wh = {
+        ...where,
+        ...this.otdeleniaWhereFilter(sOtdeleniaId)
+      };
+    } else {
+      wh = {
+        ...this.otdeleniaWhereFilter(sOtdeleniaId)
+      };
+    }
+
+    return wh;
   }
 }
 

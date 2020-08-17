@@ -1,3 +1,4 @@
+const middleware = require('../../middleware');
 // Имя модели к которому привязан этот API
 const modelName = 'posMaterial';
 // Превикс API маршрута
@@ -33,6 +34,13 @@ module.exports = {
       method: 'GET',
       middleware: [],
       controllerMethod: 'search'
+    },
+    {
+      name: 'getLastByNomerToOtdel',
+      url: `/api/v1/${routePrefix}/lastByNomerToOtdel`,
+      method: 'GET',
+      middleware: [middleware.getMiddleware('restTokenVerify')],
+      controllerMethod: 'getLastByNomerToOtdel'
     },
   ]
 };

@@ -1,9 +1,55 @@
+const _ = require('lodash');
 const Controller = require('../controller');
+const refService = Controller.getService('ref');
 const restDataName = 'isledovanie_result_names';
 
 class BaseController extends Controller {
   constructor(params) {
     super(params);
+  }
+
+  async all(req, res) {
+    let where = {};
+    const { attributes = [], options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+    // if(!req.isAdmin) {
+    //   where = {
+    //     sOtdeleniaId: req.payload.personal.sOtdeleniaId
+    //   };
+    // }
+
+    const result = await refService.getAll(this.map.get('modelName'), {
+      ...options,
+      where
+    });
+    res.json(result);
+  }
+
+  async allPaginate(req, res) {
+    let where = {};
+    const {
+      page = 1,
+      pageSize = 10,
+      attributes,
+      options = {}
+    } = refService.getObjectOneOfTwo(req.query, req.body);
+    if (Array.isArray(attributes) && attributes.length >= 1) {
+      options.attributes = attributes;
+    }
+
+    // if(!req.isAdmin) {
+    //   where = {
+    //     sOtdeleniaId: req.payload.personal.sOtdeleniaId
+    //   };
+    // }
+
+    const result = await refService.getAllPaginate(this.map.get('modelName'), { page, pageSize }, {
+      ...options,
+      where
+    });
+    res.json(result);
   }
 
   async create(req, res) {

@@ -4,6 +4,7 @@ module.exports = async function({ socket }, data) {
     id,
     vnytNapravlenieId,
     isResult,
+    isledovanieDataJSON,
     personalId,
     otdelId,
     subOtdelId,
@@ -11,12 +12,11 @@ module.exports = async function({ socket }, data) {
   const isService = this.getService('isledovanie');
   const vnytService = this.getService('vnytNapravlenie');
 
-  console.log('server finish isledovanie started', data);
-
   const finished = await isService.finishIsledovanie({
     id,
     vnytNapravlenieId,
     isResult,
+    isledovanieDataJSON,
     otdelId,
     subOtdelId,
     personalId
@@ -26,10 +26,14 @@ module.exports = async function({ socket }, data) {
     const isledovanie = await isService.getById(id);
     await vnytService.updateVnytNapravlenieStatus(vnytNapravlenieId, 'completed');
     socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_STATUS_UPDATED, {
-      id: vnytNapravlenieId,
-      status: 'completed'
+      data: {
+        id: vnytNapravlenieId,
+        status: 'completed'
+      }
     });
-    socket.broadcast.emit(EVENTS.CLIENT_FINISH_ISLEDOVANIE_SHARE, isledovanie);
+    socket.broadcast.emit(EVENTS.CLIENT_FINISH_ISLEDOVANIE_SHARE, {
+      data: isledovanie
+    });
     return isledovanie;
   }
 

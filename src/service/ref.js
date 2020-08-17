@@ -2,6 +2,10 @@ const Service = require('./service');
 const db = Service.getInject('db');
 
 class RefService extends Service {
+  constructor(params) {
+    super(params);
+  }
+
   // ========================= REFERENCE ================================//
   async getById(model, id, options = {}) {
     const safeOptions = await this.safeOptions(options);
@@ -18,10 +22,34 @@ class RefService extends Service {
     });
   }
 
+  async getAllWithOtdelenia(model, options = {}, sOtdeleniaId = null) {
+    options.where = this.otdeleniaWhereBuild(options.where, sOtdeleniaId);
+    const safeOptions = await this.safeOptions(options);
+    return db[model].findAll({
+      ...safeOptions
+      ,order: [
+        ['createdAt', 'DESC']
+      ]
+    });
+  }
+
   async getAllPaginate(model, { page, pageSize }, options = {}) {
     const safeOptions = await this.safeOptions(options);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
 
+    return db[model].findAndCountAll({
+      ...safeOptions
+      , ...paginate
+      , order: [
+        ['createdAt', 'DESC']
+      ]
+    });
+  }
+
+  async getAllPaginateWithOtdelenia(model, { page, pageSize }, options = {}, sOtdeleniaId) {
+    options.where = this.otdeleniaWhereBuild(options.where, sOtdeleniaId);
+    const safeOptions = await this.safeOptions(options);
+    const paginate = await this.getPaginateAttrs({ page, pageSize });
     return db[model].findAndCountAll({
       ...safeOptions
       , ...paginate

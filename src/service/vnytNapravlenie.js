@@ -96,8 +96,12 @@ class NapravlenieService extends Service {
   }
   // ========================= REFERENCE ================================//
   async getLastNomerByOtdelId(napravlenOtdelId) {
-    return db[this.modelName].findAll({
+    return db[this.modelName].findOne({
       where: { napravlenOtdelId }
+      ,limit: 1
+      ,order: [
+        ['nomer', 'DESC']
+      ]
     });
   }
 
@@ -160,10 +164,11 @@ class NapravlenieService extends Service {
   }
 
   async getAllEpicRelPaginate(
-    { page, pageSize, search, searchColumn, searchPosition = 'substring' },
+    { page, pageSize, search, searchColumn, searchPosition = 'substring', where = {} },
     options = {}
     ) {
     const safeOptions = await this.safeOptions(options);
+    const safeWhere = await this.safeWhere(where);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
     const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
@@ -171,7 +176,8 @@ class NapravlenieService extends Service {
       ...safeOptions
       , ...paginate
       ,where: {
-        ...searchWhere
+        ...searchWhere,
+        ...safeWhere
       }
       ,include: [
         ...this.relations.includeWithAll,
@@ -184,10 +190,11 @@ class NapravlenieService extends Service {
   }
 
   async getAllPubRelPaginate(
-    { page, pageSize, search, searchColumn, searchPosition = 'substring' },
+    { page, pageSize, search, searchColumn, searchPosition = 'substring', where = {} },
     options = {}
   ) {
     const safeOptions = await this.safeOptions(options);
+    const safeWhere = await this.safeWhere(where);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
     const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
@@ -195,7 +202,8 @@ class NapravlenieService extends Service {
       ...safeOptions
       , ...paginate
       ,where: {
-        ...searchWhere
+        ...searchWhere,
+        ...safeWhere
       }
       ,include: [
         ...this.relations.includeWithAll,

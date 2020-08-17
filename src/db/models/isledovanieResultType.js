@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('isledovanieResultName', {
+  const schema = sequelize.define('isledovanieResultType', {
 
     name: {
       type: DataTypes.STRING(300),
@@ -9,12 +9,6 @@ module.exports = (sequelize, DataTypes) => {
 
     shortName: {
       type: DataTypes.STRING(100),
-      allowNull: true,
-      defaultValue: null
-    },
-
-    isledovanieResultTypeId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
@@ -32,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }, {
-    tableName: 'isledovanie_result_names',
-    modelName: 'isledovanieResultName',
+    tableName: 'isledovanie_result_types',
+    modelName: 'isledovanieResultType',
     timestamps: true
   });
   schema.associate = (models) => {

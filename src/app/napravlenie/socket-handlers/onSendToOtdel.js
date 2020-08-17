@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 module.exports = async function({ socket }, data) {
   const EVENTS = this.getSocksEvents();
   const payload = socket.payload;
@@ -10,8 +12,12 @@ module.exports = async function({ socket }, data) {
   const napravilPersonalId = payload.personal.id;
   const napravlenDepartmentId = otdel.departmentId;
 
+  const lastNomer = await vnytService.getLastNomerByOtdelId(data.napravlenOtdelId);
+  const nomer = _.get(lastNomer, 'nomer', 0) || 0;
+
   const newInDirection = await vnytService.createVnytNapravlenie({
     ...data,
+    nomer: nomer + 1,
     napravilPersonalId,
     napravlenDepartmentId,
     status: 'pending'

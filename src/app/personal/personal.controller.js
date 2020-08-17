@@ -38,6 +38,36 @@ class BaseController extends Controller {
     return res.json(personal);
   }
 
+  async getLaborantsByOtdelId(req, res) {
+    const otdelId = req.params.otdelId || req.query.otdelId || req.body.otdelId;
+    const personals = await personalService.getLaborantsByOtdelId(otdelId);
+    return res.json(personals);
+  }
+
+  async getChemistsByOtdelId(req, res) {
+    const otdelId = req.params.otdelId || req.query.otdelId || req.body.otdelId;
+    const personals = await personalService.getChemistsByOtdelId(otdelId);
+    return res.json(personals);
+  }
+
+  async getSeniorsByOtdelId(req, res) {
+    const otdelId = req.params.otdelId || req.query.otdelId || req.body.otdelId;
+    const personals = await personalService.getSeniorsByOtdelId(otdelId);
+    return res.json(personals);
+  }
+
+  async getHeadByOtdelId(req, res) {
+    const otdelId = req.params.otdelId || req.query.otdelId || req.body.otdelId;
+    const personal = await personalService.getHeadByOtdelId(otdelId);
+    return res.json(personal);
+  }
+
+  async getHeadsByOtdelId(req, res) {
+    const otdelId = req.params.otdelId || req.query.otdelId || req.body.otdelId;
+    const personals = await personalService.getHeadsByOtdelId(otdelId);
+    return res.json(personals);
+  }
+
   async create(req, res) {
     const { user, ...personalData } = req.body;
     const newPersonal = await personalService.createPersonalWithUser({

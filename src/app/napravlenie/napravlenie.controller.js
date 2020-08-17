@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Controller = require('../controller');
 const rest = Controller.getHelper('rest');
 const refService = Controller.getService('ref');
@@ -20,24 +21,48 @@ class BaseController extends Controller {
   }
 
   async all(req, res) {
+    let where = {};
     const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
-    const result = await directionService.getAllWithPosMaterial(options);
+
+    if(!req.isAdmin) {
+      where = {
+        otdelId: req.payload.personal.otdelId
+      };
+    }
+    options.where = {
+      ...where
+    };
+
+    const result = await directionService.getAllWithPosMaterial({
+      ...options,
+    });
     res.json(result);
   }
 
   async allWithPosMaterial(req, res) {
+    let where = {};
     const { attributes, options = {} } = refService.getObjectOneOfTwo(req.query, req.body);
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
+    if(!req.isAdmin) {
+      where = {
+        otdelId: req.payload.personal.otdelId
+      };
+    }
+    options.where = {
+      ...where
+    };
+
     const result = await directionService.getAllWithPosMaterial(options);
     res.json(result);
   }
 
   async allWithPosMaterialWithPaginate(req, res) {
+    let where = {};
     const  {
       page,
       pageSize,
@@ -50,14 +75,21 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
+    if(!req.isAdmin) {
+      where = {
+        otdelId: req.payload.personal.otdelId
+      };
+    }
+
     const result = await directionService.getAllWithPosMaterialWithPaginate(
-      { page, pageSize, search, searchColumn, searchPosition },
+      { page, pageSize, search, searchColumn, searchPosition, where },
       options
     );
     res.json(result);
   }
 
   async allWithPosMaterialWithPaginateAndVnyt(req, res) {
+    let where = {};
     const  {
       page,
       pageSize,
@@ -70,8 +102,15 @@ class BaseController extends Controller {
     if (Array.isArray(attributes) && attributes.length >= 1) {
       options.attributes = attributes;
     }
+
+    if(!req.isAdmin) {
+      where = {
+        otdelId: req.payload.personal.otdelId
+      };
+    }
+
     const result = await directionService.getAllWithPosMaterialWithPaginateAndVnyt(
-      { page, pageSize, search, searchColumn, searchPosition },
+      { page, pageSize, search, searchColumn, searchPosition, where },
       options
     );
     res.json(result);
@@ -86,8 +125,14 @@ class BaseController extends Controller {
     const zapolnilDepartmentId = department.id;
     const zapolnilDate = new Date();
     const dataZapolnenia = new Date();
+    const lastNomer = await directionService.getLastNomerByOtdelId(napravlenie.otdelId);
+    let nomer = Number(lastNomer.nomer);
+    if(!nomer || Number.isNaN(nomer)) {
+      nomer = 1;
+    }
     const updatedDirection = {
       ...napravlenie,
+      nomer: nomer + 1,
       zapolnilPersonalId,
       zapolnilDepartmentId,
       zapolnilDate,
@@ -156,6 +201,16 @@ class BaseController extends Controller {
       message: 'vnytNapravlenie.send.success',
       data: createdVnytNapravlenie
     }));
+  }
+
+  async getLastByNomerToOtdel(req, res) {
+    const otdelId = req.query.otdelId || req.body.otdelId || _.get(req.payload, 'personal.otdelId', null);
+    const last = await directionService.getLastNomerByOtdelId(otdelId);
+    res.json({
+      nomer: _.get(last, 'nomer', 0) || 0,
+      otdelId,
+      last
+    });
   }
 }
 

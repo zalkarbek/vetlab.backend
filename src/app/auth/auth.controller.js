@@ -14,7 +14,8 @@ class AuthController extends Controller {
   // Авторизация пользователей
   async userAuthenticate(req, res) {
     const { email, password } = req.body;
-    const user = await authService.userAuthenticate({ email, password });
+    console.log(req.body);
+    const user = await authService.userAuthenticate({ email, password: String(password) });
     if (!user) {
       return res.json(rest.response({
         error: true,

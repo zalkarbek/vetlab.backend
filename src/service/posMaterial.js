@@ -21,7 +21,7 @@ class PosMaterialService extends Service {
   }
 
   async getLastNomerByOtdelId(otdelId) {
-    return db[this.modelName].findAll({
+    return db[this.modelName].findOne({
       include: [
         {
           model: db.napravlenie,
@@ -38,7 +38,7 @@ class PosMaterialService extends Service {
       ]
       ,limit: 1
       ,order: [
-        ['createdAt', 'DESC']
+        ['nomer', 'DESC']
       ]
     });
   }

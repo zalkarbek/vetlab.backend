@@ -1,3 +1,4 @@
+const middleware = require('../../middleware');
 const baseApiRoutes = require('./baseApiRoutes');
 // Имя модели к которому привязан этот API
 const modelName = 'vnytNapravlenie';
@@ -19,18 +20,34 @@ module.exports = {
   api: [
     ...baseApi,
     {
-      name: 'getAllVnytNapravlenieRelPaginateEpic',
+      name: 'getAllRelPaginateEpic',
       url: `/api/v1/${routePrefix}/epic/rel/paginate`,
       method: 'GET',
-      middleware: [],
-      controllerMethod: 'getAllVnytNapravlenieRelPaginateEpic'
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
+      controllerMethod: 'getAllRelPaginateEpic'
     },
     {
-      name: 'getAllVnytNapravlenieRelPaginatePub',
+      name: 'getAllRelPaginatePub',
       url: `/api/v1/${routePrefix}/pub/rel/paginate`,
       method: 'GET',
-      middleware: [],
-      controllerMethod: 'getAllVnytNapravlenieRelPaginatePub'
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
+      controllerMethod: 'getAllRelPaginatePub'
+    },
+    {
+      name: 'getLastByNomerToOtdel',
+      url: `/api/v1/${routePrefix}/lastByNomerToOtdel`,
+      method: 'GET',
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
+      controllerMethod: 'getLastByNomerToOtdel'
     },
   ]
 };

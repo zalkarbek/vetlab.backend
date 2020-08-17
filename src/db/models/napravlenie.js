@@ -1,6 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('napravlenie', {
 
+    nomer: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
     zapolnilPersonalId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
@@ -61,6 +67,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
+    ownerJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
     probyNapravilJSON: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -68,6 +80,12 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     probyDostavilJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    napravlenieDataJSON: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null

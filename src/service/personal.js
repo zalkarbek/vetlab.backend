@@ -6,9 +6,7 @@ const db = Service.getInject('db');
 class PersonalService extends Service {
   async getPersonalByUserId(userId) {
     return db.personal.findOne({
-      where : {
-        userId: userId
-      }
+      where : { userId }
     });
   }
 
@@ -85,6 +83,57 @@ class PersonalService extends Service {
         }
       ]
     });
+  }
+
+  async getHeadByOtdelId(otdelId, options = {}) {
+    const doljnost = 'head';
+    const safeOptions = await this.safeOptions(options);
+    return db.personal.findOne({
+      include: [
+        {
+          model: db.otdel,
+          as: 'headedOtdel',
+          where: {
+            id: {
+              [db.Op.eq]: otdelId
+            }
+          },
+        },
+        {
+          model: db.sDoljnost,
+          where: {
+            shortKey: {
+              [db.Op.eq]: doljnost
+            }
+          }
+        }
+      ],
+      ...safeOptions
+    });
+  }
+
+  async getLaborantsByOtdelId(otdelId) {
+    const doljnost = 'лаборант';
+    const query = db.QUERY.GET_PERSONALS_BY_POSITION_AND_OTDELID(doljnost, otdelId);
+    return db.vetdb.query(query.Q,  { replacements: query.REPLACE, type: db.vetdb.QueryTypes.SELECT });
+  }
+
+  async getChemistsByOtdelId(otdelId) {
+    const doljnost = 'химик';
+    const query = db.QUERY.GET_PERSONALS_BY_POSITION_AND_OTDELID(doljnost, otdelId);
+    return db.vetdb.query(query.Q,  { replacements: query.REPLACE, type: db.vetdb.QueryTypes.SELECT });
+  }
+
+  async getSeniorsByOtdelId(otdelId) {
+    const doljnost = 'senior';
+    const query = db.QUERY.GET_PERSONALS_BY_POSITION_KEY_AND_OTDELID(doljnost, otdelId);
+    return db.vetdb.query(query.Q,  { replacements: query.REPLACE, type: db.vetdb.QueryTypes.SELECT });
+  }
+
+  async getHeadsByOtdelId(otdelId) {
+    const doljnost = 'head';
+    const query = db.QUERY.GET_PERSONALS_BY_POSITION_KEY_AND_OTDELID(doljnost, otdelId);
+    return db.vetdb.query(query.Q,  { replacements: query.REPLACE, type: db.vetdb.QueryTypes.SELECT });
   }
 
   async createPersonal(data, options = {}) {

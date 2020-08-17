@@ -8,7 +8,9 @@ module.exports = async function({ socket }, data) {
     otdelId,
     subOtdelId
   });
-  const vnytNap = await vnyService.getVnytNapravlenieById(id);
-  socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS, vnytNap);
-  return vnytNap;
+  const vnyt = await vnyService.getVnytNapravlenieById(id);
+  socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_ACCEPT_SUCCESS, {
+    data: vnyt
+  });
+  return vnyt;
 };

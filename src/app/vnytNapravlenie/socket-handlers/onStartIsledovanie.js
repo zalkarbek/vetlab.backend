@@ -25,9 +25,13 @@ module.exports = async function({ socket }, data) {
   await vnytService.updateVnytNapravlenieStatus(vnytNapravlenieId, 'research');
   const isledovanie = await isService.getById(newIs.id);
   socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_STATUS_UPDATED, {
-    id: vnytNapravlenieId,
-    status: 'research'
+    data: {
+      id: vnytNapravlenieId,
+      status: 'research'
+    }
   });
-  socket.broadcast.emit(EVENTS.CLIENT_START_ISLEDOVANIE_SHARE, isledovanie);
+  socket.broadcast.emit(EVENTS.CLIENT_START_ISLEDOVANIE_SHARE, {
+    data: isledovanie
+  });
   return isledovanie;
 };

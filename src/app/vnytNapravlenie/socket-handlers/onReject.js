@@ -12,6 +12,8 @@ module.exports = async function({ socket }, data) {
   });
 
   const vnytNap = await vnyService.getVnytNapravlenieById(id);
-  socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_REJECT, vnytNap);
+  socket.broadcast.emit(EVENTS.CLIENT_VNYT_NAPRAVLENIE_REJECT, {
+    data: vnytNap
+  });
   return vnytNap;
 };

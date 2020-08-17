@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Service = require('./service');
 const helpers = require('../helpers');
 const roleService = require('./role');
@@ -144,6 +145,18 @@ class UserService extends Service {
       ],
       ...options
     });
+  }
+
+  async isAdmin(userId, userRoles) {
+    const adminRoles = ['admin', 'super', 'developer', 'vetAdmin'];
+    if(!userRoles && !userRoles.length) {
+      return false;
+    }
+    const finded = _.find(userRoles, (userRole) => {
+      return adminRoles.find((adminRole) => adminRole === userRole.role_key);
+    });
+
+    return Boolean(finded);
   }
 
   /**

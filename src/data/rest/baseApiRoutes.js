@@ -5,21 +5,30 @@ module.exports = ({ routePrefix }) => {
       name: 'all',
       url: `/api/v1/${routePrefix}`,
       method: 'GET',
-      middleware: [],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'all'
     },
     {
       name: 'allPaginate',
       url: `/api/v1/${routePrefix}/paginate`,
       method: 'GET',
-      middleware: [],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'allPaginate'
     },
     {
       name: 'search',
       url: `/api/v1/${routePrefix}/search`,
       method: 'GET',
-      middleware: [],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'search'
     },
     {

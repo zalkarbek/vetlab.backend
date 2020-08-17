@@ -23,29 +23,51 @@ module.exports = {
       name: 'allWithPosMaterial',
       url: `/api/v1/${routePrefix}/pos`,
       method: 'GET',
-      middleware: [],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'allWithPosMaterial'
     },
     {
       name: 'allWithPosMaterialWithPaginate',
       url: `/api/v1/${routePrefix}/pos/withPaginate`,
       method: 'GET',
-      middleware: [],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'allWithPosMaterialWithPaginate'
     },
     {
       name: 'allWithPosMaterialWithPaginateAndVnyt',
       url: `/api/v1/${routePrefix}/pos/withPaginateAndVnyt`,
       method: 'GET',
-      middleware: [],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'allWithPosMaterialWithPaginateAndVnyt'
     },
     {
       name: 'sendToOtdel',
       url: `/api/v1/${routePrefix}/vnyt/sendToOtdel`,
       method: 'POST',
-      middleware: [middleware.getMiddleware('restTokenVerify')],
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
       controllerMethod: 'sendToOtdel'
-    }
+    },
+    {
+      name: 'getLastByNomerToOtdel',
+      url: `/api/v1/${routePrefix}/lastByNomerToOtdel`,
+      method: 'GET',
+      middleware: [
+        middleware.getMiddleware('restTokenVerify'),
+        middleware.getMiddleware('restAdminVerify')
+      ],
+      controllerMethod: 'getLastByNomerToOtdel'
+    },
   ]
 };

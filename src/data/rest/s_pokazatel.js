@@ -16,5 +16,7 @@ module.exports = {
   routePrefix,
   i18nUnitOne,
   i18nUnitMany,
-  api: [ ...baseApi ]
+  api: [
+    ...baseApi,
+  ]
 };

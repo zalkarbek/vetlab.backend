@@ -7,8 +7,12 @@ class NapravlenieService extends Service {
   // ========================= REFERENCE ================================//
 
   async getLastNomerByOtdelId(otdelId) {
-    return db[this.modelName].findAll({
+    return db[this.modelName].findOne({
       where: { otdelId }
+      ,limit: 1
+      ,order: [
+        ['nomer', 'DESC']
+      ]
     });
   }
 
@@ -24,6 +28,10 @@ class NapravlenieService extends Service {
               model: db.sMera
             }
           ]
+        },
+        {
+          model: db.otdel,
+          as: 'otdel'
         }
       ]
     });
@@ -43,6 +51,10 @@ class NapravlenieService extends Service {
               model: db.sMera
             }
           ]
+        },
+        {
+          model: db.otdel,
+          as: 'otdel'
         }
       ],
       ...safeOptions,
@@ -58,11 +70,13 @@ class NapravlenieService extends Service {
       pageSize,
       search,
       searchColumn,
-      searchPosition = 'substring'
+      searchPosition = 'substring',
+      where = {}
     },
     options = {}
   ) {
     const safeOptions = await this.safeOptions(options);
+    const safeWhere = await this.safeWhere(where);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
     const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
@@ -70,7 +84,8 @@ class NapravlenieService extends Service {
       ...safeOptions
       , ...paginate
       ,where: {
-        ...searchWhere
+        ...searchWhere,
+        ...safeWhere
       }
       ,include: [
         {
@@ -80,6 +95,10 @@ class NapravlenieService extends Service {
               model: db.sMera
             }
           ]
+        },
+        {
+          model: db.otdel,
+          as: 'otdel'
         }
       ]
       , order: [
@@ -94,11 +113,13 @@ class NapravlenieService extends Service {
       pageSize,
       search,
       searchColumn,
-      searchPosition = 'substring'
+      searchPosition = 'substring',
+      where = {}
     },
     options = {}
   ) {
     const safeOptions = await this.safeOptions(options);
+    const safeWhere = await this.safeWhere(where);
     const paginate = await this.getPaginateAttrs({ page, pageSize });
     const searchWhere = await this.setSearchOptions({ searchColumn, search, searchPosition });
 
@@ -106,7 +127,8 @@ class NapravlenieService extends Service {
       ...safeOptions
       , ...paginate
       ,where: {
-        ...searchWhere
+        ...searchWhere,
+        ...safeWhere
       }
       ,include: [
         {
@@ -125,6 +147,10 @@ class NapravlenieService extends Service {
               as: 'napravlenOtdel'
             }
           ]
+        },
+        {
+          model: db.otdel,
+          as: 'otdel'
         }
       ]
       , order: [

@@ -1,6 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   const schema = sequelize.define('isledovanie', {
 
+    nomer: {
+      type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
     vnytNapravlenieId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
@@ -38,6 +44,12 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     isResultJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    isledovanieDataJSON: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
