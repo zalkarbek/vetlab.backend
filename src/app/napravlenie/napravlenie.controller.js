@@ -126,7 +126,7 @@ class BaseController extends Controller {
     const zapolnilDate = new Date();
     const dataZapolnenia = new Date();
     const lastNomer = await directionService.getLastNomerByOtdelId(napravlenie.otdelId);
-    let nomer = Number(lastNomer.nomer);
+    let nomer = Number(lastNomer && lastNomer.nomer || 1);
     if(!nomer || Number.isNaN(nomer)) {
       nomer = 1;
     }

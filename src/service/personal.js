@@ -42,7 +42,10 @@ class PersonalService extends Service {
       ],
       where: {
         isAdmin: 0
-      }
+      },
+      order: [
+        ['id', 'DESC']
+      ]
     });
   }
 
@@ -58,7 +61,10 @@ class PersonalService extends Service {
       ...options,
       where: {
         isAdmin: 0
-      }
+      },
+      order: [
+        ['id', 'DESC']
+      ],
     };
     return refService.getAllPaginate(this.modelName, { page, pageSize }, updatedOptions);
   }
@@ -66,7 +72,10 @@ class PersonalService extends Service {
   async getPersonalWithUser(id) {
     const safeAttrs = await this.safeAttributesForUser();
     return db.personal.findOne({
-      where: { id, isAdmin: 0 },
+      where: { id, isAdmin: 0 }
+      ,order: [
+        ['id', 'DESC']
+      ],
       include: [
         {
           model: db.user,
@@ -109,6 +118,9 @@ class PersonalService extends Service {
         }
       ],
       ...safeOptions
+      ,order: [
+        ['id', 'DESC']
+      ]
     });
   }
 
