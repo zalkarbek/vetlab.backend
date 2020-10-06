@@ -109,3 +109,4 @@ cert/*.pem
 
 jwtRS256.key
 jwtRS256.key.pub
+public/text.txt
