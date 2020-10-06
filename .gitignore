@@ -42,6 +42,8 @@ build/Release
 # Kernel directories
 node_modules/
 jspm_packages/
+public/*
+public/text.txt
 
 # TypeScript v1 declaration files
 typings/
