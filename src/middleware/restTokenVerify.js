@@ -5,6 +5,7 @@ const userService = service.getService('user');
 module.exports = async (req, res, next) => {
   // проверка токена
   let token = req.headers['x-access-token'] || req.headers['authorization'] || req.headers['Authorization'];
+
   if(token && token.startsWith('Bearer ')) {
     token = token.slice(7, token.length);
   }
@@ -36,8 +37,6 @@ module.exports = async (req, res, next) => {
       error.data = { type: 'auth_error', message: e.message };
       return next(error);
     }
-
-
   } else {
     let error = new Error('Authentication Error');
     error.data = { type: 'auth_error_token_not_found', message: 'Token not found' };
