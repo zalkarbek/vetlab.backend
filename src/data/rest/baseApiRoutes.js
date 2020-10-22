@@ -7,7 +7,7 @@ module.exports = ({ routePrefix }) => {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'all'
     },
@@ -17,7 +17,7 @@ module.exports = ({ routePrefix }) => {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'allPaginate'
     },
@@ -27,7 +27,7 @@ module.exports = ({ routePrefix }) => {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'search'
     },

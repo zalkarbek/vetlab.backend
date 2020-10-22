@@ -6,14 +6,26 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    sRMetodId: {
+    sRMaterialId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
       allowNull: true,
       defaultValue: null
     },
 
-    sBoleznId: {
+    sMeraId: {
       type: DataTypes.INTEGER(11).UNSIGNED,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    sRMetodJSON: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: null
+    },
+
+    sBoleznJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -30,14 +42,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
 
-    sRMaterialId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
-      allowNull: true,
-      defaultValue: null
-    },
-
-    sMeraId: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    sMaterialJSON: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: null
     },
@@ -70,14 +76,6 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     schema.belongsTo(models.otdel, {
       foreignKey: 'otdelId'
-    });
-
-    schema.belongsTo(models.sRMetod, {
-      foreignKey: 'sRMetodId'
-    });
-
-    schema.belongsTo(models.sBolezn, {
-      foreignKey: 'sBoleznId'
     });
 
     schema.belongsTo(models.sRMaterial, {

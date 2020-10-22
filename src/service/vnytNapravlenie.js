@@ -81,6 +81,10 @@ class NapravlenieService extends Service {
             }
           ]
         },
+        {
+          model: db.napravlenie,
+          as: 'napravlenie'
+        },
       ],
       includeEpic: [
         {

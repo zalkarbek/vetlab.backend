@@ -28,12 +28,22 @@ const isledovanieResultNamesRoutes = require('./isledovanieResultNames/isledovan
 const isledovaniePdkNamesRoutes = require('./isledovaniePdkNames/isledovaniePdk.routes');
 const pokazatelPdkRoutes = require('./pokazatelPdk/pokazatelPdk.routes');
 
+const rMaterialRoutes = require('./rMaterial/routes');
+const rMetodRoutes = require('./rMetod/routes');
+const rMaterialKitRoutes = require('./rMaterialKit/routes');
+const otdelRMaterial = require('./otdelRMaterial/routes');
+
 const otdelReportRoutes = require('./report/otdel.report.controller');
 const isledovanieReportRoutes = require('./report/is.report.controller');
 
 module.exports = ({ routes }) => {
   return bindMethodToRoute(
     [
+      rMaterialRoutes,
+      rMetodRoutes,
+      rMaterialKitRoutes,
+      otdelRMaterial,
+
       optionRoutes,
       authRoutes,
       userRoutes,

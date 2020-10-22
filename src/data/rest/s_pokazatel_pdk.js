@@ -25,7 +25,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'getPdkByPokazatelAndMaterial'
     },

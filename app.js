@@ -25,7 +25,8 @@ app.use((req, res, next) => {
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '../vetlab.frontend/dist')));
+// app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(cors());
 app.use(process.env.NODE_ENV === 'development' ? logger('dev') : logger('combined'));
 app.use(routes({ app, pathResolve, routes: express.Router() }));

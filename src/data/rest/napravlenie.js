@@ -25,7 +25,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'allWithPosMaterial'
     },
@@ -35,7 +35,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'allWithPosMaterialWithPaginate'
     },
@@ -45,7 +45,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'allWithPosMaterialWithPaginateAndVnyt'
     },
@@ -55,7 +55,7 @@ module.exports = {
       method: 'POST',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'sendToOtdel'
     },
@@ -65,7 +65,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'getLastByNomerToOtdel'
     },

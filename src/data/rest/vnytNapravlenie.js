@@ -25,7 +25,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'getAllRelPaginateEpic'
     },
@@ -35,7 +35,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'getAllRelPaginatePub'
     },
@@ -45,7 +45,7 @@ module.exports = {
       method: 'GET',
       middleware: [
         middleware.getMiddleware('restTokenVerify'),
-        middleware.getMiddleware('restAdminVerify')
+        middleware.getMiddleware('isAdmin')
       ],
       controllerMethod: 'getLastByNomerToOtdel'
     },
