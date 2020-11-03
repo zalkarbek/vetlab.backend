@@ -26,6 +26,7 @@ const preparatRoutes = require('./preparat/preparat.routes');
 const isledovanieRoutes = require('./isledovanie/is.routes');
 const isledovanieResultNamesRoutes = require('./isledovanieResultNames/isledovanieResult.routes');
 const isledovaniePdkNamesRoutes = require('./isledovaniePdkNames/isledovaniePdk.routes');
+const isledovanieTypeRoutes = require('./isledovanieType/routes');
 const pokazatelPdkRoutes = require('./pokazatelPdk/pokazatelPdk.routes');
 
 const rMaterialRoutes = require('./rMaterial/routes');
@@ -71,6 +72,7 @@ module.exports = ({ routes }) => {
       isledovanieRoutes,
       isledovanieResultNamesRoutes,
       isledovaniePdkNamesRoutes,
+      isledovanieTypeRoutes,
       pokazatelPdkRoutes,
 
       otdelReportRoutes,
