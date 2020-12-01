@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const schema = sequelize.define('vnytNapravlenie_posMaterial', {
+  const schema = sequelize.define('vnytNapravleniePosMaterial', {
 
     vnytNapravlenieId: {
       type: DataTypes.INTEGER(10).UNSIGNED,

@@ -130,7 +130,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'isledovanieTypeId'
     });
 
-
     schema.belongsTo(models.otdel, {
       foreignKey: 'finishedOtdelId',
       as: 'finishedOtdel'
@@ -144,6 +143,12 @@ module.exports = (sequelize, DataTypes) => {
     schema.belongsTo(models.personal, {
       foreignKey: 'finishedPersonalId',
       as: 'finishedPersonal'
+    });
+
+    schema.belongsToMany(models.sRMetod, {
+      through: 'isledovanieRMetod',
+      foreignKey: 'isledovanieId',
+      otherKey: 'rmetodId'
     });
   };
 

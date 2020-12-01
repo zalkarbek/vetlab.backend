@@ -189,7 +189,7 @@ module.exports = (sequelize, DataTypes) => {
   schema.associate = (models) => {
 
     schema.belongsToMany(models.posMaterial, {
-      through: 'vnytNapravlenie_posMaterial',
+      through: 'vnytNapravleniePosMaterial',
       foreignKey: 'vnytNapravlenieId',
       otherKey: 'posMaterialId'
     });
