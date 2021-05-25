@@ -270,7 +270,6 @@ class Service {
         ...this.otdeleniaWhereFilter(sOtdeleniaId)
       };
     }
-
     return wh;
   }
 }
